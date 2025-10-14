@@ -8,8 +8,6 @@ import React from 'react'
 import { Footer } from '@/globals/Footer/Component'
 import { Header } from '@/globals/Header/Component'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
-import { Providers } from '@/providers'
-import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
 import { TypedLocale } from 'payload'
@@ -49,19 +47,18 @@ export default async function RootLayout({ children, params }: Args) {
       suppressHydrationWarning
     >
       <head>
-        <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
       <body>
-        <Providers>
+      
           <NextIntlClientProvider messages={messages}>
             <LivePreviewListener />
             <Header locale={locale} />
             {children}
             <Footer locale={locale} />
           </NextIntlClientProvider>
-        </Providers>
+       
       </body>
     </html>
   )

@@ -8,6 +8,7 @@ import React, { Fragment } from 'react'
 import type { Post } from '@/payload-types'
 
 import { Media } from '@/components/Media'
+import { Eye } from 'lucide-react'
 
 export const Card: React.FC<{
   alignItems?: 'center'
@@ -30,54 +31,81 @@ export const Card: React.FC<{
   const href = `/${locale}/${relationTo}/${slug}`
 
   return (
+    // <article
+
+    //
+    // >
+
+    //   <div className="p-4">
+
+    //     {description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
+    //   </div>
+    // </article>
     <article
-      className={cn(
-        'border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
-        className,
-      )}
       ref={card.ref}
+            className={cn(
+        ' p-[12px]  rounded-2xl overflow-hidden  bg-white border border-gray-200',
+        className
+      )}
+      
     >
-      <div className="relative w-full ">
+      <div className="w-full ">
         {!metaImage && <div className="">No image</div>}
-        {metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="360px" />}
-      </div>
-      <div className="p-4">
-        {showCategories && hasCategories && (
-          <div className="uppercase text-sm mb-4">
-            {showCategories && hasCategories && (
-              <div>
-                {categories?.map((category, index) => {
-                  if (typeof category === 'object') {
-                    const { title: titleFromCategory } = category
-
-                    const categoryTitle = titleFromCategory || 'Untitled category'
-
-                    const isLast = index === categories.length - 1
-
-                    return (
-                      <Fragment key={index}>
-                        {categoryTitle}
-                        {!isLast && <Fragment>, &nbsp;</Fragment>}
-                      </Fragment>
-                    )
-                  }
-
-                  return null
-                })}
-              </div>
-            )}
-          </div>
+        {metaImage && typeof metaImage !== 'string' && (
+          <Media resource={metaImage} className=" h-48  object-cover !rounded-xl" />
         )}
+      </div>
+
+      <div className="space-y-2 pt-4">
+        <div className=" flex  justify-between  items-center">
+          {showCategories && hasCategories && (
+            <div className="uppercase text-sm mb-4">
+              {showCategories && hasCategories && (
+                <div>
+                  {categories?.map((category, index) => {
+                    if (typeof category === 'object') {
+                      const { title: titleFromCategory } = category
+
+                      const categoryTitle = titleFromCategory || 'Untitled category'
+
+                      const isLast = index === categories.length - 1
+
+                      return (
+                        <Fragment key={index}>
+                          <span className="inline-block px-3 py-1 text-xs font-semibold text-red-600 bg-red-100 rounded-full">
+                            {categoryTitle}
+                          </span>
+
+                          {!isLast && <Fragment>, &nbsp;</Fragment>}
+                        </Fragment>
+                      )
+                    }
+
+                    return null
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+          <div className="flex items-center justify-end text-gray-500 text-xs gap-1">
+            <Eye size={14} />
+            <span>2.5m</span>
+          </div>
+        </div>
+
         {titleToUse && (
           <div className="prose">
             <h3>
-              <Link className="not-prose" href={href} ref={link.ref}>
+              <Link
+                className="text-sm font-semibold text-gray-900 leading-snug not-prose"
+                href={href}
+                ref={link.ref}
+              >
                 {titleToUse}
               </Link>
             </h3>
           </div>
         )}
-        {description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
       </div>
     </article>
   )

@@ -3,8 +3,6 @@ import Link from 'next/link'
 import React from 'react'
 
 import type { Footer } from '@/payload-types'
-
-import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
 import { CMSLink } from '@/components/Link'
 import { TypedLocale } from 'payload'
 
@@ -14,18 +12,6 @@ export async function Footer({ locale }: { locale: TypedLocale }) {
   const navItems = footer?.navItems || []
 
   return (
-    // <footer className="border-t border-border  text-white">
-    //   <div className="container py-8 gap-8 flex flex-col md:flex-row md:justify-between">
-    //     <Link className="flex items-center" href="/">
-    //       <h1 className="text-4xl flex shrink-0 font-bold">AeroSense</h1>
-    //     </Link>
-
-    //     <div className="flex flex-col-reverse items-start md:flex-row gap-4 md:items-center">
-    //       <ThemeSelector />
-
-    //     </div>
-    //   </div>
-    // </footer>
     <footer className="bg-white border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-10">
         <div className="flex-shrink-0">
@@ -41,26 +27,26 @@ export async function Footer({ locale }: { locale: TypedLocale }) {
 
           <ul className="space-y-3 text-gray-700">
             <li>
-              <a href="#" className="hover:text-black underline">
+              <Link href="#" className="hover:text-black underline">
                 X-Twitter ↗
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:text-black underline">
+              <Link href="#" className="hover:text-black underline">
                 LinkedIn ↗
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:text-black underline">
+              <Link href="#" className="hover:text-black underline">
                 Facebook ↗
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
       </div>
 
       <div className="border-t border-gray-200 mt-6 py-6 px-6 text-sm text-gray-600 flex flex-col md:flex-row justify-between items-center gap-4">
-        <div className='flex items-center gap-10'>
+        <div className="flex items-center gap-10">
           <div>
             © 2024 All rights reserved.
             <a href="#" className="underline">

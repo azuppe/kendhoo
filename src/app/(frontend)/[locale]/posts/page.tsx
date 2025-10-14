@@ -35,7 +35,7 @@ export default async function Page({ params }: Args) {
     <div className="pt-24 pb-24">
       <PageClient />
       <div className="container mb-16">
-        <div className="prose dark:prose-invert max-w-none">
+        <div className="  max-w-none">
           <h1>{t('posts')}</h1>
         </div>
       </div>
