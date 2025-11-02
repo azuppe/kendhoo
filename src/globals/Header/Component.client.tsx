@@ -27,11 +27,36 @@ interface HeaderClientProps {
 }
 
 export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
+  const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
   const t = useTranslations()
 
+  useEffect(() => {
+    const header = document.querySelector('#header')
+
+    const handleOnScroll = () => {
+      if (window.scrollY > 20) {
+        setScrolled(true);
+        header?.classList.add('shadow-sm')
+        header?.classList.add('bg-white')
+      } else {
+          setScrolled(false);
+        header?.classList.remove('shadow-sm')
+        header?.classList.remove('bg-white')
+      }
+    }
+
+    window.addEventListener('scroll', handleOnScroll)
+   return ()=>{
+    window.removeEventListener('scroll', handleOnScroll)
+   }
+  }, [])
+
   return (
-    <header className="w-full sticky top-0 bg-white border-b  z-10 border-gray-200 shadow-sm">
+    <header
+      id="header"
+      className="w-full z-50 top-0 bg-transparent h-[74px] fixed inset-0 transition-all duration-300  "
+    >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         <Link href="/" className="me-auto">
           <div className="flex items-center gap-2">

@@ -26,10 +26,7 @@ export const contact = (locale: 'en' | 'es'): Partial<Page> => ({
                   format: 0,
                   mode: 'normal',
                   style: '',
-                  text:
-                    locale === 'en'
-                      ? 'Example contact form:'
-                      : 'Formulario de contacto de ejemplo:',
+                  text: locale === 'en' ? 'Submit an artical for us to publish.' : '',
                   version: 1,
                 },
               ],
@@ -48,5 +45,5 @@ export const contact = (locale: 'en' | 'es'): Partial<Page> => ({
       },
     },
   ],
-  title: locale === 'en' ? 'Contact' : 'Contacto',
+  title: locale === 'en' ? 'Submit an Artical' : '',
 })

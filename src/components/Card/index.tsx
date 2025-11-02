@@ -31,16 +31,7 @@ export const Card: React.FC<{
   const href = `/${locale}/${relationTo}/${slug}`
 
   return (
-    // <article
 
-    //
-    // >
-
-    //   <div className="p-4">
-
-    //     {description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
-    //   </div>
-    // </article>
     <article
       ref={card.ref}
             className={cn(
@@ -49,10 +40,10 @@ export const Card: React.FC<{
       )}
       
     >
-      <div className="w-full ">
+      <div className="w-full rounded-xl ">
         {!metaImage && <div className="">No image</div>}
         {metaImage && typeof metaImage !== 'string' && (
-          <Media resource={metaImage} className=" h-48  object-cover !rounded-xl" />
+          <Media resource={metaImage} imgClassName='object-cover !rounded-xl h-48 ' className="  " />
         )}
       </div>
 
@@ -106,6 +97,8 @@ export const Card: React.FC<{
             </h3>
           </div>
         )}
+
+        <div className="text-sm text-gray-500">{sanitizedDescription}</div>
       </div>
     </article>
   )
