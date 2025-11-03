@@ -12,7 +12,9 @@ import { linkGroup } from '@/fields/linkGroup'
 export const hero: Field = {
   name: 'hero',
   type: 'group',
+
   fields: [
+    { name: 'title', type: 'text', localized: true },
     {
       name: 'type',
       type: 'select',
@@ -39,6 +41,10 @@ export const hero: Field = {
           label: 'Low Impact',
           value: 'lowImpact',
         },
+        {
+          label: 'HeroCarousel',
+          value: 'heroCarousel',
+        },
       ],
       required: true,
     },
@@ -58,6 +64,15 @@ export const hero: Field = {
       }),
       label: false,
     },
+    {
+      name: 'posts',
+      type: 'relationship',
+      hasMany: true,
+      relationTo: 'posts',
+        admin: {
+        condition: (_, { type } = {}) => ['heroCarousel'].includes(type),
+      },
+    },
     linkGroup({
       overrides: {
         maxRows: 2,
@@ -67,7 +82,7 @@ export const hero: Field = {
       name: 'media',
       type: 'upload',
       admin: {
-        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
+        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact', 'landing'].includes(type),
       },
       relationTo: 'media',
       required: true,

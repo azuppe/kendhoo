@@ -32,6 +32,7 @@ export const Search: React.FC = () => {
           onChange={(event) => {
             setValue(event.target.value)
           }}
+          className='rounded-full my-4'
           placeholder={t('search')}
         />
         <button type="submit" className="sr-only">

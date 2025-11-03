@@ -107,8 +107,8 @@ function LocaleSwitcher() {
 
   return (
     <Select onValueChange={onSelectChange} value={locale}>
-      <SelectTrigger className="flex items-center whitespace-nowrap gap-1 bg-black text-white px-4 py-2 rounded-full hover:bg-gray-900">
-        <SelectValue placeholder="Theme" />
+      <SelectTrigger className="flex items-center whitespace-nowrap gap-1 bg-black focus:outline-none text-white px-4 py-2 rounded-full hover:bg-gray-900">
+        <SelectValue placeholder="" />
       </SelectTrigger>
       <SelectContent className="transparent rounded-[10px] focus:outline-none">
         {localization.locales

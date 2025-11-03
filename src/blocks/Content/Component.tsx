@@ -23,8 +23,8 @@ export const ContentBlock: React.FC<
   }
 
   return (
-    <div className="container my-16">
-      <div className="grid grid-cols-4 lg:grid-cols-12 gap-y-8 gap-x-16">
+    <div className="container py-16 md:py-24">
+      <div className="grid grid-cols-4 lg:grid-cols-12 gap-3">
         {columns &&
           columns.length > 0 &&
           columns.map((col, index) => {
@@ -37,9 +37,22 @@ export const ContentBlock: React.FC<
                 })}
                 key={index}
               >
-                {richText && <RichText content={richText} enableGutter={false} />}
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 h-full ">
+                  {richText && (
+                    <RichText
+                      content={richText}
+                      enableGutter={false}
+                      className="text-gray-900 [&_h1]:text-5xl [&_h1]:font-semibold [&_h1]:tracking-tight [&_h1]:mb-2 [&_h2]:text-4xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:mb-2 [&_h3]:text-3xl [&_h3]:font-semibold [&_h3]:tracking-tight [&_h3]:mb-2 [&_p]:text-base [&_p]:text-gray-600 [&_p]:leading-relaxed [&_strong]:text-gray-900 [&_strong]:font-semibold"
+                    />
+                  )}
 
-                {enableLink && <CMSLink {...link} />}
+                  {enableLink && (
+                    <CMSLink
+                      {...link}
+                      className="mt-6 inline-flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors"
+                    />
+                  )}
+                </div>
               </div>
             )
           })}
