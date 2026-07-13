@@ -46,6 +46,15 @@ const Businesses: CollectionConfig = {
       relationTo: 'islands' as any,
     },
     {
+      name: 'typeLabel',
+      type: 'text',
+      localized: true,
+      admin: {
+        description:
+          'Specific business type shown on the card, e.g. "Co-Working", "Hotel", "Shopping Mall", "Cinema", "Spa Beauty Parlour", "Cafe". Falls back to the category above if left blank.',
+      },
+    },
+    {
       name: 'image',
       type: 'upload',
       relationTo: 'media',
@@ -75,6 +84,21 @@ const Businesses: CollectionConfig = {
       min: 0,
       max: 5,
       admin: { step: 0.1 },
+    },
+    {
+      name: 'reviewCount',
+      type: 'number',
+      min: 0,
+      admin: { description: 'Number of reviews behind the rating, e.g. 250' },
+    },
+    {
+      name: 'openStatus',
+      type: 'select',
+      defaultValue: 'open',
+      options: [
+        { label: 'Open', value: 'open' },
+        { label: 'Closed', value: 'closed' },
+      ],
     },
     {
       name: 'featured',

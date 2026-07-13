@@ -1327,12 +1327,21 @@ export interface Business {
   slugLock?: boolean | null;
   category: 'restaurant' | 'shop' | 'accommodation' | 'service';
   island?: (string | null) | Island;
+  /**
+   * Specific business type shown on the card, e.g. "Co-Working", "Hotel", "Shopping Mall", "Cinema", "Spa Beauty Parlour", "Cafe". Falls back to the category above if left blank.
+   */
+  typeLabel?: string | null;
   image?: (string | null) | Media;
   description?: string | null;
   phone?: string | null;
   address?: string | null;
   hours?: string | null;
   rating?: number | null;
+  /**
+   * Number of reviews behind the rating, e.g. 250
+   */
+  reviewCount?: number | null;
+  openStatus?: ('open' | 'closed') | null;
   /**
    * Show in the Featured Business spotlight
    */
@@ -2171,12 +2180,15 @@ export interface BusinessesSelect<T extends boolean = true> {
   slugLock?: T;
   category?: T;
   island?: T;
+  typeLabel?: T;
   image?: T;
   description?: T;
   phone?: T;
   address?: T;
   hours?: T;
   rating?: T;
+  reviewCount?: T;
+  openStatus?: T;
   featured?: T;
   updatedAt?: T;
   createdAt?: T;
