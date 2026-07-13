@@ -11,6 +11,7 @@ import RichText from '@/components/RichText'
 import type { Post } from '@/payload-types'
 
 import { PostHero } from '@/heros/PostHero'
+import { Comments } from '@/components/Comments'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { TypedLocale } from 'payload'
@@ -65,6 +66,8 @@ export default async function Post({ params: paramsPromise }: Args) {
                 enableGutter={false}
               />
             </div>
+
+            <Comments postId={post.id} />
           </div>
 
           {/* Sidebar */}

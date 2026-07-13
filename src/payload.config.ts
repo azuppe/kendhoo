@@ -21,6 +21,7 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 
 import Categories from './collections/Categories'
+import { Comments } from './collections/Comments'
 import Islands from './collections/Islands'
 import Places from './collections/Places'
 import Businesses from './collections/Businesses'
@@ -128,7 +129,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
-  collections: [Pages, Posts, Media, Categories, Islands, Places, Businesses, Users],
+  collections: [Pages, Posts, Media, Categories, Comments, Islands, Places, Businesses, Users],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   endpoints: [

@@ -7,6 +7,9 @@ import { LowImpactHero } from '@/heros/LowImpact'
 import { MediumImpactHero } from '@/heros/MediumImpact'
 import { LandingPage } from '@/heros/Landing'
 import HeroCarousel from './HeroCarousel'
+import { AdventureHero } from '@/heros/Adventure'
+import { CosmeticHero } from '@/heros/Cosmetic'
+import { EventDetailsHero } from '@/heros/EventDetails'
 
 const heroes = {
   highImpact: HighImpactHero,
@@ -14,6 +17,9 @@ const heroes = {
   mediumImpact: MediumImpactHero,
   landing: LandingPage,
   heroCarousel: HeroCarousel,
+  adventure: AdventureHero,
+  cosmetic: CosmeticHero,
+  eventDetails: EventDetailsHero,
 }
 
 export const RenderHero: React.FC<Page['hero']> = (props) => {

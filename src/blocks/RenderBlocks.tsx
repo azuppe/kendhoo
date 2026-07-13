@@ -18,6 +18,12 @@ import { BusinessDirectoryBlock } from '@/blocks/BusinessDirectory/Component'
 import { TimelineBlock } from '@/blocks/Timeline/Component'
 import { ContactInfoBlock } from '@/blocks/ContactInfo/Component'
 import { TestimonialsBlock } from '@/blocks/Testimonials/Component'
+import { WhyUsBlock } from '@/blocks/WhyUs/Component'
+import { StatsBlock } from '@/blocks/Stats/Component'
+import { DestinationsBlock } from '@/blocks/Destinations/Component'
+import { EventTimelineBlock } from '@/blocks/EventTimeline/Component'
+import { WhatsIncludedBlock } from '@/blocks/WhatsIncluded/Component'
+import { RecommendedToursBlock } from '@/blocks/RecommendedTours/Component'
 import { TypedLocale } from 'payload'
 
 const blockComponents = {
@@ -35,6 +41,12 @@ const blockComponents = {
   timeline: TimelineBlock,
   contactInfo: ContactInfoBlock,
   testimonials: TestimonialsBlock,
+  whyUs: WhyUsBlock,
+  stats: StatsBlock,
+  destinations: DestinationsBlock,
+  eventTimeline: EventTimelineBlock,
+  whatsIncluded: WhatsIncludedBlock,
+  recommendedTours: RecommendedToursBlock,
 }
 
 export const RenderBlocks: React.FC<{

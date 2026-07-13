@@ -18,6 +18,7 @@ export const Banner: Block = {
         { label: 'Warning', value: 'warning' },
         { label: 'Error', value: 'error' },
         { label: 'Success', value: 'success' },
+        { label: 'Promo', value: 'promo' },
       ],
       required: true,
     },
@@ -32,6 +33,32 @@ export const Banner: Block = {
       }),
       label: false,
       required: true,
+    },
+    {
+      name: 'backgroundImage',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        condition: (_, { style } = {}) => style === 'promo',
+        description: 'Photo shown on the right side of the diagonal split',
+      },
+    },
+    {
+      name: 'logo',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        condition: (_, { style } = {}) => style === 'promo',
+      },
+    },
+    {
+      name: 'tagline',
+      type: 'text',
+      localized: true,
+      admin: {
+        condition: (_, { style } = {}) => style === 'promo',
+        description: 'e.g. "Build a Wildly Successful Life Abroad!"',
+      },
     },
   ],
   interfaceName: 'BannerBlock',

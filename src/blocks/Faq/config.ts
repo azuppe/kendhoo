@@ -1,4 +1,4 @@
-import { Block } from "payload"
+import { Block } from 'payload'
 
 const FaqBlock: Block = {
   slug: 'faq',
@@ -8,28 +8,55 @@ const FaqBlock: Block = {
   },
   fields: [
     {
+      name: 'badge',
+      type: 'text',
+      defaultValue: 'FAQ',
+      localized: true,
+    },
+    {
       name: 'title',
       type: 'text',
       required: false,
       localized: true,
+      admin: {
+        description: 'e.g. "Frequently Asked"',
+      },
     },
     {
-      name: 'subtitle',
+      name: 'titleAccent',
       type: 'text',
       required: false,
       localized: true,
+      admin: {
+        description: 'Rendered in italic serif on its own line, e.g. "Questions"',
+      },
+    },
+    {
+      name: 'email',
+      type: 'text',
+      admin: {
+        description: 'e.g. "hello@vistaire.com"',
+      },
+    },
+    {
+      name: 'ctaLabel',
+      type: 'text',
+      defaultValue: 'Get in touch',
+      localized: true,
+    },
+    {
+      name: 'ctaLink',
+      type: 'text',
+      admin: {
+        description: 'e.g. "mailto:hello@vistaire.com"',
+      },
     },
     {
       name: 'items',
       type: 'array',
       required: true,
+      minRows: 1,
       fields: [
-        {
-          name: 'image',
-          type: 'upload',
-          relationTo: 'media',
-          required: true,
-        },
         {
           name: 'question',
           type: 'text',
@@ -42,17 +69,39 @@ const FaqBlock: Block = {
           required: true,
           localized: true,
         },
-        {
-          name: 'link',
-          type: 'text',
-          required: false,
-        },
       ],
     },
     {
-      name: 'learnMoreUrl',
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Photo shown alongside the FAQ list',
+      },
+    },
+    {
+      name: 'imageCaption',
       type: 'text',
-      required: false,
+      localized: true,
+      admin: {
+        description: 'e.g. "@skyline.villas"',
+      },
+    },
+    {
+      name: 'signatureName',
+      type: 'text',
+      localized: true,
+      admin: {
+        description: 'Optional cursive signature shown below the section, e.g. "crafted setared"',
+      },
+    },
+    {
+      name: 'signatureTagline',
+      type: 'text',
+      localized: true,
+      admin: {
+        description: 'e.g. "for real estate"',
+      },
     },
   ],
 }

@@ -70,6 +70,7 @@ export interface Config {
     posts: Post;
     media: Media;
     categories: Category;
+    comments: Comment;
     islands: Island;
     places: Place;
     businesses: Business;
@@ -88,6 +89,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    comments: CommentsSelect<false> | CommentsSelect<true>;
     islands: IslandsSelect<false> | IslandsSelect<true>;
     places: PlacesSelect<false> | PlacesSelect<true>;
     businesses: BusinessesSelect<false> | BusinessesSelect<true>;
@@ -147,7 +149,16 @@ export interface Page {
   title: string;
   hero: {
     title?: string | null;
-    type: 'none' | 'landing' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'heroCarousel';
+    type:
+      | 'none'
+      | 'landing'
+      | 'highImpact'
+      | 'mediumImpact'
+      | 'lowImpact'
+      | 'heroCarousel'
+      | 'adventure'
+      | 'cosmetic'
+      | 'eventDetails';
     richText?: {
       root: {
         type: string;
@@ -183,7 +194,129 @@ export interface Page {
           id?: string | null;
         }[]
       | null;
+    /**
+     * For Event Details, this is the large center image in the gallery mosaic.
+     */
     media?: (string | null) | Media;
+    /**
+     * Small pill label, e.g. "East Java's Natural Wonder" or "Top Rated" (Event Details)
+     */
+    badge?: string | null;
+    /**
+     * Nav links shown over the hero image
+     */
+    navItems?:
+      | {
+          label: string;
+          link: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Stacked avatar images for the "X People Joined" badge
+     */
+    avatars?:
+      | {
+          image: string | Media;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * e.g. "50+"
+     */
+    joinedCount?: string | null;
+    /**
+     * e.g. "People Joined"
+     */
+    joinedLabel?: string | null;
+    description?: string | null;
+    /**
+     * Phone number shown in the top nav, e.g. "+1 (555) 123-4567"
+     */
+    phone?: string | null;
+    /**
+     * e.g. "Dr. Isabella Cruz, MD"
+     */
+    doctorName?: string | null;
+    /**
+     * e.g. "Aesthetic Medicine & Dermatological Care"
+     */
+    doctorTitle?: string | null;
+    /**
+     * The larger, first card in the gallery strip
+     */
+    featuredImage?: (string | null) | Media;
+    featuredTitle?: string | null;
+    featuredDescription?: string | null;
+    /**
+     * The smaller image cards in the gallery strip. For Event Details, the first 2 form the left column and the last 2 form the right column around the center image.
+     */
+    galleryImages?:
+      | {
+          image: string | Media;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Breadcrumb label, e.g. "Classic"
+     */
+    category?: string | null;
+    /**
+     * e.g. "AJJR"
+     */
+    tripCode?: string | null;
+    /**
+     * Row of icon stats under the description, e.g. Duration, Group Size, Physical Rating, Accommodation
+     */
+    quickStats?:
+      | {
+          /**
+           * Lucide icon name, e.g. Clock, Users, Activity, Building2
+           */
+          icon?: string | null;
+          label: string;
+          value: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * The sticky booking card shown alongside the gallery
+     */
+    priceBox?: {
+      /**
+       * e.g. "9 days"
+       */
+      durationLabel?: string | null;
+      /**
+       * e.g. "Osaka to Tokyo"
+       */
+      route?: string | null;
+      price: number;
+      originalPrice?: number | null;
+      currency?: string | null;
+      /**
+       * e.g. "Jul 31 2026"
+       */
+      validOn?: string | null;
+      /**
+       * Out of 5
+       */
+      rating?: number | null;
+      reviewCount?: number | null;
+      /**
+       * Small icon row, e.g. Flight Included, Hotels Comfortable Stay, Tours Expert Guides
+       */
+      includes?:
+        | {
+            /**
+             * Lucide icon name, e.g. Plane, Hotel, MapPin
+             */
+            icon?: string | null;
+            label: string;
+            id?: string | null;
+          }[]
+        | null;
+    };
   };
   layout: (
     | CallToActionBlock
@@ -193,16 +326,45 @@ export interface Page {
     | BlogArchiveBlock
     | FormBlock
     | {
+        badge?: string | null;
+        /**
+         * e.g. "Frequently Asked"
+         */
         title?: string | null;
-        subtitle?: string | null;
+        /**
+         * Rendered in italic serif on its own line, e.g. "Questions"
+         */
+        titleAccent?: string | null;
+        /**
+         * e.g. "hello@vistaire.com"
+         */
+        email?: string | null;
+        ctaLabel?: string | null;
+        /**
+         * e.g. "mailto:hello@vistaire.com"
+         */
+        ctaLink?: string | null;
         items: {
-          image: string | Media;
           question: string;
           answer: string;
-          link?: string | null;
           id?: string | null;
         }[];
-        learnMoreUrl?: string | null;
+        /**
+         * Photo shown alongside the FAQ list
+         */
+        image?: (string | null) | Media;
+        /**
+         * e.g. "@skyline.villas"
+         */
+        imageCaption?: string | null;
+        /**
+         * Optional cursive signature shown below the section, e.g. "crafted setared"
+         */
+        signatureName?: string | null;
+        /**
+         * e.g. "for real estate"
+         */
+        signatureTagline?: string | null;
         id?: string | null;
         blockName?: string | null;
         blockType: 'faq';
@@ -214,6 +376,12 @@ export interface Page {
     | TimelineBlock
     | ContactInfoBlock
     | TestimonialsBlock
+    | WhyUsBlock
+    | StatsBlock
+    | DestinationsBlock
+    | EventTimelineBlock
+    | WhatsIncludedBlock
+    | RecommendedToursBlock
   )[];
   meta?: {
     title?: string | null;
@@ -913,6 +1081,213 @@ export interface TestimonialsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "WhyUsBlock".
+ */
+export interface WhyUsBlock {
+  /**
+   * e.g. "Why Aviatour"
+   */
+  title?: string | null;
+  items: {
+    image: string | Media;
+    title: string;
+    description?: string | null;
+    id?: string | null;
+  }[];
+  /**
+   * e.g. "Discover Your Perfect Place"
+   */
+  ctaTitle?: string | null;
+  ctaDescription?: string | null;
+  ctaLink?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: string | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'whyUs';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock".
+ */
+export interface StatsBlock {
+  /**
+   * e.g. "Your Trusted Partner In Seamless Travel"
+   */
+  title?: string | null;
+  description?: string | null;
+  image: string | Media;
+  stats: {
+    /**
+     * e.g. "300+"
+     */
+    number: string;
+    /**
+     * e.g. "Trips expertly managed"
+     */
+    label: string;
+    link: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?: {
+        relationTo: 'pages';
+        value: string | Page;
+      } | null;
+      url?: string | null;
+      label: string;
+    };
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'stats';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DestinationsBlock".
+ */
+export interface DestinationsBlock {
+  destinations: {
+    image: string | Media;
+    title: string;
+    subtitle?: string | null;
+    /**
+     * Optional URL this destination links to
+     */
+    link?: string | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'destinations';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EventTimelineBlock".
+ */
+export interface EventTimelineBlock {
+  /**
+   * e.g. "Itinerary"
+   */
+  title?: string | null;
+  items: {
+    /**
+     * e.g. "Day 1" or "Day 4 - 5"
+     */
+    dayLabel: string;
+    title: string;
+    description?: string | null;
+    images?: (string | Media)[] | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'eventTimeline';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "WhatsIncludedBlock".
+ */
+export interface WhatsIncludedBlock {
+  title?: string | null;
+  /**
+   * e.g. "Japan Rail (JR) pass for 7 days", "8 nights hotel accommodation"
+   */
+  items: {
+    label: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'whatsIncluded';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RecommendedToursBlock".
+ */
+export interface RecommendedToursBlock {
+  title?: string | null;
+  tours: {
+    image: string | Media;
+    /**
+     * e.g. "ON SALE"
+     */
+    badge?: string | null;
+    /**
+     * e.g. "18-30s"
+     */
+    ageRange?: string | null;
+    title: string;
+    /**
+     * e.g. "20 days"
+     */
+    durationLabel?: string | null;
+    /**
+     * e.g. "Nairobi to Victoria Falls"
+     */
+    route?: string | null;
+    price: number;
+    originalPrice?: number | null;
+    currency?: string | null;
+    /**
+     * e.g. "Departs on Oct 05, 2026"
+     */
+    departsOn?: string | null;
+    tags?:
+      | {
+          label: string;
+          id?: string | null;
+        }[]
+      | null;
+    buttonLabel?: string | null;
+    /**
+     * URL this tour card links to
+     */
+    link?: string | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'recommendedTours';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "comments".
+ */
+export interface Comment {
+  id: string;
+  post: string | Post;
+  authorName: string;
+  comment: string;
+  /**
+   * Uncheck to hide this comment from the public without deleting it.
+   */
+  approved?: boolean | null;
+  /**
+   * Honeypot field — left blank by real visitors, hidden from the public form.
+   */
+  website?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "places".
  */
 export interface Place {
@@ -1063,6 +1438,10 @@ export interface PayloadLockedDocument {
         value: string | Category;
       } | null)
     | ({
+        relationTo: 'comments';
+        value: string | Comment;
+      } | null)
+    | ({
         relationTo: 'islands';
         value: string | Island;
       } | null)
@@ -1165,6 +1544,64 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        badge?: T;
+        navItems?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              id?: T;
+            };
+        avatars?:
+          | T
+          | {
+              image?: T;
+              id?: T;
+            };
+        joinedCount?: T;
+        joinedLabel?: T;
+        description?: T;
+        phone?: T;
+        doctorName?: T;
+        doctorTitle?: T;
+        featuredImage?: T;
+        featuredTitle?: T;
+        featuredDescription?: T;
+        galleryImages?:
+          | T
+          | {
+              image?: T;
+              id?: T;
+            };
+        category?: T;
+        tripCode?: T;
+        quickStats?:
+          | T
+          | {
+              icon?: T;
+              label?: T;
+              value?: T;
+              id?: T;
+            };
+        priceBox?:
+          | T
+          | {
+              durationLabel?: T;
+              route?: T;
+              price?: T;
+              originalPrice?: T;
+              currency?: T;
+              validOn?: T;
+              rating?: T;
+              reviewCount?: T;
+              includes?:
+                | T
+                | {
+                    icon?: T;
+                    label?: T;
+                    id?: T;
+                  };
+            };
       };
   layout?:
     | T
@@ -1178,18 +1615,23 @@ export interface PagesSelect<T extends boolean = true> {
         faq?:
           | T
           | {
+              badge?: T;
               title?: T;
-              subtitle?: T;
+              titleAccent?: T;
+              email?: T;
+              ctaLabel?: T;
+              ctaLink?: T;
               items?:
                 | T
                 | {
-                    image?: T;
                     question?: T;
                     answer?: T;
-                    link?: T;
                     id?: T;
                   };
-              learnMoreUrl?: T;
+              image?: T;
+              imageCaption?: T;
+              signatureName?: T;
+              signatureTagline?: T;
               id?: T;
               blockName?: T;
             };
@@ -1200,6 +1642,12 @@ export interface PagesSelect<T extends boolean = true> {
         timeline?: T | TimelineBlockSelect<T>;
         contactInfo?: T | ContactInfoBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
+        whyUs?: T | WhyUsBlockSelect<T>;
+        stats?: T | StatsBlockSelect<T>;
+        destinations?: T | DestinationsBlockSelect<T>;
+        eventTimeline?: T | EventTimelineBlockSelect<T>;
+        whatsIncluded?: T | WhatsIncludedBlockSelect<T>;
+        recommendedTours?: T | RecommendedToursBlockSelect<T>;
       };
   meta?:
     | T
@@ -1430,6 +1878,149 @@ export interface TestimonialsBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "WhyUsBlock_select".
+ */
+export interface WhyUsBlockSelect<T extends boolean = true> {
+  title?: T;
+  items?:
+    | T
+    | {
+        image?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  ctaTitle?: T;
+  ctaDescription?: T;
+  ctaLink?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock_select".
+ */
+export interface StatsBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  image?: T;
+  stats?:
+    | T
+    | {
+        number?: T;
+        label?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DestinationsBlock_select".
+ */
+export interface DestinationsBlockSelect<T extends boolean = true> {
+  destinations?:
+    | T
+    | {
+        image?: T;
+        title?: T;
+        subtitle?: T;
+        link?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EventTimelineBlock_select".
+ */
+export interface EventTimelineBlockSelect<T extends boolean = true> {
+  title?: T;
+  items?:
+    | T
+    | {
+        dayLabel?: T;
+        title?: T;
+        description?: T;
+        images?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "WhatsIncludedBlock_select".
+ */
+export interface WhatsIncludedBlockSelect<T extends boolean = true> {
+  title?: T;
+  items?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RecommendedToursBlock_select".
+ */
+export interface RecommendedToursBlockSelect<T extends boolean = true> {
+  title?: T;
+  tours?:
+    | T
+    | {
+        image?: T;
+        badge?: T;
+        ageRange?: T;
+        title?: T;
+        durationLabel?: T;
+        route?: T;
+        price?: T;
+        originalPrice?: T;
+        currency?: T;
+        departsOn?: T;
+        tags?:
+          | T
+          | {
+              label?: T;
+              id?: T;
+            };
+        buttonLabel?: T;
+        link?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1498,6 +2089,19 @@ export interface CategoriesSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "comments_select".
+ */
+export interface CommentsSelect<T extends boolean = true> {
+  post?: T;
+  authorName?: T;
+  comment?: T;
+  approved?: T;
+  website?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1915,7 +2519,7 @@ export interface FooterSelect<T extends boolean = true> {
  * via the `definition` "BannerBlock".
  */
 export interface BannerBlock {
-  style: 'info' | 'warning' | 'error' | 'success';
+  style: 'info' | 'warning' | 'error' | 'success' | 'promo';
   content: {
     root: {
       type: string;
@@ -1931,6 +2535,15 @@ export interface BannerBlock {
     };
     [k: string]: unknown;
   };
+  /**
+   * Photo shown on the right side of the diagonal split
+   */
+  backgroundImage?: (string | null) | Media;
+  logo?: (string | null) | Media;
+  /**
+   * e.g. "Build a Wildly Successful Life Abroad!"
+   */
+  tagline?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'banner';

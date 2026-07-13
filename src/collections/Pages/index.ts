@@ -16,6 +16,12 @@ import { BusinessDirectory } from '../../blocks/BusinessDirectory/config'
 import { Timeline } from '../../blocks/Timeline/config'
 import { ContactInfo } from '../../blocks/ContactInfo/config'
 import { Testimonials } from '../../blocks/Testimonials/config'
+import { WhyUs } from '../../blocks/WhyUs/config'
+import { Stats } from '../../blocks/Stats/config'
+import { Destinations } from '../../blocks/Destinations/config'
+import { EventTimeline } from '../../blocks/EventTimeline/config'
+import { WhatsIncluded } from '../../blocks/WhatsIncluded/config'
+import { RecommendedTours } from '../../blocks/RecommendedTours/config'
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -96,6 +102,12 @@ export const Pages: CollectionConfig = {
                 Timeline,
                 ContactInfo,
                 Testimonials,
+                WhyUs,
+                Stats,
+                Destinations,
+                EventTimeline,
+                WhatsIncluded,
+                RecommendedTours,
               ],
               required: true,
             },
