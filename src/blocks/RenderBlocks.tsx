@@ -4,18 +4,37 @@ import React, { Fragment } from 'react'
 import type { Page } from '@/payload-types'
 
 import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
+import { BlogArchiveBlock } from '@/blocks/BlogArchive/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
+
+import { FaqBlock } from '@/blocks/Faq/Component'
+import { QuickFactsBlock } from '@/blocks/QuickFacts/Component'
+import { GalleryBlock } from '@/blocks/Gallery/Component'
+import { PlacesGridBlock } from '@/blocks/PlacesGrid/Component'
+import { BusinessDirectoryBlock } from '@/blocks/BusinessDirectory/Component'
+import { TimelineBlock } from '@/blocks/Timeline/Component'
+import { ContactInfoBlock } from '@/blocks/ContactInfo/Component'
+import { TestimonialsBlock } from '@/blocks/Testimonials/Component'
 import { TypedLocale } from 'payload'
 
 const blockComponents = {
   archive: ArchiveBlock,
+  blogArchive: BlogArchiveBlock,
   content: ContentBlock,
   cta: CallToActionBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
+  faq: FaqBlock,
+  quickFacts: QuickFactsBlock,
+  gallery: GalleryBlock,
+  placesGrid: PlacesGridBlock,
+  businessDirectory: BusinessDirectoryBlock,
+  timeline: TimelineBlock,
+  contactInfo: ContactInfoBlock,
+  testimonials: TestimonialsBlock,
 }
 
 export const RenderBlocks: React.FC<{

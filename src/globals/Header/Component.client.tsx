@@ -55,32 +55,32 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
   return (
     <header
       id="header"
-      className="w-full z-50 top-0 bg-transparent h-[74px] fixed inset-0 transition-all duration-300  "
+      className="w-full z-50 top-0 bg-white/80 backdrop-blur-md h-[74px] fixed inset-0 transition-all duration-300 border-b border-gray-100 shadow-sm"
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-        <Link href="/" className="me-auto">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl font-bold">KendhooOnline</span>
-            <div className="p-2 border rounded-full">
-              <Waves size={18} />
-            </div>
-          </div>
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-8 py-3">
+        <Link href="/" className="me-auto flex items-center gap-2 group">
+          <span className="text-2xl font-extrabold tracking-tight text-primary group-hover:text-blue-700 transition-colors">KendhooOnline</span>
+          <span className="p-2 bg-blue-100 rounded-full border border-blue-200 group-hover:bg-blue-200 transition-colors">
+            <Waves size={20} className="text-blue-500" />
+          </span>
         </Link>
 
-        <nav className="hidden w-full md:flex items-center justify-center gap-4">
+        <nav className="hidden md:flex items-center gap-2 lg:gap-4">
           <HeaderNav header={header} />
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 md:gap-3">
           <Link
             href="/search"
-            className="flex items-center whitespace-nowrap gap-1 bg-white t border border-gray-300 px-4 py-2 rounded-full hover:bg-gray-50"
+            className="flex items-center gap-1 bg-white border border-gray-300 px-3 py-2 rounded-full shadow-sm hover:bg-gray-50 transition-colors"
           >
             <span className="sr-only">{t('search')}</span>
-            <SearchIcon className="w-5 text-primary" />
+            <SearchIcon className="w-5 text-blue-500" />
           </Link>
           <LocaleSwitcher />
         </div>
+
+        {/* Mobile nav toggle (optional, for future expansion) */}
       </div>
     </header>
   )

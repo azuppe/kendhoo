@@ -1,16 +1,15 @@
 const localization = {
-  defaultLocale: 'en',
+  defaultLocale: 'dv',
   // fallback: true,
   locales: [
-    {
-      code: 'en',
-      label: 'English (English)',
-    },
-   
     {
       code: 'dv',
       label: 'ދިވެހި',
       rtl: true,
+    },
+    {
+      code: 'en',
+      label: 'English',
     },
   ],
 }

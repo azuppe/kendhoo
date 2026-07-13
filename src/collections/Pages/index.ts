@@ -3,10 +3,19 @@ import type { CollectionConfig, TypedLocale } from 'payload'
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Archive } from '../../blocks/ArchiveBlock/config'
+import { BlogArchive } from '../../blocks/BlogArchive/config'
 import { CallToAction } from '../../blocks/CallToAction/config'
 import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
+import FaqBlock from '../../blocks/Faq/config'
+import { QuickFacts } from '../../blocks/QuickFacts/config'
+import { Gallery } from '../../blocks/Gallery/config'
+import { PlacesGrid } from '../../blocks/PlacesGrid/config'
+import { BusinessDirectory } from '../../blocks/BusinessDirectory/config'
+import { Timeline } from '../../blocks/Timeline/config'
+import { ContactInfo } from '../../blocks/ContactInfo/config'
+import { Testimonials } from '../../blocks/Testimonials/config'
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -72,7 +81,22 @@ export const Pages: CollectionConfig = {
               name: 'layout',
               type: 'blocks',
               localized: true,
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock],
+              blocks: [
+                CallToAction,
+                Content,
+                MediaBlock,
+                Archive,
+                BlogArchive,
+                FormBlock,
+                FaqBlock,
+                QuickFacts,
+                Gallery,
+                PlacesGrid,
+                BusinessDirectory,
+                Timeline,
+                ContactInfo,
+                Testimonials,
+              ],
               required: true,
             },
           ],

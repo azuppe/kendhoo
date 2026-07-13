@@ -54,7 +54,6 @@ export type SupportedTimezones =
   | 'Asia/Singapore'
   | 'Asia/Tokyo'
   | 'Asia/Seoul'
-  | 'Australia/Brisbane'
   | 'Australia/Sydney'
   | 'Pacific/Guam'
   | 'Pacific/Noumea'
@@ -71,6 +70,9 @@ export interface Config {
     posts: Post;
     media: Media;
     categories: Category;
+    islands: Island;
+    places: Place;
+    businesses: Business;
     users: User;
     redirects: Redirect;
     forms: Form;
@@ -86,6 +88,9 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    islands: IslandsSelect<false> | IslandsSelect<true>;
+    places: PlacesSelect<false> | PlacesSelect<true>;
+    businesses: BusinessesSelect<false> | BusinessesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -106,7 +111,7 @@ export interface Config {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
   };
-  locale: 'en' | 'dv';
+  locale: 'dv' | 'en';
   user: User & {
     collection: 'users';
   };
@@ -147,7 +152,7 @@ export interface Page {
       root: {
         type: string;
         children: {
-          type: any;
+          type: string;
           version: number;
           [k: string]: unknown;
         }[];
@@ -180,7 +185,36 @@ export interface Page {
       | null;
     media?: (string | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | BlogArchiveBlock
+    | FormBlock
+    | {
+        title?: string | null;
+        subtitle?: string | null;
+        items: {
+          image: string | Media;
+          question: string;
+          answer: string;
+          link?: string | null;
+          id?: string | null;
+        }[];
+        learnMoreUrl?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'faq';
+      }
+    | QuickFactsBlock
+    | GalleryBlock
+    | PlacesGridBlock
+    | BusinessDirectoryBlock
+    | TimelineBlock
+    | ContactInfoBlock
+    | TestimonialsBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -207,7 +241,7 @@ export interface Post {
     root: {
       type: string;
       children: {
-        type: any;
+        type: string;
         version: number;
         [k: string]: unknown;
       }[];
@@ -220,6 +254,7 @@ export interface Post {
   };
   relatedPosts?: (string | Post)[] | null;
   categories?: (string | Category)[] | null;
+  island?: (string | null) | Island;
   meta?: {
     title?: string | null;
     /**
@@ -249,6 +284,20 @@ export interface Post {
 export interface Category {
   id: string;
   title: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  /**
+   * Short description of this category
+   */
+  description?: string | null;
+  /**
+   * Icon name (e.g., MapPin, Camera, Waves, Fish, Fork)
+   */
+  icon?: string | null;
+  /**
+   * Hex color code for category (e.g., #FF6B6B)
+   */
+  color?: string | null;
   parent?: (string | null) | Category;
   breadcrumbs?:
     | {
@@ -263,6 +312,51 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "islands".
+ */
+export interface Island {
+  id: string;
+  /**
+   * Island or atoll name
+   */
+  name: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  /**
+   * Brief description of the island
+   */
+  description?: string | null;
+  /**
+   * Featured image of the island
+   */
+  image?: (string | null) | Media;
+  location?: {
+    latitude?: number | null;
+    longitude?: number | null;
+    /**
+     * Atoll name (e.g., Malé City, Thiladhummati, Ari)
+     */
+    atoll?: string | null;
+  };
+  /**
+   * Main attractions and activities on this island
+   */
+  attractions?:
+    | {
+        title?: string | null;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Best season and weather information
+   */
+  bestTimeToVisit?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
@@ -272,7 +366,7 @@ export interface Media {
     root: {
       type: string;
       children: {
-        type: any;
+        type: string;
         version: number;
         [k: string]: unknown;
       }[];
@@ -311,13 +405,6 @@ export interface User {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
   password?: string | null;
 }
 /**
@@ -329,7 +416,7 @@ export interface CallToActionBlock {
     root: {
       type: string;
       children: {
-        type: any;
+        type: string;
         version: number;
         [k: string]: unknown;
       }[];
@@ -375,7 +462,7 @@ export interface ContentBlock {
           root: {
             type: string;
             children: {
-              type: any;
+              type: string;
               version: number;
               [k: string]: unknown;
             }[];
@@ -428,7 +515,7 @@ export interface ArchiveBlock {
     root: {
       type: string;
       children: {
-        type: any;
+        type: string;
         version: number;
         [k: string]: unknown;
       }[];
@@ -455,6 +542,41 @@ export interface ArchiveBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogArchiveBlock".
+ */
+export interface BlogArchiveBlock {
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  limit?: number | null;
+  showCategories?: boolean | null;
+  showIslands?: boolean | null;
+  /**
+   * Leave empty to show all categories
+   */
+  categories?: (string | Category)[] | null;
+  /**
+   * Leave empty to show all islands
+   */
+  islands?: (string | Island)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blogArchive';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "FormBlock".
  */
 export interface FormBlock {
@@ -464,7 +586,7 @@ export interface FormBlock {
     root: {
       type: string;
       children: {
-        type: any;
+        type: string;
         version: number;
         [k: string]: unknown;
       }[];
@@ -521,7 +643,7 @@ export interface Form {
               root: {
                 type: string;
                 children: {
-                  type: any;
+                  type: string;
                   version: number;
                   [k: string]: unknown;
                 }[];
@@ -551,7 +673,6 @@ export interface Form {
             label?: string | null;
             width?: number | null;
             defaultValue?: string | null;
-            placeholder?: string | null;
             options?:
               | {
                   label: string;
@@ -604,7 +725,7 @@ export interface Form {
     root: {
       type: string;
       children: {
-        type: any;
+        type: string;
         version: number;
         [k: string]: unknown;
       }[];
@@ -636,7 +757,7 @@ export interface Form {
           root: {
             type: string;
             children: {
-              type: any;
+              type: string;
               version: number;
               [k: string]: unknown;
             }[];
@@ -650,6 +771,197 @@ export interface Form {
         id?: string | null;
       }[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QuickFactsBlock".
+ */
+export interface QuickFactsBlock {
+  title?: string | null;
+  /**
+   * e.g. Population, Size, Atoll, Distance from Malé, Ferry Duration, Speedboat Duration, Airport, Time Zone, Language, Currency, Island Code
+   */
+  facts: {
+    /**
+     * Lucide icon name, e.g. Users, MapPin, Ship, Plane, Globe, Clock
+     */
+    icon?: string | null;
+    label: string;
+    value: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'quickFacts';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GalleryBlock".
+ */
+export interface GalleryBlock {
+  title?: string | null;
+  layout?: ('grid' | 'masonry' | 'slider') | null;
+  images: {
+    image: string | Media;
+    caption?: string | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'gallery';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PlacesGridBlock".
+ */
+export interface PlacesGridBlock {
+  title?: string | null;
+  type: 'thingsToDo' | 'placesToVisit' | 'beach';
+  /**
+   * Leave empty to show places from all islands
+   */
+  island?: (string | null) | Island;
+  limit?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'placesGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BusinessDirectoryBlock".
+ */
+export interface BusinessDirectoryBlock {
+  title?: string | null;
+  category?: ('all' | 'restaurant' | 'shop' | 'accommodation' | 'service') | null;
+  /**
+   * Leave empty to show businesses from all islands
+   */
+  island?: (string | null) | Island;
+  featuredOnly?: boolean | null;
+  limit?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'businessDirectory';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TimelineBlock".
+ */
+export interface TimelineBlock {
+  title?: string | null;
+  /**
+   * e.g. Founded, important events, development milestones, infrastructure
+   */
+  events: {
+    year: string;
+    title: string;
+    description?: string | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'timeline';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactInfoBlock".
+ */
+export interface ContactInfoBlock {
+  title?: string | null;
+  address?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  /**
+   * Google Maps embed URL
+   */
+  mapEmbedUrl?: string | null;
+  emergencyContacts?:
+    | {
+        /**
+         * e.g. Hospital, Police, Fire, Council, Harbor Master
+         */
+        label: string;
+        phone: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contactInfo';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialsBlock".
+ */
+export interface TestimonialsBlock {
+  title?: string | null;
+  items: {
+    quote: string;
+    name: string;
+    /**
+     * e.g. Visitor, Resident
+     */
+    role?: string | null;
+    photo?: (string | null) | Media;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'testimonials';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "places".
+ */
+export interface Place {
+  id: string;
+  name: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  type: 'thingsToDo' | 'placesToVisit' | 'beach';
+  island?: (string | null) | Island;
+  image?: (string | null) | Media;
+  description?: string | null;
+  location?: {
+    latitude?: number | null;
+    longitude?: number | null;
+  };
+  openingHours?: string | null;
+  /**
+   * e.g. Swimming, Sunset, Family Friendly, Snorkeling, Drone Photos
+   */
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "businesses".
+ */
+export interface Business {
+  id: string;
+  name: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  category: 'restaurant' | 'shop' | 'accommodation' | 'service';
+  island?: (string | null) | Island;
+  image?: (string | null) | Media;
+  description?: string | null;
+  phone?: string | null;
+  address?: string | null;
+  hours?: string | null;
+  rating?: number | null;
+  /**
+   * Show in the Featured Business spotlight
+   */
+  featured?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -751,6 +1063,18 @@ export interface PayloadLockedDocument {
         value: string | Category;
       } | null)
     | ({
+        relationTo: 'islands';
+        value: string | Island;
+      } | null)
+    | ({
+        relationTo: 'places';
+        value: string | Place;
+      } | null)
+    | ({
+        relationTo: 'businesses';
+        value: string | Business;
+      } | null)
+    | ({
         relationTo: 'users';
         value: string | User;
       } | null)
@@ -849,7 +1173,33 @@ export interface PagesSelect<T extends boolean = true> {
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
+        blogArchive?: T | BlogArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        faq?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              items?:
+                | T
+                | {
+                    image?: T;
+                    question?: T;
+                    answer?: T;
+                    link?: T;
+                    id?: T;
+                  };
+              learnMoreUrl?: T;
+              id?: T;
+              blockName?: T;
+            };
+        quickFacts?: T | QuickFactsBlockSelect<T>;
+        gallery?: T | GalleryBlockSelect<T>;
+        placesGrid?: T | PlacesGridBlockSelect<T>;
+        businessDirectory?: T | BusinessDirectoryBlockSelect<T>;
+        timeline?: T | TimelineBlockSelect<T>;
+        contactInfo?: T | ContactInfoBlockSelect<T>;
+        testimonials?: T | TestimonialsBlockSelect<T>;
       };
   meta?:
     | T
@@ -941,12 +1291,140 @@ export interface ArchiveBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogArchiveBlock_select".
+ */
+export interface BlogArchiveBlockSelect<T extends boolean = true> {
+  introContent?: T;
+  limit?: T;
+  showCategories?: T;
+  showIslands?: T;
+  categories?: T;
+  islands?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "FormBlock_select".
  */
 export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QuickFactsBlock_select".
+ */
+export interface QuickFactsBlockSelect<T extends boolean = true> {
+  title?: T;
+  facts?:
+    | T
+    | {
+        icon?: T;
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GalleryBlock_select".
+ */
+export interface GalleryBlockSelect<T extends boolean = true> {
+  title?: T;
+  layout?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PlacesGridBlock_select".
+ */
+export interface PlacesGridBlockSelect<T extends boolean = true> {
+  title?: T;
+  type?: T;
+  island?: T;
+  limit?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BusinessDirectoryBlock_select".
+ */
+export interface BusinessDirectoryBlockSelect<T extends boolean = true> {
+  title?: T;
+  category?: T;
+  island?: T;
+  featuredOnly?: T;
+  limit?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TimelineBlock_select".
+ */
+export interface TimelineBlockSelect<T extends boolean = true> {
+  title?: T;
+  events?:
+    | T
+    | {
+        year?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactInfoBlock_select".
+ */
+export interface ContactInfoBlockSelect<T extends boolean = true> {
+  title?: T;
+  address?: T;
+  phone?: T;
+  email?: T;
+  mapEmbedUrl?: T;
+  emergencyContacts?:
+    | T
+    | {
+        label?: T;
+        phone?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialsBlock_select".
+ */
+export interface TestimonialsBlockSelect<T extends boolean = true> {
+  title?: T;
+  items?:
+    | T
+    | {
+        quote?: T;
+        name?: T;
+        role?: T;
+        photo?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -959,6 +1437,7 @@ export interface PostsSelect<T extends boolean = true> {
   content?: T;
   relatedPosts?: T;
   categories?: T;
+  island?: T;
   meta?:
     | T
     | {
@@ -1005,6 +1484,11 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface CategoriesSelect<T extends boolean = true> {
   title?: T;
+  slug?: T;
+  slugLock?: T;
+  description?: T;
+  icon?: T;
+  color?: T;
   parent?: T;
   breadcrumbs?:
     | T
@@ -1014,6 +1498,82 @@ export interface CategoriesSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "islands_select".
+ */
+export interface IslandsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  slugLock?: T;
+  description?: T;
+  image?: T;
+  location?:
+    | T
+    | {
+        latitude?: T;
+        longitude?: T;
+        atoll?: T;
+      };
+  attractions?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  bestTimeToVisit?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "places_select".
+ */
+export interface PlacesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  slugLock?: T;
+  type?: T;
+  island?: T;
+  image?: T;
+  description?: T;
+  location?:
+    | T
+    | {
+        latitude?: T;
+        longitude?: T;
+      };
+  openingHours?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "businesses_select".
+ */
+export interface BusinessesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  slugLock?: T;
+  category?: T;
+  island?: T;
+  image?: T;
+  description?: T;
+  phone?: T;
+  address?: T;
+  hours?: T;
+  rating?: T;
+  featured?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1032,13 +1592,6 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
-  sessions?:
-    | T
-    | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1121,7 +1674,6 @@ export interface FormsSelect<T extends boolean = true> {
               label?: T;
               width?: T;
               defaultValue?: T;
-              placeholder?: T;
               options?:
                 | T
                 | {
@@ -1368,7 +1920,7 @@ export interface BannerBlock {
     root: {
       type: string;
       children: {
-        type: any;
+        type: string;
         version: number;
         [k: string]: unknown;
       }[];

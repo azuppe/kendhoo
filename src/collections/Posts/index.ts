@@ -120,6 +120,14 @@ export const Posts: CollectionConfig = {
               hasMany: true,
               relationTo: 'categories',
             },
+            {
+              name: 'island',
+              type: 'relationship',
+              admin: {
+                position: 'sidebar',
+              },
+              relationTo: 'islands',
+            },
           ],
           label: 'Meta',
         },

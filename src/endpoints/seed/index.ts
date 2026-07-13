@@ -4,14 +4,19 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-import { contactForm as contactFormData } from './contact-form'
-import { contact as contactPageData } from './contact-page'
-import { home } from './home'
 import { image1 } from './image-1'
 import { image2 } from './image-2'
-import { post1, post1_es } from './post-1'
-import { post2, post2_es } from './post-2'
-import { post3, post3_es } from './post-3'
+import { lexicalText } from './lexical'
+import {
+  businessesData,
+  categoriesData,
+  emergencyContactsData,
+  islandsData,
+  placesData,
+  postsData,
+  quickFactsData,
+  testimonialsData,
+} from './island-content'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -21,9 +26,11 @@ const collections: CollectionSlug[] = [
   'media',
   'pages',
   'posts',
+  'islands' as CollectionSlug,
+  'places' as CollectionSlug,
+  'businesses' as CollectionSlug,
   'forms',
   'form-submissions',
-  // 'search', TO-DO: enable again!
 ]
 const globals: GlobalSlug[] = ['header', 'footer']
 
@@ -40,11 +47,6 @@ export const seed = async ({
 }): Promise<void> => {
   payload.logger.info('Seeding database...')
 
-  // we need to clear the media directory before seeding
-  // as well as the collections and globals
-  // this is because while `yarn seed` drops the database
-  // the custom `/api/seed` endpoint does not
-
   // #region Clearing database
   payload.logger.info(`— Clearing media...`)
 
@@ -55,7 +57,6 @@ export const seed = async ({
 
   payload.logger.info(`— Clearing collections and globals...`)
 
-  // clear the database
   for (const global of globals) {
     await payload.updateGlobal({
       slug: global,
@@ -77,12 +78,6 @@ export const seed = async ({
       req,
     })
   }
-
-  await payload.delete({
-    collection: 'pages',
-    where: {},
-    req,
-  })
   // #endregion
 
   // #region Users
@@ -107,8 +102,6 @@ export const seed = async ({
     },
     req,
   })
-
-  let demoAuthorID: number | string = demoAuthor.id
   // #endregion
 
   // #region Media
@@ -123,8 +116,8 @@ export const seed = async ({
   await payload.update({
     collection: 'media',
     id: image1Doc.id,
-    data: image1('es'),
-    locale: 'es',
+    data: image1('dv'),
+    locale: 'dv',
     filePath: path.resolve(dirname, 'image-post1.webp'),
     req,
   })
@@ -139,8 +132,8 @@ export const seed = async ({
   await payload.update({
     collection: 'media',
     id: image2Doc.id,
-    data: image2('es'),
-    locale: 'es',
+    data: image2('dv'),
+    locale: 'dv',
     filePath: path.resolve(dirname, 'image-post2.webp'),
     req,
   })
@@ -155,8 +148,8 @@ export const seed = async ({
   await payload.update({
     collection: 'media',
     id: image3Doc.id,
-    data: image2('es'),
-    locale: 'es',
+    data: image2('dv'),
+    locale: 'dv',
     filePath: path.resolve(dirname, 'image-post3.webp'),
     req,
   })
@@ -164,337 +157,287 @@ export const seed = async ({
   const imageHomeDoc = await payload.create({
     collection: 'media',
     locale: 'en',
-    data: image2('en'),
+    data: image1('en'),
     filePath: path.resolve(dirname, 'image-hero1.webp'),
     req,
   })
   await payload.update({
     collection: 'media',
     id: imageHomeDoc.id,
-    data: image2('es'),
-    locale: 'es',
+    data: image1('dv'),
+    locale: 'dv',
     filePath: path.resolve(dirname, 'image-hero1.webp'),
     req,
   })
 
-  let image1ID: number | string = image1Doc.id
-  let image2ID: number | string = image2Doc.id
-  let image3ID: number | string = image3Doc.id
-  let imageHomeID: number | string = imageHomeDoc.id
-
-  if (payload.db.defaultIDType === 'text') {
-    image1ID = `"${image1Doc.id}"`
-    image2ID = `"${image2Doc.id}"`
-    image3ID = `"${image3Doc.id}"`
-    imageHomeID = `"${imageHomeDoc.id}"`
-    demoAuthorID = `"${demoAuthorID}"`
-  }
+  const galleryImages = [image1Doc, image2Doc, image3Doc, imageHomeDoc]
   // #endregion
 
   // #region Categories
   payload.logger.info(`— Seeding categories...`)
-  const technologyCategory = await payload.create({
-    collection: 'categories',
-    locale: 'en',
-    data: {
-      title: 'Technology',
-    },
-    req,
-  })
-  await payload.update({
-    collection: 'categories',
-    id: technologyCategory.id,
-    locale: 'es',
-    data: {
-      title: 'Tecnología',
-    },
-    req,
-  })
+  const categoryDocs: any[] = []
+  for (const cat of categoriesData) {
+    const doc = await payload.create({
+      collection: 'categories',
+      locale: 'en',
+      data: { title: cat.en.title, description: cat.en.description, icon: cat.icon, color: cat.color },
+      req,
+    })
+    await payload.update({
+      collection: 'categories',
+      id: doc.id,
+      locale: 'dv',
+      data: { title: cat.dv.title, description: cat.dv.description },
+      req,
+    })
+    categoryDocs.push(doc)
+  }
+  // #endregion
 
-  const newsCategory = await payload.create({
-    collection: 'categories',
-    locale: 'en',
-    data: {
-      title: 'News',
-    },
-    req,
-  })
-  await payload.update({
-    collection: 'categories',
-    id: newsCategory.id,
-    locale: 'es',
-    data: {
-      title: 'Noticias',
-    },
-    req,
-  })
+  // #region Islands
+  payload.logger.info(`— Seeding islands...`)
+  const islandDocs: any[] = []
+  for (const island of islandsData) {
+    const doc = await payload.create({
+      collection: 'islands' as CollectionSlug,
+      locale: 'en',
+      data: {
+        name: island.en.name,
+        description: island.en.description,
+        image: image2Doc.id,
+        location: { latitude: island.lat, longitude: island.lng, atoll: island.en.atoll },
+        attractions: island.en.attractions,
+        bestTimeToVisit: island.en.bestTimeToVisit,
+      },
+      req,
+    })
+    await payload.update({
+      collection: 'islands' as CollectionSlug,
+      id: doc.id,
+      locale: 'dv',
+      data: {
+        name: island.dv.name,
+        description: island.dv.description,
+        location: { latitude: island.lat, longitude: island.lng, atoll: island.dv.atoll },
+        attractions: island.dv.attractions,
+        bestTimeToVisit: island.dv.bestTimeToVisit,
+      },
+      req,
+    })
+    islandDocs.push(doc)
+  }
+  // #endregion
 
-  const financeCategory = await payload.create({
-    collection: 'categories',
-    locale: 'en',
-    data: {
-      title: 'Finance',
-    },
-    req,
-  })
-  await payload.update({
-    collection: 'categories',
-    id: financeCategory.id,
-    locale: 'es',
-    data: {
-      title: 'Finanzas',
-    },
-    req,
-  })
+  // #region Places
+  payload.logger.info(`— Seeding places...`)
+  for (const place of placesData) {
+    const island = islandDocs[place.islandIndex]
+    const doc = await payload.create({
+      collection: 'places' as CollectionSlug,
+      locale: 'en',
+      data: {
+        name: place.en.name,
+        type: place.type,
+        island: island.id,
+        image: image1Doc.id,
+        description: place.en.description,
+        openingHours: place.openingHours.en,
+        tags: place.tags.map((t) => ({ tag: t.en })),
+      },
+      req,
+    })
+    await payload.update({
+      collection: 'places' as CollectionSlug,
+      id: doc.id,
+      locale: 'dv',
+      data: {
+        name: place.dv.name,
+        description: place.dv.description,
+        openingHours: place.openingHours.dv,
+        tags: place.tags.map((t) => ({ tag: t.dv })),
+      },
+      req,
+    })
+  }
+  // #endregion
 
-  const designCategory = await payload.create({
-    collection: 'categories',
-    locale: 'en',
-    data: {
-      title: 'Design',
-    },
-    req,
-  })
-  await payload.update({
-    collection: 'categories',
-    id: designCategory.id,
-    locale: 'es',
-    data: {
-      title: 'Diseño',
-    },
-    req,
-  })
-
-  const softwareCategory = await payload.create({
-    collection: 'categories',
-    locale: 'en',
-    data: {
-      title: 'Software',
-    },
-    req,
-  })
-  await payload.update({
-    collection: 'categories',
-    id: softwareCategory.id,
-    locale: 'es',
-    data: {
-      title: 'Software',
-    },
-    req,
-  })
-
-  const engineeringCategory = await payload.create({
-    collection: 'categories',
-    locale: 'en',
-    data: {
-      title: 'Engineering',
-    },
-    req,
-  })
-  await payload.update({
-    collection: 'categories',
-    id: engineeringCategory.id,
-    locale: 'es',
-    data: {
-      title: 'Ingeniería',
-    },
-    req,
-  })
+  // #region Businesses
+  payload.logger.info(`— Seeding businesses...`)
+  for (const biz of businessesData) {
+    const island = islandDocs[biz.islandIndex]
+    const doc = await payload.create({
+      collection: 'businesses' as CollectionSlug,
+      locale: 'en',
+      data: {
+        name: biz.en.name,
+        category: biz.category,
+        island: island.id,
+        image: image2Doc.id,
+        description: biz.en.description,
+        phone: biz.phone,
+        address: biz.en.address,
+        hours: biz.en.hours,
+        rating: biz.rating,
+        featured: biz.featured,
+      },
+      req,
+    })
+    await payload.update({
+      collection: 'businesses' as CollectionSlug,
+      id: doc.id,
+      locale: 'dv',
+      data: {
+        name: biz.dv.name,
+        description: biz.dv.description,
+        address: biz.dv.address,
+        hours: biz.dv.hours,
+      },
+      req,
+    })
+  }
   // #endregion
 
   // #region Posts
   payload.logger.info(`— Seeding posts...`)
-
-  // Do not create posts with `Promise.all` because we want the posts to be created in order
-  // This way we can sort them by `createdAt` or `publishedAt` and they will be in the expected order
-  const post1Doc = await payload.create({
-    collection: 'posts',
-    data: JSON.parse(
-      JSON.stringify({ ...post1, categories: [technologyCategory.id] })
-        .replace(/"\{\{IMAGE_1\}\}"/g, String(image1ID))
-        .replace(/"\{\{IMAGE_2\}\}"/g, String(image2ID))
-        .replace(/"\{\{AUTHOR\}\}"/g, String(demoAuthorID)),
-    ),
-    locale: 'en',
-    req,
-  })
-  await payload.update({
-    collection: 'posts',
-    id: post1Doc.id,
-    data: JSON.parse(
-      JSON.stringify({ ...post1_es, categories: [technologyCategory.id] })
-        .replace(/"\{\{IMAGE_1\}\}"/g, String(image1ID))
-        .replace(/"\{\{IMAGE_2\}\}"/g, String(image2ID))
-        .replace(/"\{\{AUTHOR\}\}"/g, String(demoAuthorID)),
-    ),
-    locale: 'es',
-    req,
-  })
-
-  const post2Doc = await payload.create({
-    collection: 'posts',
-    data: JSON.parse(
-      JSON.stringify({ ...post2, categories: [newsCategory.id] })
-        .replace(/"\{\{IMAGE_1\}\}"/g, String(image2ID))
-        .replace(/"\{\{IMAGE_2\}\}"/g, String(image3ID))
-        .replace(/"\{\{AUTHOR\}\}"/g, String(demoAuthorID)),
-    ),
-    locale: 'en',
-    req,
-  })
-  await payload.update({
-    collection: 'posts',
-    id: post2Doc.id,
-    data: JSON.parse(
-      JSON.stringify({ ...post2_es, categories: [newsCategory.id] })
-        .replace(/"\{\{IMAGE_1\}\}"/g, String(image2ID))
-        .replace(/"\{\{IMAGE_2\}\}"/g, String(image3ID))
-        .replace(/"\{\{AUTHOR\}\}"/g, String(demoAuthorID)),
-    ),
-    locale: 'es',
-    req,
-  })
-
-  const post3Doc = await payload.create({
-    collection: 'posts',
-    data: JSON.parse(
-      JSON.stringify({ ...post3, categories: [financeCategory.id] })
-        .replace(/"\{\{IMAGE_1\}\}"/g, String(image3ID))
-        .replace(/"\{\{IMAGE_2\}\}"/g, String(image1ID))
-        .replace(/"\{\{AUTHOR\}\}"/g, String(demoAuthorID)),
-    ),
-    locale: 'en',
-    req,
-  })
-  await payload.update({
-    collection: 'posts',
-    id: post3Doc.id,
-    data: JSON.parse(
-      JSON.stringify({ ...post3_es, categories: [financeCategory.id] })
-        .replace(/"\{\{IMAGE_1\}\}"/g, String(image3ID))
-        .replace(/"\{\{IMAGE_2\}\}"/g, String(image1ID))
-        .replace(/"\{\{AUTHOR\}\}"/g, String(demoAuthorID)),
-    ),
-    locale: 'es',
-    req,
-  })
-
-  // update each post with related posts
-  await payload.update({
-    id: post1Doc.id,
-    collection: 'posts',
-    data: {
-      relatedPosts: [post2Doc.id, post3Doc.id],
-    },
-    req,
-  })
-  await payload.update({
-    id: post2Doc.id,
-    collection: 'posts',
-    data: {
-      relatedPosts: [post1Doc.id, post3Doc.id],
-    },
-    req,
-  })
-  await payload.update({
-    id: post3Doc.id,
-    collection: 'posts',
-    data: {
-      relatedPosts: [post1Doc.id, post2Doc.id],
-    },
-    req,
-  })
+  const postDocs: any[] = []
+  for (const post of postsData) {
+    const island = islandDocs[post.islandIndex]
+    const category = categoryDocs[post.categoryIndex]
+    const doc = await payload.create({
+      collection: 'posts',
+      locale: 'en',
+      data: {
+        title: post.en.title,
+        content: lexicalText(post.en.excerpt),
+        categories: [category.id],
+        island: island.id,
+        authors: [demoAuthor.id],
+        _status: 'published',
+        meta: {
+          title: post.en.title,
+          description: post.en.excerpt,
+          image: image1Doc.id,
+        },
+      },
+      req,
+    })
+    await payload.update({
+      collection: 'posts',
+      id: doc.id,
+      locale: 'dv',
+      data: {
+        title: post.dv.title,
+        content: lexicalText(post.dv.excerpt),
+        meta: {
+          title: post.dv.title,
+          description: post.dv.excerpt,
+        },
+      },
+      req,
+    })
+    postDocs.push(doc)
+  }
   // #endregion
 
-  // #region Pages
+  // #region Home page
   payload.logger.info(`— Seeding home page...`)
+
+  const homeLayout = (locale: 'en' | 'dv') => [
+    {
+      blockType: 'quickFacts',
+      title: locale === 'en' ? 'Quick Facts' : 'ކުއިކް ފެކްޓްސް',
+      facts: quickFactsData.map((f) => ({ icon: f.icon, label: f[locale].label, value: f[locale].value })),
+    },
+    {
+      blockType: 'placesGrid',
+      title: locale === 'en' ? 'Things To Do' : 'ކުރެވިދާނެ ކަންތައްތައް',
+      type: 'thingsToDo',
+      limit: 6,
+    },
+    {
+      blockType: 'businessDirectory',
+      title: locale === 'en' ? 'Local Businesses' : 'ލޯކަލް ވިޔަފާރިތައް',
+      category: 'all',
+      limit: 8,
+    },
+    {
+      blockType: 'gallery',
+      title: locale === 'en' ? 'Island Gallery' : 'ރަށުގެ ގެލެރީ',
+      layout: 'grid',
+      images: galleryImages.map((img) => ({ image: img.id })),
+    },
+    {
+      blockType: 'blogArchive',
+      introContent: lexicalText(
+        locale === 'en' ? 'The latest news from the islands.' : 'ރަށްރަށުގެ އެންމެ ފަހުގެ ޚަބަރުތައް.',
+        locale === 'en' ? 'Latest News' : 'އެންމެ ފަހުގެ ޚަބަރު',
+      ),
+      limit: 6,
+      showCategories: true,
+      showIslands: true,
+    },
+    {
+      blockType: 'testimonials',
+      title: locale === 'en' ? 'What People Say' : 'ބުނާ ބަސްތައް',
+      items: testimonialsData.map((t) => ({
+        quote: t[locale].quote,
+        name: t.name,
+        role: t[locale].role,
+      })),
+    },
+    {
+      blockType: 'contactInfo',
+      title: locale === 'en' ? 'Contact & Emergency' : 'ގުޅުއްވުމަށާއި އިމަރޖެންސީ',
+      address: locale === 'en' ? 'Kaafu Atoll, Maldives' : 'ކާފު އަތޮޅު، ދިވެހިރާއްޖެ',
+      phone: '+960 330 0000',
+      email: 'info@islandguide.mv',
+      emergencyContacts: emergencyContactsData[locale],
+    },
+  ]
 
   const homePage = await payload.create({
     collection: 'pages',
     locale: 'en',
-    data: JSON.parse(
-      JSON.stringify(home('en'))
-        .replace(/"\{\{IMAGE_1\}\}"/g, String(imageHomeID))
-        .replace(/"\{\{IMAGE_2\}\}"/g, String(image2ID)),
-    ),
+    data: {
+      slug: 'home',
+      slugLock: false,
+      _status: 'published',
+      title: 'Home',
+      hero: {
+        type: 'landing',
+        title: 'Maldives Island Guide',
+        media: imageHomeDoc.id,
+        links: [
+          { link: { type: 'custom', appearance: 'default', label: 'Latest News', url: '/posts' } },
+        ],
+      },
+      layout: homeLayout('en'),
+      meta: {
+        title: 'Maldives Island Guide',
+        description: 'A local island information and travel portal for the Maldives.',
+        image: imageHomeDoc.id,
+      },
+    } as any,
     req,
   })
   await payload.update({
     collection: 'pages',
     id: homePage.id,
-    locale: 'es',
-    data: JSON.parse(
-      JSON.stringify(home('es'))
-        .replace(/"\{\{IMAGE_1\}\}"/g, String(imageHomeID))
-        .replace(/"\{\{IMAGE_2\}\}"/g, String(image2ID)),
-    ),
-    req,
-  })
-
-  payload.logger.info(`— Seeding contact form...`)
-
-  const contactForm = await payload.create({
-    collection: 'forms',
-    locale: 'en',
-    data: JSON.parse(JSON.stringify(contactFormData('en'))),
-    req,
-  })
-
-  const contactFormData_es = JSON.parse(JSON.stringify(contactFormData('es')))
-  await payload.update({
-    collection: 'forms',
-    id: contactForm.id,
-    locale: 'es',
+    locale: 'dv',
     data: {
-      redirect: contactFormData_es.redirect,
-      title: contactFormData_es.title,
-      id: contactForm.id,
-      submitButtonLabel: contactFormData_es.submitButtonLabel,
-      confirmationType: contactFormData_es.confirmationType,
-      createdAt: contactFormData_es.createdAt,
-      updatedAt: contactFormData_es.updatedAt,
-      confirmationMessage: contactFormData_es.confirmationMessage,
-      fields: contactFormData_es.fields?.map((field, index) => ({
-        id: contactForm.fields![index].id,
-        ...field,
-      })),
-      emails: contactFormData_es.emails?.map((email, index) => ({
-        id: contactForm.emails![index].id,
-        ...email,
-      })),
-    },
-    req,
-  })
-
-  let contactFormID: number | string = contactForm.id
-
-  if (payload.db.defaultIDType === 'text') {
-    contactFormID = `"${contactFormID}"`
-  }
-
-  payload.logger.info(`— Seeding contact page...`)
-
-  const contactPage = await payload.create({
-    collection: 'pages',
-    locale: 'en',
-    data: JSON.parse(
-      JSON.stringify(contactPageData('en')).replace(
-        /"\{\{CONTACT_FORM_ID\}\}"/g,
-        String(contactFormID),
-      ),
-    ),
-    req,
-  })
-  await payload.update({
-    collection: 'pages',
-    id: contactPage.id,
-    locale: 'es',
-    data: JSON.parse(
-      JSON.stringify(contactPageData('es')).replace(
-        /"\{\{CONTACT_FORM_ID\}\}"/g,
-        String(contactFormID),
-      ),
-    ),
+      title: 'ފުރަތަމަ ޞަފްޙާ',
+      hero: {
+        title: 'ދިވެހިރާއްޖޭގެ ރަށްރަށުގެ ގައިޑް',
+        links: [
+          { id: homePage.hero?.links?.[0]?.id, link: { type: 'custom', appearance: 'default', label: 'އެންމެ ފަހުގެ ޚަބަރު', url: '/posts' } },
+        ],
+      },
+      layout: homeLayout('dv'),
+      meta: {
+        title: 'ދިވެހިރާއްޖޭގެ ރަށްރަށުގެ ގައިޑް',
+        description: 'ދިވެހިރާއްޖޭގެ ރަށްރަށާ ބެހޭ މައުލޫމާތާއި ދަތުރުފަތުރުގެ ޕޯޓަލްއެއް.',
+      },
+    } as any,
     req,
   })
   // #endregion
@@ -507,23 +450,8 @@ export const seed = async ({
     locale: 'en',
     data: {
       navItems: [
-        {
-          link: {
-            type: 'custom',
-            label: 'Home',
-            url: '/',
-          },
-        },
-        {
-          link: {
-            type: 'reference',
-            label: 'Contact',
-            reference: {
-              relationTo: 'pages',
-              value: contactPage.id,
-            },
-          },
-        },
+        { link: { type: 'custom', label: 'Home', url: '/' } },
+        { link: { type: 'custom', label: 'News', url: '/posts' } },
       ],
     },
     req,
@@ -531,28 +459,11 @@ export const seed = async ({
 
   await payload.updateGlobal({
     slug: 'header',
-    locale: 'es',
+    locale: 'dv',
     data: {
       navItems: [
-        {
-          id: header.navItems![0].id,
-          link: {
-            type: 'custom',
-            url: '/',
-            label: 'Inicio',
-          },
-        },
-        {
-          id: header.navItems![1].id,
-          link: {
-            type: 'reference',
-            reference: {
-              relationTo: 'pages',
-              value: contactPage.id,
-            },
-            label: 'Contacto',
-          },
-        },
+        { id: header.navItems![0].id, link: { type: 'custom', url: '/', label: 'މައި ޞަފްޙާ' } },
+        { id: header.navItems![1].id, link: { type: 'custom', url: '/posts', label: 'ޚަބަރު' } },
       ],
     },
     req,
@@ -565,62 +476,19 @@ export const seed = async ({
     locale: 'en',
     data: {
       navItems: [
-        {
-          link: {
-            type: 'custom',
-            label: 'Admin',
-            url: '/admin',
-          },
-        },
-        {
-          link: {
-            type: 'custom',
-            label: 'Source Code',
-            newTab: true,
-            url: 'https://github.com/payloadcms/payload/tree/beta/templates/website',
-          },
-        },
-        {
-          link: {
-            type: 'custom',
-            label: 'Payload',
-            newTab: true,
-            url: 'https://payloadcms.com/',
-          },
-        },
+        { link: { type: 'custom', label: 'Admin', url: '/admin' } },
+        { link: { type: 'custom', label: 'Home', url: '/' } },
       ],
     },
     req,
   })
   await payload.updateGlobal({
     slug: 'footer',
-    locale: 'es',
+    locale: 'dv',
     data: {
       navItems: [
-        {
-          id: footer.navItems![0].id,
-          link: {
-            type: 'custom',
-            url: '/admin',
-            label: 'Panel',
-          },
-        },
-        {
-          id: footer.navItems![1].id,
-          link: {
-            type: 'custom',
-            url: 'https://github.com/payloadcms/payload/tree/beta/templates/website',
-            label: 'Código fuente',
-          },
-        },
-        {
-          id: footer.navItems![2].id,
-          link: {
-            type: 'custom',
-            url: 'https://payloadcms.com/',
-            label: 'Payload',
-          },
-        },
+        { id: footer.navItems![0].id, link: { type: 'custom', url: '/admin', label: 'ޕެނަލް' } },
+        { id: footer.navItems![1].id, link: { type: 'custom', url: '/', label: 'މައި ޞަފްޙާ' } },
       ],
     },
     req,

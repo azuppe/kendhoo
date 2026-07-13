@@ -2,15 +2,9 @@
 // import React, { useEffect } from 'react'
 
 import type { Page } from '@/payload-types'
-
 import { CMSLink } from '@/components/Link'
-
 import RichText from '@/components/RichText'
 import { motion } from 'framer-motion'
-
-import { Fragment, useState } from 'react'
-import { Calendar, MapPin, Users } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { Media } from '@/components/Media'
 
 export function LandingPage({ links, media, title, richText, ...props }: Page['hero']) {

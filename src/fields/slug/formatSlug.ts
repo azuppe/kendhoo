@@ -8,6 +8,10 @@ export const formatSlug = (val: string): string =>
 
 export const formatSlugHook =
   (fallback: string): FieldHook =>
-  ({ originalDoc, value }) => {
-    return value ? formatSlug(value) : originalDoc.slug
+  ({ originalDoc, value, siblingData }) => {
+    if (value) return formatSlug(value)
+    if (!originalDoc?.slug && siblingData?.[fallback]) {
+      return formatSlug(siblingData[fallback])
+    }
+    return originalDoc?.slug
   }

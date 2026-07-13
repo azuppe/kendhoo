@@ -4,18 +4,11 @@ import { redirect } from 'next/navigation'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { CollectionSlug, TypedLocale } from 'payload'
+import type { NextRequest } from 'next/server'
 
 const payloadToken = 'payload-token'
 
-export async function GET(
-  req: Request & {
-    cookies: {
-      get: (name: string) => {
-        value: string
-      }
-    }
-  },
-): Promise<Response> {
+export async function GET(req: NextRequest): Promise<Response> {
   const payload = await getPayload({ config: configPromise })
   const token = req.cookies.get(payloadToken)?.value
   const { searchParams } = new URL(req.url)
@@ -51,7 +44,7 @@ export async function GET(
     let user
 
     try {
-      user = jwt.verify(token, payload.secret)
+      user = token ? jwt.verify(token, payload.secret) : undefined
     } catch (error) {
       payload.logger.error('Error verifying token for live preview:', error)
     }

@@ -1,0 +1,51 @@
+import React from 'react'
+import { Media } from '@/components/Media'
+
+type GalleryImage = {
+  image: any
+  caption?: string | null
+}
+
+export type GalleryBlockProps = {
+  title?: string | null
+  layout?: 'grid' | 'masonry' | 'slider' | null
+  images: GalleryImage[]
+}
+
+export const GalleryBlock: React.FC<GalleryBlockProps> = ({ title, layout = 'grid', images }) => {
+  const gridClass =
+    layout === 'masonry'
+      ? 'columns-1 sm:columns-2 lg:columns-3 gap-4 [&>*]:mb-4 [&>*]:break-inside-avoid'
+      : layout === 'slider'
+        ? 'flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4'
+        : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'
+
+  return (
+    <section className="py-12">
+      <div className="container mx-auto px-4 max-w-6xl">
+        {title && <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">{title}</h2>}
+        <div className={gridClass}>
+          {images?.map((item, i) => (
+            <figure
+              key={i}
+              className={`overflow-hidden rounded-2xl bg-gray-100 dark:bg-gray-900 ${
+                layout === 'slider' ? 'shrink-0 w-72 snap-start' : ''
+              }`}
+            >
+              <Media
+                resource={item.image}
+                imgClassName="w-full h-64 object-cover"
+                className="w-full h-64"
+              />
+              {item.caption && (
+                <figcaption className="text-sm text-gray-500 dark:text-gray-400 px-3 py-2">
+                  {item.caption}
+                </figcaption>
+              )}
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
