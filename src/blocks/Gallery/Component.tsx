@@ -1,18 +1,46 @@
 import React from 'react'
 import { Media } from '@/components/Media'
+import { GalleryCoverflow } from './Coverflow'
 
 type GalleryImage = {
   image: any
   caption?: string | null
+  location?: string | null
+  isVideo?: boolean | null
 }
 
 export type GalleryBlockProps = {
+  eyebrow?: string | null
   title?: string | null
-  layout?: 'grid' | 'masonry' | 'slider' | null
+  description?: string | null
+  layout?: 'grid' | 'masonry' | 'slider' | 'coverflow' | null
   images: GalleryImage[]
+  viewMoreLabel?: string | null
+  viewMoreUrl?: string | null
 }
 
-export const GalleryBlock: React.FC<GalleryBlockProps> = ({ title, layout = 'grid', images }) => {
+export const GalleryBlock: React.FC<GalleryBlockProps> = ({
+  eyebrow,
+  title,
+  description,
+  layout = 'grid',
+  images,
+  viewMoreLabel,
+  viewMoreUrl,
+}) => {
+  if (layout === 'coverflow') {
+    return (
+      <GalleryCoverflow
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
+        images={images}
+        viewMoreLabel={viewMoreLabel}
+        viewMoreUrl={viewMoreUrl}
+      />
+    )
+  }
+
   const gridClass =
     layout === 'masonry'
       ? 'columns-1 sm:columns-2 lg:columns-3 gap-4 [&>*]:mb-4 [&>*]:break-inside-avoid'

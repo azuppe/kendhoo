@@ -14,6 +14,15 @@ export const QuickFacts: Block = {
       localized: true,
     },
     {
+      name: 'layout',
+      type: 'select',
+      defaultValue: 'stats',
+      options: [
+        { label: 'Stats (icon + value cards)', value: 'stats' },
+        { label: 'Mosaic (photo & text collage)', value: 'mosaic' },
+      ],
+    },
+    {
       name: 'facts',
       type: 'array',
       required: true,
@@ -23,25 +32,95 @@ export const QuickFacts: Block = {
           name: 'icon',
           type: 'text',
           admin: {
-            description: 'Lucide icon name, e.g. Users, MapPin, Ship, Plane, Globe, Clock',
+            description: 'Stats layout only. Lucide icon name, e.g. Users, MapPin, Ship, Plane, Globe, Clock',
           },
         },
         {
           name: 'label',
           type: 'text',
           localized: true,
-          required: true,
+          admin: {
+            description: 'Stats layout: the value\'s caption. Mosaic layout: the tile heading, e.g. "SPA".',
+          },
         },
         {
           name: 'value',
           type: 'text',
           localized: true,
-          required: true,
+          admin: {
+            description: 'Stats layout only, e.g. "12,000".',
+          },
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+          localized: true,
+          admin: {
+            description: 'Mosaic layout only. Short paragraph shown under the tile heading.',
+          },
+        },
+        {
+          name: 'variant',
+          type: 'select',
+          defaultValue: 'image',
+          options: [
+            { label: 'Photo tile', value: 'image' },
+            { label: 'Color tile', value: 'color' },
+          ],
+          admin: {
+            description: 'Mosaic layout only.',
+          },
+        },
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          admin: {
+            description: 'Mosaic layout, photo tile only.',
+            condition: (_, siblingData) => siblingData?.variant !== 'color',
+          },
+        },
+        {
+          name: 'color',
+          type: 'select',
+          defaultValue: 'blue',
+          options: [
+            { label: 'Blue', value: 'blue' },
+            { label: 'White', value: 'white' },
+          ],
+          admin: {
+            description: 'Mosaic layout, color tile only.',
+            condition: (_, siblingData) => siblingData?.variant === 'color',
+          },
+        },
+        {
+          name: 'span',
+          type: 'select',
+          defaultValue: 'normal',
+          options: [
+            { label: 'Normal (1x1)', value: 'normal' },
+            { label: 'Wide (2x1)', value: 'wide' },
+            { label: 'Tall (1x2)', value: 'tall' },
+          ],
+          admin: {
+            description: 'Mosaic layout only. Controls how many grid cells this tile fills.',
+          },
+        },
+        {
+          name: 'button',
+          type: 'group',
+          admin: {
+            description: 'Mosaic layout only. Optional call-to-action shown on the tile.',
+          },
+          fields: [
+            { name: 'label', type: 'text', localized: true },
+            { name: 'url', type: 'text' },
+          ],
         },
       ],
       admin: {
         description:
-          'e.g. Population, Size, Atoll, Distance from Malé, Ferry Duration, Speedboat Duration, Airport, Time Zone, Language, Currency, Island Code',
+          'Stats layout e.g. Population, Size, Atoll, Distance from Malé, Ferry Duration, Speedboat Duration, Airport, Time Zone, Language, Currency, Island Code. Mosaic layout e.g. Spa, Explore, Native Cuisine, Weddings, Luxury Resorts.',
       },
     },
   ],

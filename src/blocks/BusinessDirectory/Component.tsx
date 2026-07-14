@@ -1,7 +1,7 @@
 import React from 'react'
 import configPromise from '@payload-config'
 import { getPayload, TypedLocale } from 'payload'
-import { Star, Heart, MapPin } from 'lucide-react'
+import { Star, Heart } from 'lucide-react'
 import { Media } from '@/components/Media'
 
 export type BusinessDirectoryBlockProps = {
@@ -11,13 +11,6 @@ export type BusinessDirectoryBlockProps = {
   featuredOnly?: boolean | null
   limit?: number | null
   locale: TypedLocale
-}
-
-const categoryLabels: Record<string, string> = {
-  restaurant: 'Restaurant / Cafe',
-  shop: 'Shop',
-  accommodation: 'Accommodation',
-  service: 'Service',
 }
 
 export const BusinessDirectoryBlock: React.FC<BusinessDirectoryBlockProps> = async ({
@@ -55,59 +48,54 @@ export const BusinessDirectoryBlock: React.FC<BusinessDirectoryBlockProps> = asy
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {businesses.map((biz: any) => {
             const isOpen = (biz.openStatus ?? 'open') === 'open'
-            const typeLabel = biz.typeLabel || categoryLabels[biz.category] || null
 
             return (
-              <article key={biz.id} className="flex flex-col">
-                <div className="relative h-56 rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-800">
-                  {biz.image && (
-                    <Media resource={biz.image} fill imgClassName="object-cover" />
-                  )}
+              <article
+                key={biz.id}
+                className="relative h-[420px] rounded-3xl overflow-hidden bg-gray-900 flex flex-col justify-end"
+              >
+                {biz.image && (
+                  <Media resource={biz.image} fill imgClassName="object-cover" />
+                )}
 
-                  <span
-                    className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold text-white ${
-                      isOpen ? 'bg-teal-800' : 'bg-gray-500'
-                    }`}
-                  >
-                    {isOpen ? 'Open' : 'Closed'}
-                  </span>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 
-                  <button
-                    type="button"
-                    aria-label="Save"
-                    className="absolute top-3 right-3 flex items-center justify-center w-8 h-8 rounded-full bg-white text-gray-500 hover:text-red-500 shadow transition-colors"
-                  >
-                    <Heart className="w-4 h-4" />
-                  </button>
-                </div>
+                <span
+                  className={`absolute top-4 left-4 px-4 py-1.5 rounded-full text-xs font-semibold text-white backdrop-blur-sm ${
+                    isOpen ? 'bg-white/20' : 'bg-white/10'
+                  }`}
+                >
+                  {isOpen ? 'Open' : 'Closed'}
+                </span>
 
-                <div className="pt-3">
-                  {(typeof biz.rating === 'number' || typeLabel) && (
-                    <div className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400 mb-1">
-                      {typeof biz.rating === 'number' && (
-                        <span className="flex items-center gap-1 text-gray-900 dark:text-gray-100 font-medium">
-                          <Star className="w-4 h-4 fill-rose-800 text-rose-800" />
-                          {biz.rating}
-                          {typeof biz.reviewCount === 'number' && (
-                            <span className="text-gray-500 font-normal">({biz.reviewCount})</span>
-                          )}
-                        </span>
-                      )}
-                      {typeof biz.rating === 'number' && typeLabel && <span>•</span>}
-                      {typeLabel && <span>{typeLabel}</span>}
+                <button
+                  type="button"
+                  aria-label="Save"
+                  className="absolute top-4 right-4 flex items-center justify-center w-8 h-8 rounded-full bg-white text-gray-500 hover:text-red-500 shadow transition-colors"
+                >
+                  <Heart className="w-4 h-4" />
+                </button>
+
+                <div className="relative px-5 pb-5">
+                  {typeof biz.rating === 'number' && (
+                    <div className="flex items-center gap-1 text-white font-semibold mb-1.5">
+                      <Star className="w-4 h-4 fill-white text-white" />
+                      {biz.rating}
                     </div>
                   )}
 
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-1">
-                    {biz.name}
-                  </h3>
+                  <h3 className="text-xl font-bold text-white mb-1.5">{biz.name}</h3>
 
-                  {biz.address && (
-                    <p className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
-                      <MapPin className="w-4 h-4 shrink-0" />
-                      {biz.address}
-                    </p>
+                  {biz.description && (
+                    <p className="text-sm text-white/80 line-clamp-3 mb-4">{biz.description}</p>
                   )}
+
+                  <button
+                    type="button"
+                    className="w-full rounded-full bg-white text-gray-900 font-semibold py-2.5 hover:bg-gray-100 transition-colors"
+                  >
+                    Book Now
+                  </button>
                 </div>
               </article>
             )

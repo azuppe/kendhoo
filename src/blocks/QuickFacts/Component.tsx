@@ -1,19 +1,38 @@
 import React from 'react'
 import * as Icons from 'lucide-react'
 import { MapPin } from 'lucide-react'
+import { QuickFactsMosaic } from './Mosaic'
 
 type QuickFact = {
   icon?: string | null
-  label: string
-  value: string
+  label?: string | null
+  value?: string | null
+  description?: string | null
+  variant?: 'image' | 'color' | null
+  image?: any
+  color?: 'blue' | 'white' | null
+  span?: 'normal' | 'wide' | 'tall' | null
+  button?: { label?: string | null; url?: string | null } | null
 }
 
 export type QuickFactsBlockProps = {
   title?: string | null
+  layout?: 'stats' | 'mosaic' | null
   facts: QuickFact[]
 }
 
-export const QuickFactsBlock: React.FC<QuickFactsBlockProps> = ({ title, facts }) => {
+export const QuickFactsBlock: React.FC<QuickFactsBlockProps> = ({ title, layout = 'stats', facts }) => {
+  if (layout === 'mosaic') {
+    return (
+      <section className="py-12">
+        <div className="container mx-auto px-4 max-w-6xl">
+          {title && <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">{title}</h2>}
+          <QuickFactsMosaic facts={facts} />
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className="py-12">
       <div className="container mx-auto px-4 max-w-6xl">
