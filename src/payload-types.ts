@@ -69,8 +69,10 @@ export interface Config {
   collections: {
     pages: Page;
     posts: Post;
+    events: Event;
     media: Media;
     categories: Category;
+    sources: Source;
     comments: Comment;
     islands: Island;
     places: Place;
@@ -88,8 +90,10 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    sources: SourcesSelect<false> | SourcesSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
     islands: IslandsSelect<false> | IslandsSelect<true>;
     places: PlacesSelect<false> | PlacesSelect<true>;
@@ -440,8 +444,17 @@ export interface Post {
     | {
         id?: string | null;
         name?: string | null;
+        avatar?: (string | null) | Media;
       }[]
     | null;
+  /**
+   * Publisher/source badge shown on the post card (e.g. BBC, CNN)
+   */
+  source?: (string | null) | Source;
+  /**
+   * Used for the view-count badge on cards. Leave blank to show a placeholder.
+   */
+  viewCount?: number | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -567,6 +580,7 @@ export interface Media {
 export interface User {
   id: string;
   name?: string | null;
+  avatar?: (string | null) | Media;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -584,6 +598,19 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sources".
+ */
+export interface Source {
+  id: string;
+  name: string;
+  logo?: (string | null) | Media;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1474,6 +1501,172 @@ export interface TripOverviewBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: string;
+  /**
+   * e.g. "Japan Express: Osaka to Tokyo"
+   */
+  title: string;
+  /**
+   * Up to 4 photos for the top gallery collage (1 large left, 1 large center, 2 stacked right).
+   */
+  images?: (string | Media)[] | null;
+  /**
+   * e.g. "Classic", "Far East AU5"
+   */
+  breadcrumbs?:
+    | {
+        label: string;
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * e.g. 5
+   */
+  rating?: number | null;
+  /**
+   * e.g. 296
+   */
+  reviewCount?: number | null;
+  /**
+   * Trip meta row, e.g. Duration / Group Size / Pacing / Accommodation.
+   */
+  tripMeta?:
+    | {
+        icon?: ('duration' | 'groupSize' | 'pacing' | 'accommodation') | null;
+        /**
+         * e.g. "9 Days"
+         */
+        label?: string | null;
+        /**
+         * e.g. "Max 16, Aug 13"
+         */
+        sublabel?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Sticky price / booking card shown on the right.
+   */
+  priceCard: {
+    /**
+     * e.g. "TOP"
+     */
+    badge?: string | null;
+    /**
+     * e.g. "9 days"
+     */
+    durationLabel?: string | null;
+    /**
+     * e.g. "Osaka to Tokyo"
+     */
+    route?: string | null;
+    price: number;
+    originalPrice?: number | null;
+    currency?: string | null;
+    /**
+     * e.g. "Jul 24, 2026"
+     */
+    validOn?: string | null;
+    /**
+     * e.g. "AJJ5"
+     */
+    tripCode?: string | null;
+    buttonLabel?: string | null;
+    buttonUrl?: string | null;
+    /**
+     * Icon row under the button, e.g. Flight / Hotels / Tours.
+     */
+    includes?:
+      | {
+          icon?: ('flight' | 'hotels' | 'tours') | null;
+          label?: string | null;
+          sublabel?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  overviewTitle?: string | null;
+  overviewDescription?: string | null;
+  includedTitle?: string | null;
+  /**
+   * e.g. "Japan Rail (JR) pass for 7 days", "8 nights hotel accommodation"
+   */
+  includedItems?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  itineraryTitle?: string | null;
+  itineraryItems?:
+    | {
+        /**
+         * e.g. "Day 1" or "Day 4 - 5"
+         */
+        dayLabel: string;
+        title: string;
+        description?: string | null;
+        images?: (string | Media)[] | null;
+        id?: string | null;
+      }[]
+    | null;
+  recommendedTitle?: string | null;
+  recommendedTours?:
+    | {
+        image: string | Media;
+        /**
+         * e.g. "ON SALE"
+         */
+        badge?: string | null;
+        /**
+         * e.g. "18-30s"
+         */
+        ageRange?: string | null;
+        title: string;
+        /**
+         * e.g. "20 days"
+         */
+        durationLabel?: string | null;
+        /**
+         * e.g. "Nairobi to Victoria Falls"
+         */
+        route?: string | null;
+        price: number;
+        originalPrice?: number | null;
+        currency?: string | null;
+        departsOn?: string | null;
+        tags?:
+          | {
+              label?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        buttonLabel?: string | null;
+        link?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "comments".
  */
 export interface Comment {
@@ -1645,12 +1838,20 @@ export interface PayloadLockedDocument {
         value: string | Post;
       } | null)
     | ({
+        relationTo: 'events';
+        value: string | Event;
+      } | null)
+    | ({
         relationTo: 'media';
         value: string | Media;
       } | null)
     | ({
         relationTo: 'categories';
         value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'sources';
+        value: string | Source;
       } | null)
     | ({
         relationTo: 'comments';
@@ -2353,7 +2554,113 @@ export interface PostsSelect<T extends boolean = true> {
     | {
         id?: T;
         name?: T;
+        avatar?: T;
       };
+  source?: T;
+  viewCount?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  title?: T;
+  images?: T;
+  breadcrumbs?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  rating?: T;
+  reviewCount?: T;
+  tripMeta?:
+    | T
+    | {
+        icon?: T;
+        label?: T;
+        sublabel?: T;
+        id?: T;
+      };
+  priceCard?:
+    | T
+    | {
+        badge?: T;
+        durationLabel?: T;
+        route?: T;
+        price?: T;
+        originalPrice?: T;
+        currency?: T;
+        validOn?: T;
+        tripCode?: T;
+        buttonLabel?: T;
+        buttonUrl?: T;
+        includes?:
+          | T
+          | {
+              icon?: T;
+              label?: T;
+              sublabel?: T;
+              id?: T;
+            };
+      };
+  overviewTitle?: T;
+  overviewDescription?: T;
+  includedTitle?: T;
+  includedItems?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  itineraryTitle?: T;
+  itineraryItems?:
+    | T
+    | {
+        dayLabel?: T;
+        title?: T;
+        description?: T;
+        images?: T;
+        id?: T;
+      };
+  recommendedTitle?: T;
+  recommendedTours?:
+    | T
+    | {
+        image?: T;
+        badge?: T;
+        ageRange?: T;
+        title?: T;
+        durationLabel?: T;
+        route?: T;
+        price?: T;
+        originalPrice?: T;
+        currency?: T;
+        departsOn?: T;
+        tags?:
+          | T
+          | {
+              label?: T;
+              id?: T;
+            };
+        buttonLabel?: T;
+        link?: T;
+        id?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  publishedAt?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -2399,6 +2706,18 @@ export interface CategoriesSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sources_select".
+ */
+export interface SourcesSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  slug?: T;
+  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2500,6 +2819,7 @@ export interface BusinessesSelect<T extends boolean = true> {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  avatar?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

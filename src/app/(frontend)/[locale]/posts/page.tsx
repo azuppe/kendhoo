@@ -11,6 +11,17 @@ import PageClient from './page.client'
 import { TypedLocale } from 'payload'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
+import { HeroFeatured } from '@/components/PostsMagazine/HeroFeatured'
+import { LatestNewsGrid } from '@/components/PostsMagazine/LatestNewsGrid'
+import { StoryAvatars } from '@/components/PostsMagazine/StoryAvatars'
+import { MustRead } from '@/components/PostsMagazine/MustRead'
+import { EditorsPick } from '@/components/PostsMagazine/EditorsPick'
+import { CategorySplit } from '@/components/PostsMagazine/CategorySplit'
+import { TopCreators } from '@/components/PostsMagazine/TopCreators'
+import { NewsletterBanner } from '@/components/PostsMagazine/NewsletterBanner'
+import { topAuthorsFromPosts } from '@/components/PostsMagazine/utils'
+import type { Category, Post } from '@/payload-types'
+
 export const revalidate = 600
 
 type Args = {
@@ -37,49 +48,169 @@ export default async function Page({ params, searchParams }: Args) {
     overrideAccess: false,
   })
 
-  const posts = await payload.find({
-    collection: 'posts',
-    locale,
-    depth: 1,
-    limit: 12,
-    overrideAccess: false,
-    where: category
-      ? {
-          'categories.slug': {
-            equals: category,
-          },
-        }
-      : undefined,
-  })
+  // A category filter falls back to the classic paginated grid.
+  if (category) {
+    const posts = await payload.find({
+      collection: 'posts',
+      locale,
+      depth: 1,
+      limit: 12,
+      overrideAccess: false,
+      where: {
+        'categories.slug': {
+          equals: category,
+        },
+      },
+    })
+
+    return (
+      <div className="pt-32 pb-24">
+        <PageClient />
+        <div className="container mb-16">
+          <h1>{t('posts')}</h1>
+        </div>
+        <div className="mb-8">
+          <CategoryNav categories={categories.docs} activeSlug={category} />
+        </div>
+        <div className="container mb-8">
+          <PageRange
+            collection="posts"
+            currentPage={posts.page}
+            limit={12}
+            totalDocs={posts.totalDocs}
+          />
+        </div>
+        <CollectionArchive posts={posts.docs} />
+        <div className="container">
+          {posts.totalPages > 1 && posts.page && (
+            <Pagination page={posts.page} totalPages={posts.totalPages} category={category} />
+          )}
+        </div>
+      </div>
+    )
+  }
+
+  const [postsResult, sourcesResult] = await Promise.all([
+    payload.find({
+      collection: 'posts',
+      locale,
+      depth: 2,
+      limit: 30,
+      sort: '-publishedAt',
+      overrideAccess: false,
+      where: {
+        _status: {
+          equals: 'published',
+        },
+      },
+    }),
+    payload.find({
+      collection: 'sources',
+      locale,
+      depth: 1,
+      limit: 12,
+      overrideAccess: false,
+    }),
+  ])
+
+  const posts = postsResult.docs
+  let cursor = 0
+  const take = (count: number): Post[] => {
+    const slice = posts.slice(cursor, cursor + count)
+    cursor += slice.length
+    return slice
+  }
+
+  const heroPost = take(1)[0]
+  const latestNewsPosts = take(4)
+  const mustReadPosts = take(4)
+  const editorsPickPosts = take(5)
+
+  const remainingPosts = posts.slice(cursor)
+  const categoryBuckets = new Map<string, { category: Category; posts: Post[] }>()
+  for (const post of remainingPosts) {
+    const cat = post.categories?.find((c): c is Category => typeof c === 'object')
+    if (!cat) continue
+    const bucket = categoryBuckets.get(cat.id)
+    if (bucket) {
+      bucket.posts.push(post)
+    } else {
+      categoryBuckets.set(cat.id, { category: cat, posts: [post] })
+    }
+  }
+  const categorySections = Array.from(categoryBuckets.values())
+    .filter((bucket) => bucket.posts.length >= 2)
+    .slice(0, 2)
+
+  const topCreators = topAuthorsFromPosts(posts, 4)
 
   return (
-    <div className="pt-24 pb-24">
+    <div className="pt-32 pb-24 space-y-16">
       <PageClient />
-      <div className="container mb-16">
-        <div className="  max-w-none">
-          <h1>{t('posts')}</h1>
+
+      <div className="container">
+        <div className="rounded-2xl bg-gray-50 border border-gray-200 px-6 py-8 text-center">
+          <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-2">
+            Welcome to Buletin
+          </p>
+          <h1 className="text-lg lg:text-2xl font-semibold text-gray-900 max-w-2xl mx-auto">
+            Craft narratives that ignite <span className="text-red-600">inspiration</span>,{' '}
+            <span className="text-red-600">knowledge</span>, and{' '}
+            <span className="text-red-600">entertainment</span>
+          </h1>
         </div>
       </div>
 
-      <div className="mb-8">
-        <CategoryNav categories={categories.docs} activeSlug={category} />
+      {heroPost && (
+        <div className="container">
+          <HeroFeatured post={heroPost} locale={locale} />
+        </div>
+      )}
+
+      {latestNewsPosts.length > 0 && (
+        <div className="container">
+          <LatestNewsGrid posts={latestNewsPosts} locale={locale} href={`/${locale}/posts`} />
+        </div>
+      )}
+
+      {sourcesResult.docs.length > 0 && (
+        <div className="container">
+          <StoryAvatars sources={sourcesResult.docs} />
+        </div>
+      )}
+
+      <div className="container">
+        <MustRead posts={mustReadPosts} locale={locale} />
+      </div>
+
+      <div className="container">
+        <EditorsPick posts={editorsPickPosts} locale={locale} />
+      </div>
+
+      {categorySections.length > 0 && (
+        <div className="container grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {categorySections.map(({ category: cat, posts: catPosts }) => (
+            <CategorySplit
+              key={cat.id}
+              title={cat.title}
+              posts={catPosts.slice(0, 4)}
+              locale={locale}
+              href={`/${locale}/posts?category=${cat.slug}`}
+            />
+          ))}
+        </div>
+      )}
+
+      <div className="container">
+        <TopCreators creators={topCreators} />
       </div>
 
       <div className="container mb-8">
-        <PageRange
-          collection="posts"
-          currentPage={posts.page}
-          limit={12}
-          totalDocs={posts.totalDocs}
-        />
+        <CategoryNav categories={categories.docs} />
       </div>
 
-      <CollectionArchive posts={posts.docs} />
-
       <div className="container">
-        {posts.totalPages > 1 && posts.page && (
-          <Pagination page={posts.page} totalPages={posts.totalPages} category={category} />
-        )}
+        <NewsletterBanner />
       </div>
     </div>
   )

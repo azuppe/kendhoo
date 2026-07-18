@@ -210,7 +210,29 @@ export const Posts: CollectionConfig = {
           name: 'name',
           type: 'text',
         },
+        {
+          name: 'avatar',
+          type: 'upload',
+          relationTo: 'media',
+        },
       ],
+    },
+    {
+      name: 'source',
+      type: 'relationship',
+      admin: {
+        position: 'sidebar',
+        description: 'Publisher/source badge shown on the post card (e.g. BBC, CNN)',
+      },
+      relationTo: 'sources',
+    },
+    {
+      name: 'viewCount',
+      type: 'number',
+      admin: {
+        position: 'sidebar',
+        description: 'Used for the view-count badge on cards. Leave blank to show a placeholder.',
+      },
     },
     ...slugField(),
   ],

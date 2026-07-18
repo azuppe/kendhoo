@@ -25,9 +25,11 @@ import { Comments } from './collections/Comments'
 import Islands from './collections/Islands'
 import Places from './collections/Places'
 import Businesses from './collections/Businesses'
+import { Events } from './collections/Events'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
+import Sources from './collections/Sources'
 import Users from './collections/Users'
 import { seedHandler } from './endpoints/seedHandler'
 import { Footer } from './globals/Footer/config'
@@ -129,7 +131,19 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
-  collections: [Pages, Posts, Media, Categories, Comments, Islands, Places, Businesses, Users],
+  collections: [
+    Pages,
+    Posts,
+    Events,
+    Media,
+    Categories,
+    Sources,
+    Comments,
+    Islands,
+    Places,
+    Businesses,
+    Users,
+  ],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   endpoints: [

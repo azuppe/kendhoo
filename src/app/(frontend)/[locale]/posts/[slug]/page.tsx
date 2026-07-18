@@ -50,7 +50,7 @@ export default async function Post({ params: paramsPromise }: Args) {
   const relatedPosts = post.relatedPosts?.filter((p) => typeof p === 'object') || [];
 
   return (
-    <article className="pt-16 pb-16 bg-gray-50 min-h-screen">
+    <article className="pt-32 pb-16 bg-gray-50 min-h-screen">
       <PageClient />
       <PayloadRedirects disableNotFound url={url} />
 
