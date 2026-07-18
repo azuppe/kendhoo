@@ -375,7 +375,6 @@ export interface Page {
     | GalleryBlock
     | PlacesGridBlock
     | BusinessDirectoryBlock
-    | TimelineBlock
     | ContactInfoBlock
     | TestimonialsBlock
     | WhyUsBlock
@@ -384,6 +383,8 @@ export interface Page {
     | EventTimelineBlock
     | WhatsIncludedBlock
     | RecommendedToursBlock
+    | TripHeaderBlock
+    | TripOverviewBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1123,25 +1124,6 @@ export interface BusinessDirectoryBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TimelineBlock".
- */
-export interface TimelineBlock {
-  title?: string | null;
-  /**
-   * e.g. Founded, important events, development milestones, infrastructure
-   */
-  events: {
-    year: string;
-    title: string;
-    description?: string | null;
-    id?: string | null;
-  }[];
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'timeline';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ContactInfoBlock".
  */
 export interface ContactInfoBlock {
@@ -1385,6 +1367,110 @@ export interface RecommendedToursBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'recommendedTours';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TripHeaderBlock".
+ */
+export interface TripHeaderBlock {
+  /**
+   * Up to 4 photos for the top gallery collage (1 large left, 1 large center, 2 stacked right).
+   */
+  images?: (string | Media)[] | null;
+  /**
+   * e.g. "Classic", "Far East AU5"
+   */
+  breadcrumbs?:
+    | {
+        label: string;
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * e.g. "Japan Express: Osaka to Tokyo"
+   */
+  title: string;
+  /**
+   * e.g. 5
+   */
+  rating?: number | null;
+  /**
+   * e.g. 296
+   */
+  reviewCount?: number | null;
+  /**
+   * Trip meta row, e.g. Duration / Group Size / Pacing / Accommodation.
+   */
+  meta?:
+    | {
+        icon?: ('duration' | 'groupSize' | 'pacing' | 'accommodation') | null;
+        /**
+         * e.g. "9 Days"
+         */
+        label?: string | null;
+        /**
+         * e.g. "Max 16, Aug 13"
+         */
+        sublabel?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Sticky price / booking card shown on the right.
+   */
+  priceCard: {
+    /**
+     * e.g. "TOP"
+     */
+    badge?: string | null;
+    /**
+     * e.g. "9 days"
+     */
+    durationLabel?: string | null;
+    /**
+     * e.g. "Osaka to Tokyo"
+     */
+    route?: string | null;
+    price: number;
+    originalPrice?: number | null;
+    currency?: string | null;
+    /**
+     * e.g. "Jul 24, 2026"
+     */
+    validOn?: string | null;
+    /**
+     * e.g. "AJJ5"
+     */
+    tripCode?: string | null;
+    buttonLabel?: string | null;
+    buttonUrl?: string | null;
+    /**
+     * Icon row under the button, e.g. Flight / Hotels / Tours.
+     */
+    includes?:
+      | {
+          icon?: ('flight' | 'hotels' | 'tours') | null;
+          label?: string | null;
+          sublabel?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tripHeader';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TripOverviewBlock".
+ */
+export interface TripOverviewBlock {
+  title?: string | null;
+  description?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tripOverview';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1769,7 +1855,6 @@ export interface PagesSelect<T extends boolean = true> {
         gallery?: T | GalleryBlockSelect<T>;
         placesGrid?: T | PlacesGridBlockSelect<T>;
         businessDirectory?: T | BusinessDirectoryBlockSelect<T>;
-        timeline?: T | TimelineBlockSelect<T>;
         contactInfo?: T | ContactInfoBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
         whyUs?: T | WhyUsBlockSelect<T>;
@@ -1778,6 +1863,8 @@ export interface PagesSelect<T extends boolean = true> {
         eventTimeline?: T | EventTimelineBlockSelect<T>;
         whatsIncluded?: T | WhatsIncludedBlockSelect<T>;
         recommendedTours?: T | RecommendedToursBlockSelect<T>;
+        tripHeader?: T | TripHeaderBlockSelect<T>;
+        tripOverview?: T | TripOverviewBlockSelect<T>;
       };
   meta?:
     | T
@@ -1998,23 +2085,6 @@ export interface BusinessDirectoryBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TimelineBlock_select".
- */
-export interface TimelineBlockSelect<T extends boolean = true> {
-  title?: T;
-  events?:
-    | T
-    | {
-        year?: T;
-        title?: T;
-        description?: T;
-        id?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ContactInfoBlock_select".
  */
 export interface ContactInfoBlockSelect<T extends boolean = true> {
@@ -2197,6 +2267,65 @@ export interface RecommendedToursBlockSelect<T extends boolean = true> {
         link?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TripHeaderBlock_select".
+ */
+export interface TripHeaderBlockSelect<T extends boolean = true> {
+  images?: T;
+  breadcrumbs?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  title?: T;
+  rating?: T;
+  reviewCount?: T;
+  meta?:
+    | T
+    | {
+        icon?: T;
+        label?: T;
+        sublabel?: T;
+        id?: T;
+      };
+  priceCard?:
+    | T
+    | {
+        badge?: T;
+        durationLabel?: T;
+        route?: T;
+        price?: T;
+        originalPrice?: T;
+        currency?: T;
+        validOn?: T;
+        tripCode?: T;
+        buttonLabel?: T;
+        buttonUrl?: T;
+        includes?:
+          | T
+          | {
+              icon?: T;
+              label?: T;
+              sublabel?: T;
+              id?: T;
+            };
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TripOverviewBlock_select".
+ */
+export interface TripOverviewBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
   id?: T;
   blockName?: T;
 }

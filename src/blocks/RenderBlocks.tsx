@@ -16,7 +16,6 @@ import { QuickFactsBlock } from '@/blocks/QuickFacts/Component'
 import { GalleryBlock } from '@/blocks/Gallery/Component'
 import { PlacesGridBlock } from '@/blocks/PlacesGrid/Component'
 import { BusinessDirectoryBlock } from '@/blocks/BusinessDirectory/Component'
-import { TimelineBlock } from '@/blocks/Timeline/Component'
 import { ContactInfoBlock } from '@/blocks/ContactInfo/Component'
 import { TestimonialsBlock } from '@/blocks/Testimonials/Component'
 import { WhyUsBlock } from '@/blocks/WhyUs/Component'
@@ -25,6 +24,8 @@ import { DestinationsBlock } from '@/blocks/Destinations/Component'
 import { EventTimelineBlock } from '@/blocks/EventTimeline/Component'
 import { WhatsIncludedBlock } from '@/blocks/WhatsIncluded/Component'
 import { RecommendedToursBlock } from '@/blocks/RecommendedTours/Component'
+import { TripHeaderBlock } from '@/blocks/TripHeader/Component'
+import { TripOverviewBlock } from '@/blocks/TripOverview/Component'
 import { TypedLocale } from 'payload'
 
 const blockComponents = {
@@ -40,7 +41,6 @@ const blockComponents = {
   gallery: GalleryBlock,
   placesGrid: PlacesGridBlock,
   businessDirectory: BusinessDirectoryBlock,
-  timeline: TimelineBlock,
   contactInfo: ContactInfoBlock,
   testimonials: TestimonialsBlock,
   whyUs: WhyUsBlock,
@@ -49,6 +49,8 @@ const blockComponents = {
   eventTimeline: EventTimelineBlock,
   whatsIncluded: WhatsIncludedBlock,
   recommendedTours: RecommendedToursBlock,
+  tripHeader: TripHeaderBlock,
+  tripOverview: TripOverviewBlock,
 }
 
 export const RenderBlocks: React.FC<{
@@ -71,7 +73,7 @@ export const RenderBlocks: React.FC<{
             if (Block) {
               return (
                 <div className="my-16" key={index}>
-                  {/* @ts-expect-error */}
+ 
                   <Block {...block} locale={locale} />
                 </div>
               )

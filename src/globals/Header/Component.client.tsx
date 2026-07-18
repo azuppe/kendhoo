@@ -31,12 +31,15 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
   const t = useTranslations()
 
   return (
-    <div className="fixed inset-x-0 top-0 z-50 bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 shadow-[0_4px_24px_rgba(0,0,0,0.15)]">
+    <div className="fixed inset-x-0 top-0 z-50">
       <header
         id="header"
         className="max-w-7xl mx-auto flex items-center justify-between gap-4 px-4 py-3 md:px-6"
       >
-        <Link href="/" className="me-auto flex items-center gap-2 group shrink-0">
+        <Link
+          href="/"
+          className="me-auto flex items-center gap-2 group shrink-0 bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 border border-white/10 rounded-full pl-2 pr-4 py-1.5 hover:bg-slate-950/50 transition-colors"
+        >
           <span className="p-2 bg-white/10 rounded-full border border-white/20 group-hover:bg-white/20 transition-colors">
             <Waves size={20} className="text-white" />
           </span>
@@ -45,22 +48,22 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-1 bg-white/10 backdrop-blur-md rounded-full px-1.5 py-1.5 border border-white/10">
+        <nav className="hidden md:flex items-center gap-1 bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 rounded-full px-1.5 py-1.5 border border-white/10">
           <HeaderNav header={header} />
         </nav>
 
         <div className="flex items-center gap-2 md:gap-3">
           <Link
             href="/search"
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 hover:bg-slate-950/50 transition-colors"
           >
             <span className="sr-only">{t('search')}</span>
             <SearchIcon className="min-w-10 text-white" />
           </Link>
-          <span className="hidden sm:flex items-center justify-center min-w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-colors">
+          <span className="hidden sm:flex items-center justify-center min-w-10 h-10 rounded-full bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 hover:bg-slate-950/50 transition-colors">
             <Heart className="w-5 text-white" />
           </span>
-          <span className="hidden sm:flex items-center justify-center min-w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-colors">
+          <span className="hidden sm:flex items-center justify-center min-w-10 h-10 rounded-full bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 hover:bg-slate-950/50 transition-colors">
             <User className="w-5 text-white" />
           </span>
           <LocaleSwitcher />
@@ -93,7 +96,7 @@ function LocaleSwitcher() {
 
   return (
     <Select onValueChange={onSelectChange} value={locale}>
-      <SelectTrigger className="flex items-center whitespace-nowrap gap-1 bg-white/10 border-white/20 focus:outline-none text-white px-4 py-2 rounded-full hover:bg-white/20">
+      <SelectTrigger className="flex items-center whitespace-nowrap gap-1 bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 border-white/20 focus:outline-none text-white px-4 py-2 rounded-full hover:bg-slate-950/50">
         <SelectValue placeholder="" />
       </SelectTrigger>
       <SelectContent className="transparent rounded-[10px] focus:outline-none">

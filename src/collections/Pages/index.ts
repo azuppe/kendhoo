@@ -14,7 +14,6 @@ import { QuickFacts } from '../../blocks/QuickFacts/config'
 import { Gallery } from '../../blocks/Gallery/config'
 import { PlacesGrid } from '../../blocks/PlacesGrid/config'
 import { BusinessDirectory } from '../../blocks/BusinessDirectory/config'
-import { Timeline } from '../../blocks/Timeline/config'
 import { ContactInfo } from '../../blocks/ContactInfo/config'
 import { Testimonials } from '../../blocks/Testimonials/config'
 import { WhyUs } from '../../blocks/WhyUs/config'
@@ -23,6 +22,8 @@ import { Destinations } from '../../blocks/Destinations/config'
 import { EventTimeline } from '../../blocks/EventTimeline/config'
 import { WhatsIncluded } from '../../blocks/WhatsIncluded/config'
 import { RecommendedTours } from '../../blocks/RecommendedTours/config'
+import { TripHeader } from '../../blocks/TripHeader/config'
+import { TripOverview } from '../../blocks/TripOverview/config'
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -101,7 +102,6 @@ export const Pages: CollectionConfig = {
                 Gallery,
                 PlacesGrid,
                 BusinessDirectory,
-                Timeline,
                 ContactInfo,
                 Testimonials,
                 WhyUs,
@@ -110,6 +110,8 @@ export const Pages: CollectionConfig = {
                 EventTimeline,
                 WhatsIncluded,
                 RecommendedTours,
+                TripHeader,
+                TripOverview,
               ],
               required: true,
             },
