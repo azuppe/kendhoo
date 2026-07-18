@@ -63,7 +63,7 @@ export const Card: React.FC<{
 
                       return (
                         <Fragment key={index}>
-                          <span className="inline-block px-3 py-1 text-xs font-semibold text-red-600 bg-red-100 rounded-full">
+                          <span className="inline-block px-3 py-1 text-xs font-semibold text-gray-700 bg-gray-100 rounded-full">
                             {categoryTitle}
                           </span>
 

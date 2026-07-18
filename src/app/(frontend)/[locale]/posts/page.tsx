@@ -165,7 +165,7 @@ export default async function Page({ params, searchParams }: Args) {
           </p>
           <h1 className="text-lg lg:text-2xl font-semibold text-gray-900 max-w-2xl mx-auto">
             {t.rich('welcome-headline', {
-              red: (chunks) => <span className="text-red-600">{chunks}</span>,
+              red: (chunks) => <span className="text-gray-900 font-bold">{chunks}</span>,
             })}
           </h1>
         </div>

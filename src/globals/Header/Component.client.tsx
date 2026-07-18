@@ -34,7 +34,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
     <div className="fixed inset-x-0 top-0 z-50">
       <header
         id="header"
-        className="max-w-7xl mx-auto flex items-center justify-between gap-4 px-4 py-3 md:px-6"
+        className=" container mx-auto flex items-center justify-between gap-4 px-4 py-3 md:px-6"
       >
         <Link
           href="/"

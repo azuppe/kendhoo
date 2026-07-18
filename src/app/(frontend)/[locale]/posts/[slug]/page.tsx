@@ -54,7 +54,7 @@ export default async function Post({ params: paramsPromise }: Args) {
       <PageClient />
       <PayloadRedirects disableNotFound url={url} />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
+      <div className="container  mx-auto px-4 md:px-8">
         {/* Main Article */}
         <div>
           <PostHero post={post} />
@@ -74,7 +74,7 @@ export default async function Post({ params: paramsPromise }: Args) {
           <div className="bg-white rounded-2xl shadow-sm p-6 mt-10">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold">Related News</h2>
-              <a href="#" className="text-sm text-blue-600 hover:underline">See all</a>
+              <a href="#" className="text-sm text-gray-900 hover:underline">See all</a>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {relatedPosts.slice(0, 3).map((related, idx) => (
@@ -92,7 +92,7 @@ export default async function Post({ params: paramsPromise }: Args) {
                   <div className="flex-1 min-w-0">
                     {/* Category badge */}
                     {Array.isArray(related.categories) && related.categories.length > 0 && (
-                      <span className="inline-block mb-1 px-2 py-0.5 text-xs font-semibold rounded-full bg-pink-100 text-pink-600">
+                      <span className="inline-block mb-1 px-2 py-0.5 text-xs font-semibold rounded-full bg-gray-100 text-gray-700">
                         {typeof related.categories[0] === 'object' ? related.categories[0].title : ''}
                       </span>
                     )}

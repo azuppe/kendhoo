@@ -16,10 +16,10 @@ export async function Footer({ locale }: { locale: TypedLocale }) {
 
   return (
     <footer className="border-t border-gray-200 mt-10 bg-white">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-16 grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8">
+      <div className=" container mx-auto px-4 md:px-8 py-12 md:py-16 grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8">
         <div className="flex flex-col gap-4 md:col-span-1">
           <span className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center">
-            <Waves className="w-5 h-5 text-blue-600" />
+            <Waves className="w-5 h-5 text-gray-900" />
           </span>
 
           {footer?.ctaHeading && (
@@ -46,7 +46,7 @@ export async function Footer({ locale }: { locale: TypedLocale }) {
               {footer.contactEmail && (
                 <a
                   href={`mailto:${footer.contactEmail}`}
-                  className="inline-flex items-center gap-1 font-medium text-gray-900 hover:text-blue-700"
+                  className="inline-flex items-center gap-1 font-medium text-gray-900 hover:text-black"
                 >
                   {footer.contactEmail}
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -69,7 +69,7 @@ export async function Footer({ locale }: { locale: TypedLocale }) {
             {footer.phone && (
               <a
                 href={`tel:${footer.phone}`}
-                className="text-lg font-semibold text-gray-900 hover:text-blue-700"
+                className="text-lg font-semibold text-gray-900 hover:text-black"
               >
                 {footer.phone}
               </a>
@@ -88,7 +88,7 @@ export async function Footer({ locale }: { locale: TypedLocale }) {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 w-fit text-sm text-gray-600 hover:text-blue-700 transition-colors"
+                  className="inline-flex items-center gap-1 w-fit text-sm text-gray-600 hover:text-black transition-colors"
                 >
                   {social.label}
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -106,7 +106,7 @@ export async function Footer({ locale }: { locale: TypedLocale }) {
             <div className="flex flex-col gap-2">
               {navItems.map(({ link }, i) => (
                 <CMSLink
-                  className="w-fit text-sm text-gray-600 hover:text-blue-700 transition-colors"
+                  className="w-fit text-sm text-gray-600 hover:text-black transition-colors"
                   key={i}
                   {...link}
                 />

@@ -52,13 +52,13 @@ export const BlogArchiveBlock: React.FC<BlogArchiveBlockProps> = async ({
     .filter((n): n is string => !!n)
 
   return (
-    <section className="py-16 bg-lime-50/60 dark:bg-lime-950/10 rounded-3xl">
-      <div className="container mx-auto px-4 max-w-6xl">
+    <section className="py-16 bg-gray-50 dark:bg-gray-900/40 rounded-3xl">
+      <div className="container mx-auto px-4  ">
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-10">
           <div className="max-w-xs">
             {badge && (
               <span className="inline-flex items-center gap-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-full px-4 py-2 text-sm font-medium mb-4">
-                <span className="w-2 h-2 rounded-full bg-lime-500" />
+                <span className="w-2 h-2 rounded-full bg-gray-900" />
                 {badge}
               </span>
             )}
@@ -106,7 +106,7 @@ export const BlogArchiveBlock: React.FC<BlogArchiveBlockProps> = async ({
                       {name.charAt(0)}
                     </span>
                   ))}
-                  <span className="w-9 h-9 rounded-full bg-lime-500 border-2 border-white flex items-center justify-center">
+                  <span className="w-9 h-9 rounded-full bg-gray-900 border-2 border-white flex items-center justify-center">
                     <Plus className="w-4 h-4 text-white" />
                   </span>
                 </div>
@@ -130,7 +130,7 @@ export const BlogArchiveBlock: React.FC<BlogArchiveBlockProps> = async ({
                         imgClassName="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     )}
-                    <span className="absolute top-3 right-3 w-9 h-9 rounded-full bg-lime-500 flex items-center justify-center shadow group-hover:rotate-90 transition-transform duration-300">
+                    <span className="absolute top-3 right-3 w-9 h-9 rounded-full bg-gray-900 flex items-center justify-center shadow group-hover:rotate-90 transition-transform duration-300">
                       <Plus className="w-4 h-4 text-white" />
                     </span>
                   </Link>

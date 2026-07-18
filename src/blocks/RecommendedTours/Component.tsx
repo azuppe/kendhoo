@@ -27,7 +27,7 @@ export type RecommendedToursBlockProps = {
 export const RecommendedToursBlock: React.FC<RecommendedToursBlockProps> = ({ title, tours }) => {
   return (
     <section className="py-12">
-      <div className="container mx-auto px-4 max-w-6xl">
+      <div className="container mx-auto px-4  ">
         {title && (
           <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-8 text-start">
             {title}
@@ -49,7 +49,7 @@ export const RecommendedToursBlock: React.FC<RecommendedToursBlockProps> = ({ ti
                   )}
                   <div className="absolute top-3 left-3 flex items-center gap-2">
                     {tour.badge && (
-                      <span className="px-2.5 py-1 text-[11px] font-bold rounded-full bg-red-500 text-white">
+                      <span className="px-2.5 py-1 text-[11px] font-bold rounded-full bg-gray-900 text-white">
                         {tour.badge}
                       </span>
                     )}
@@ -81,7 +81,7 @@ export const RecommendedToursBlock: React.FC<RecommendedToursBlockProps> = ({ ti
                   </div>
 
                   {tour.departsOn && (
-                    <p className="text-xs font-medium text-pink-600">{tour.departsOn}</p>
+                    <p className="text-xs font-medium text-gray-700">{tour.departsOn}</p>
                   )}
 
                   {Array.isArray(tour.tags) && tour.tags.length > 0 && (
@@ -107,7 +107,7 @@ export const RecommendedToursBlock: React.FC<RecommendedToursBlockProps> = ({ ti
                     <button
                       type="button"
                       aria-label="Save"
-                      className="w-10 h-10 shrink-0 flex items-center justify-center rounded-full border border-gray-200 dark:border-gray-800 text-gray-400 hover:text-red-500 transition-colors"
+                      className="w-10 h-10 shrink-0 flex items-center justify-center rounded-full border border-gray-200 dark:border-gray-800 text-gray-400 hover:text-gray-900 transition-colors"
                     >
                       <Heart className="w-4 h-4" />
                     </button>

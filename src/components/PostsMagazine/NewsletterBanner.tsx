@@ -11,7 +11,7 @@ export const NewsletterBanner: React.FC = async () => {
       </p>
       <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-6">
         {t.rich('newsletter-headline', {
-          red: (chunks) => <span className="text-red-600">{chunks}</span>,
+          red: (chunks) => <span className="text-gray-900">{chunks}</span>,
         })}
       </h2>
       <form className="mx-auto flex max-w-md gap-2">
@@ -19,11 +19,11 @@ export const NewsletterBanner: React.FC = async () => {
           type="email"
           required
           placeholder={t('your-email')}
-          className="flex-1 rounded-full border border-gray-300 bg-white px-5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="flex-1 rounded-full border border-gray-300 bg-white px-5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
         />
         <button
           type="submit"
-          className="rounded-full bg-red-600 px-6 py-3 text-sm font-semibold text-white hover:bg-red-700 transition-colors"
+          className="rounded-full bg-gray-900 px-6 py-3 text-sm font-semibold text-white hover:bg-black transition-colors"
         >
           {t('subscribe-button')}
         </button>

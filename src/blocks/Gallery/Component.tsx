@@ -50,7 +50,7 @@ export const GalleryBlock: React.FC<GalleryBlockProps> = ({
 
   return (
     <section className="py-12">
-      <div className="container mx-auto px-4 max-w-6xl">
+      <div className="container mx-auto px-4  ">
         {title && (
           <h2 className="font-serif text-4xl md:text-5xl font-bold mb-8 text-start">{title}</h2>
         )}

@@ -16,7 +16,7 @@ export type TestimonialsBlockProps = {
 export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({ title, items }) => {
   return (
     <section className="py-12 bg-gray-50 dark:bg-gray-950">
-      <div className="container mx-auto px-4 max-w-6xl">
+      <div className="container mx-auto px-4  ">
         {title && (
           <h2 className="font-serif text-4xl md:text-5xl font-bold mb-10 text-start">{title}</h2>
         )}

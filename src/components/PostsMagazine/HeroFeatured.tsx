@@ -32,7 +32,7 @@ export const HeroFeatured: React.FC<{ post: Post; locale: string }> = ({ post, l
           )}
           <PostFooterLine post={post} readTimeMinutes={formatReadTime(post)} variant="dark" />
         </div>
-        <span className="absolute bottom-6 right-6 lg:bottom-10 lg:right-10 flex h-12 w-12 items-center justify-center rounded-full bg-red-600 text-white shadow-lg">
+        <span className="absolute bottom-6 right-6 lg:bottom-10 lg:right-10 flex h-12 w-12 items-center justify-center rounded-full bg-gray-900 text-white shadow-lg">
           <ArrowUpRight className="h-5 w-5" />
         </span>
       </Link>

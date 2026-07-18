@@ -114,7 +114,7 @@ export const CommentForm: React.FC<{ postId: string | number }> = ({ postId }) =
         />
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-gray-900 font-medium">{error}</p>}
 
       <Button type="submit" disabled={isLoading} className="self-start">
         {isLoading ? 'Posting...' : 'Post comment'}

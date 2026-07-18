@@ -49,7 +49,7 @@ export const ContentBlock: React.FC<
                   {enableLink && (
                     <CMSLink
                       {...link}
-                      className="mt-6 inline-flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors"
+                      className="mt-6 inline-flex items-center text-gray-900 hover:text-black font-medium text-sm transition-colors"
                     />
                   )}
                 </div>

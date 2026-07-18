@@ -42,14 +42,14 @@ export const GalleryCoverflow: React.FC<{
 
   return (
     <section className="py-16 overflow-hidden">
-      <div className="container mx-auto px-4 max-w-6xl text-center">
-        {eyebrow && <p className="text-sm font-semibold tracking-wide text-indigo-600 mb-3">{eyebrow}</p>}
+      <div className="container mx-auto px-4   text-center">
+        {eyebrow && <p className="text-sm font-semibold tracking-wide text-gray-900 mb-3">{eyebrow}</p>}
         {title && (
           <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-4 text-start">
             {title}
           </h2>
         )}
-        {description && <p className="text-indigo-600/80 max-w-md mx-auto mb-10">{description}</p>}
+        {description && <p className="text-gray-500 max-w-md mx-auto mb-10">{description}</p>}
 
         {locations.length > 0 && (
           <div className="flex flex-wrap items-center justify-center gap-2 mb-14">

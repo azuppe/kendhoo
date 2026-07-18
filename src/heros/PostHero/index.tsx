@@ -24,7 +24,7 @@ export const PostHero: React.FC<{
       <div className="relative z-10 px-0 md:px-6 -mt-16 md:-mt-24">
         {/* Category badge */}
         {Array.isArray(categories) && categories.length > 0 && (
-          <span className="inline-block mb-3 px-3 py-1 text-xs font-semibold rounded-full bg-pink-100 text-pink-600">
+          <span className="inline-block mb-3 px-3 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-700">
             {typeof categories[0] === 'object' ? categories[0].title : ''}
           </span>
         )}

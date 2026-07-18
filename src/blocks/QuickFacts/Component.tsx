@@ -40,7 +40,7 @@ export const QuickFactsBlock: React.FC<QuickFactsBlockProps> = ({
   if (layout === 'mosaic') {
     return (
       <section className="py-12">
-        <div className="container mx-auto px-4 max-w-6xl">
+        <div className="container mx-auto px-4  ">
           {title && (
             <h2 className="font-serif text-4xl md:text-5xl font-bold mb-8 text-start">{title}</h2>
           )}
@@ -54,7 +54,7 @@ export const QuickFactsBlock: React.FC<QuickFactsBlockProps> = ({
 
   return (
     <section className="py-16 md:py-24 overflow-hidden">
-      <div className="container mx-auto px-4 max-w-6xl">
+      <div className="container mx-auto px-4  ">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div>
             {title && (
@@ -87,7 +87,7 @@ export const QuickFactsBlock: React.FC<QuickFactsBlockProps> = ({
                 <Send className="hidden lg:block absolute -right-24 -bottom-8 w-5 h-5 rotate-[50deg] text-gray-400 dark:text-gray-600" />
                 <a
                   href={button.url || '#'}
-                  className="relative inline-flex items-center justify-center px-7 py-3 rounded-full bg-orange-500 text-white font-medium hover:bg-orange-600 transition-colors"
+                  className="relative inline-flex items-center justify-center px-7 py-3 rounded-full bg-gray-900 text-white font-medium hover:bg-black transition-colors"
                 >
                   {button.label}
                 </a>
@@ -104,7 +104,7 @@ export const QuickFactsBlock: React.FC<QuickFactsBlockProps> = ({
                     <div key={i} className="flex flex-col gap-1">
                       <span className="font-serif text-3xl md:text-4xl font-bold leading-none">
                         {base}
-                        {suffix && <span className="text-orange-500">{suffix}</span>}
+                        {suffix && <span className="text-gray-900">{suffix}</span>}
                       </span>
                       <span className="text-sm text-gray-500 dark:text-gray-400">
                         {fact.label}

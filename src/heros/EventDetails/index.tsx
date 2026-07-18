@@ -128,7 +128,7 @@ export const EventDetailsHero: React.FC<Page['hero']> = ({
                 {tripCode && <span>Trip Code: {tripCode}</span>}
                 {priceBox.rating != null && (
                   <span className="flex items-center gap-1 text-gray-700">
-                    <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
+                    <Star className="w-3.5 h-3.5 fill-gray-900 text-gray-900" />
                     {priceBox.rating}
                     {priceBox.reviewCount != null && (
                       <span className="text-gray-500">({priceBox.reviewCount} reviews)</span>

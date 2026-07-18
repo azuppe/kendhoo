@@ -146,7 +146,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-6">
               {includedItems.map((item, i) => (
                 <div key={item.id || i} className="flex items-start gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-5 h-5 text-gray-900 shrink-0 mt-0.5" />
                   <span className="text-sm text-gray-700 dark:text-gray-300">{item.label}</span>
                 </div>
               ))}
@@ -260,7 +260,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
                       )}
                       <div className="absolute top-3 left-3 flex items-center gap-2">
                         {tour.badge && (
-                          <span className="px-2.5 py-1 text-[11px] font-bold rounded-full bg-red-500 text-white">
+                          <span className="px-2.5 py-1 text-[11px] font-bold rounded-full bg-gray-900 text-white">
                             {tour.badge}
                           </span>
                         )}
@@ -292,7 +292,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
                       </div>
 
                       {tour.departsOn && (
-                        <p className="text-xs font-medium text-pink-600">{tour.departsOn}</p>
+                        <p className="text-xs font-medium text-gray-700">{tour.departsOn}</p>
                       )}
 
                       {Array.isArray(tour.tags) && tour.tags.length > 0 && (
@@ -318,7 +318,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
                         <button
                           type="button"
                           aria-label="Save"
-                          className="w-10 h-10 shrink-0 flex items-center justify-center rounded-full border border-gray-200 dark:border-gray-800 text-gray-400 hover:text-red-500 transition-colors"
+                          className="w-10 h-10 shrink-0 flex items-center justify-center rounded-full border border-gray-200 dark:border-gray-800 text-gray-400 hover:text-gray-900 transition-colors"
                         >
                           <Heart className="w-4 h-4" />
                         </button>

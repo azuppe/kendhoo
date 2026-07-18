@@ -18,7 +18,7 @@ const spanClasses: Record<string, string> = {
 }
 
 const colorClasses: Record<string, string> = {
-  blue: 'bg-[#5b83ad] text-white',
+  blue: 'bg-gray-900 text-white',
   white: 'bg-white text-gray-900',
 }
 

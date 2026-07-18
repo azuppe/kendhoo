@@ -40,8 +40,8 @@ export const FaqBlock: React.FC<FaqBlockProps> = ({
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
-    <section className="bg-[#FAF9F6] py-16 px-4">
-      <div className="max-w-6xl mx-auto">
+    <section className="bg-gray-50 py-16 px-4">
+      <div className="  mx-auto">
         <div className="flex flex-col items-center text-center mb-14">
           {badge && (
             <span className="px-4 py-1.5 rounded-full bg-gray-100 text-xs font-semibold text-gray-600 mb-6">

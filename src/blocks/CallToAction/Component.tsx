@@ -32,8 +32,8 @@ export const CallToActionBlock: React.FC<
                 <CMSLink
                   className={
                     i === 0
-                      ? 'rounded-full bg-amber-700 text-white px-8 py-2.5 font-semibold hover:bg-amber-800 border-0'
-                      : 'rounded-full border-2 border-amber-700 bg-transparent text-amber-700 px-8 py-2.5 font-semibold hover:bg-amber-50'
+                      ? 'rounded-full bg-gray-900 text-white px-8 py-2.5 font-semibold hover:bg-black border-0'
+                      : 'rounded-full border-2 border-gray-900 bg-transparent text-gray-900 px-8 py-2.5 font-semibold hover:bg-gray-50'
                   }
                   appearance={i === 0 ? 'default' : 'outline'}
                   size="lg"

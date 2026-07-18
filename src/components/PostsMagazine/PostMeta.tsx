@@ -39,7 +39,7 @@ export const PostFooterLine: React.FC<{
   return (
     <div className="flex items-center gap-2 text-xs">
       {typeof category === 'object' && category?.title && (
-        <span className={variant === 'dark' ? 'font-semibold text-red-400' : 'font-semibold text-red-600'}>
+        <span className={variant === 'dark' ? 'font-semibold text-white' : 'font-semibold text-gray-900'}>
           {category.title}
         </span>
       )}

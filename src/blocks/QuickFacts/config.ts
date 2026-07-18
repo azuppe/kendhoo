@@ -124,7 +124,7 @@ export const QuickFacts: Block = {
           type: 'select',
           defaultValue: 'blue',
           options: [
-            { label: 'Blue', value: 'blue' },
+            { label: 'Black', value: 'blue' },
             { label: 'White', value: 'white' },
           ],
           admin: {

@@ -38,7 +38,7 @@ export const StatsBlock: React.FC<StatsBlockProps> = ({ title, description, imag
 
   return (
     <section className="py-16">
-      <div className="container mx-auto px-4 max-w-6xl">
+      <div className="container mx-auto px-4  ">
         <div className="grid grid-cols-1 lg:grid-cols-[1.8fr_1fr_1fr] lg:grid-rows-2 gap-6">
           <div className="lg:col-start-1 lg:row-start-1 flex flex-col justify-center">
             {title && (

@@ -49,7 +49,7 @@ export default function HeroCarousel({ ...props }) {
   }
 
   return (
-    <div className="w-full max-w-7xl mx-auto pt-[74px]">
+    <div className="w-full  container mx-auto pt-[74px]">
       {props.posts && (
         <div className="relative h-[500px] md:h-[600px] rounded-3xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-300">
           <AnimatePresence initial={false} custom={direction} mode="wait">
@@ -134,7 +134,7 @@ export default function HeroCarousel({ ...props }) {
                 <div
                   className={`h-2.5 rounded-full transition-all duration-300 ${
                     index === currentSlide
-                      ? 'w-8 bg-orange-500'
+                      ? 'w-8 bg-white'
                       : 'w-2.5 bg-white/50 group-hover:bg-white/70'
                   }`}
                 />
