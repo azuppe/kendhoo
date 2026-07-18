@@ -1,7 +1,6 @@
 import type { Metadata } from 'next/types'
 
 import { CategoryNav } from '@/components/CategoryNav'
-import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
@@ -17,8 +16,8 @@ import { StoryAvatars } from '@/components/PostsMagazine/StoryAvatars'
 import { MustRead } from '@/components/PostsMagazine/MustRead'
 import { EditorsPick } from '@/components/PostsMagazine/EditorsPick'
 import { CategorySplit } from '@/components/PostsMagazine/CategorySplit'
-import { TopCreators } from '@/components/PostsMagazine/TopCreators'
 import { NewsletterBanner } from '@/components/PostsMagazine/NewsletterBanner'
+import { PostCard, PostCardCompact } from '@/components/PostsMagazine/PostCard'
 import { topAuthorsFromPosts } from '@/components/PostsMagazine/utils'
 import type { Category, Post } from '@/payload-types'
 
@@ -48,12 +47,12 @@ export default async function Page({ params, searchParams }: Args) {
     overrideAccess: false,
   })
 
-  // A category filter falls back to the classic paginated grid.
+  // A category filter shows a plain list of news cards, no magazine layout.
   if (category) {
     const posts = await payload.find({
       collection: 'posts',
       locale,
-      depth: 1,
+      depth: 2,
       limit: 12,
       overrideAccess: false,
       where: {
@@ -63,11 +62,15 @@ export default async function Page({ params, searchParams }: Args) {
       },
     })
 
+    const activeCategory = categories.docs.find((c) => c.slug === category)
+
     return (
       <div className="pt-32 pb-24">
         <PageClient />
-        <div className="container mb-16">
-          <h1>{t('posts')}</h1>
+        <div className="container mb-8">
+          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
+            {activeCategory?.title || t('posts')}
+          </h1>
         </div>
         <div className="mb-8">
           <CategoryNav categories={categories.docs} activeSlug={category} />
@@ -80,7 +83,13 @@ export default async function Page({ params, searchParams }: Args) {
             totalDocs={posts.totalDocs}
           />
         </div>
-        <CollectionArchive posts={posts.docs} />
+        <div className="container">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {posts.docs.map((post) => (
+              <PostCard key={post.id} post={post} locale={locale} />
+            ))}
+          </div>
+        </div>
         <div className="container">
           {posts.totalPages > 1 && posts.page && (
             <Pagination page={posts.page} totalPages={posts.totalPages} category={category} />
@@ -122,6 +131,7 @@ export default async function Page({ params, searchParams }: Args) {
   }
 
   const heroPost = take(1)[0]
+  const heroSidePosts = take(3)
   const latestNewsPosts = take(4)
   const mustReadPosts = take(4)
   const editorsPickPosts = take(5)
@@ -151,19 +161,32 @@ export default async function Page({ params, searchParams }: Args) {
       <div className="container">
         <div className="rounded-2xl bg-gray-50 border border-gray-200 px-6 py-8 text-center">
           <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-2">
-            Welcome to Buletin
+            {t('welcome-to-buletin')}
           </p>
           <h1 className="text-lg lg:text-2xl font-semibold text-gray-900 max-w-2xl mx-auto">
-            Craft narratives that ignite <span className="text-red-600">inspiration</span>,{' '}
-            <span className="text-red-600">knowledge</span>, and{' '}
-            <span className="text-red-600">entertainment</span>
+            {t.rich('welcome-headline', {
+              red: (chunks) => <span className="text-red-600">{chunks}</span>,
+            })}
           </h1>
         </div>
       </div>
 
+      <div className="mb-8">
+        <CategoryNav categories={categories.docs} />
+      </div>
+
       {heroPost && (
         <div className="container">
-          <HeroFeatured post={heroPost} locale={locale} />
+          <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 items-stretch">
+            <HeroFeatured post={heroPost} locale={locale} />
+            {heroSidePosts.length > 0 && (
+              <div className="flex flex-col justify-between gap-6">
+                {heroSidePosts.map((post) => (
+                  <PostCardCompact key={post.id} post={post} locale={locale} />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
 
@@ -200,14 +223,6 @@ export default async function Page({ params, searchParams }: Args) {
           ))}
         </div>
       )}
-
-      <div className="container">
-        <TopCreators creators={topCreators} />
-      </div>
-
-      <div className="container mb-8">
-        <CategoryNav categories={categories.docs} />
-      </div>
 
       <div className="container">
         <NewsletterBanner />

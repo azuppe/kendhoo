@@ -55,63 +55,61 @@ export default async function Post({ params: paramsPromise }: Args) {
       <PayloadRedirects disableNotFound url={url} />
 
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Main Article */}
-          <div className="col-span-2">
-            <PostHero post={post} />
-            <div className="bg-white rounded-2xl shadow-sm p-6 mt-6">
-              <RichText
-                className="prose max-w-none"
-                content={post.content}
-                enableGutter={false}
-              />
-            </div>
-
-            <Comments postId={post.id} />
+        {/* Main Article */}
+        <div>
+          <PostHero post={post} />
+          <div className="bg-white rounded-2xl shadow-sm p-6 mt-6">
+            <RichText
+              className="prose max-w-none"
+              content={post.content}
+              enableGutter={false}
+            />
           </div>
 
-          {/* Sidebar */}
-          <aside className="col-span-1 flex flex-col gap-6">
-            <div className="bg-white rounded-2xl shadow-sm p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-bold">Related News</h2>
-                <a href="#" className="text-sm text-blue-600 hover:underline">See all</a>
-              </div>
-              <div className="flex flex-col gap-4">
-                {relatedPosts.slice(0, 3).map((related, idx) => (
-                  <div key={idx} className="flex gap-3 items-start">
-                    {/* Image */}
-                    {related.meta?.image && typeof related.meta.image !== 'string' && (
-                      <div className="w-20 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
-                        <img
-                          src={related.meta.image.url || undefined}
-                          alt={related.title}
-                          className="object-cover w-full h-full"
-                        />
-                      </div>
+          <Comments postId={post.id} />
+        </div>
+
+        {/* Related News */}
+        {relatedPosts.length > 0 && (
+          <div className="bg-white rounded-2xl shadow-sm p-6 mt-10">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-bold">Related News</h2>
+              <a href="#" className="text-sm text-blue-600 hover:underline">See all</a>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {relatedPosts.slice(0, 3).map((related, idx) => (
+                <div key={idx} className="flex gap-3 items-start">
+                  {/* Image */}
+                  {related.meta?.image && typeof related.meta.image !== 'string' && (
+                    <div className="w-20 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
+                      <img
+                        src={related.meta.image.url || undefined}
+                        alt={related.title}
+                        className="object-cover w-full h-full"
+                      />
+                    </div>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    {/* Category badge */}
+                    {Array.isArray(related.categories) && related.categories.length > 0 && (
+                      <span className="inline-block mb-1 px-2 py-0.5 text-xs font-semibold rounded-full bg-pink-100 text-pink-600">
+                        {typeof related.categories[0] === 'object' ? related.categories[0].title : ''}
+                      </span>
                     )}
-                    <div className="flex-1 min-w-0">
-                      {/* Category badge */}
-                      {Array.isArray(related.categories) && related.categories.length > 0 && (
-                        <span className="inline-block mb-1 px-2 py-0.5 text-xs font-semibold rounded-full bg-pink-100 text-pink-600">
-                          {typeof related.categories[0] === 'object' ? related.categories[0].title : ''}
-                        </span>
-                      )}
-                      <div className="font-medium text-sm leading-tight line-clamp-2 mb-1">
-                        {related.title}
-                      </div>
-                      <div className="flex items-center text-xs text-gray-500 gap-2">
-                        <span>2.5m</span>
-                        <span>•</span>
-                        <span>{related.publishedAt ? new Date(related.publishedAt).toLocaleDateString() : ''}</span>
-                      </div>
+                    <div className="font-medium text-sm leading-tight line-clamp-2 mb-1">
+                      {related.title}
+                    </div>
+                    <div className="flex items-center text-xs text-gray-500 gap-2">
+                      <span>2.5m</span>
+                      <span>•</span>
+                      <span>{related.publishedAt ? new Date(related.publishedAt).toLocaleDateString() : ''}</span>
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
-          </aside>
-        </div>
+          </div>
+        )}
       </div>
     </article>
   )

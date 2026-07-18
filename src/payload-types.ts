@@ -412,6 +412,10 @@ export interface Page {
 export interface Post {
   id: string;
   title: string;
+  /**
+   * Cover photo shown on the post hero and post cards
+   */
+  coverImage?: (string | null) | Media;
   content: {
     root: {
       type: string;
@@ -428,7 +432,6 @@ export interface Post {
     [k: string]: unknown;
   };
   relatedPosts?: (string | Post)[] | null;
-  categories?: (string | Category)[] | null;
   island?: (string | null) | Island;
   meta?: {
     title?: string | null;
@@ -440,6 +443,7 @@ export interface Post {
   };
   publishedAt?: string | null;
   authors?: (string | User)[] | null;
+  categories?: (string | Category)[] | null;
   populatedAuthors?:
     | {
         id?: string | null;
@@ -463,36 +467,37 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
+ * via the `definition` "media".
  */
-export interface Category {
+export interface Media {
   id: string;
-  title: string;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  /**
-   * Short description of this category
-   */
-  description?: string | null;
-  /**
-   * Icon name (e.g., MapPin, Camera, Waves, Fish, Fork)
-   */
-  icon?: string | null;
-  /**
-   * Hex color code for category (e.g., #FF6B6B)
-   */
-  color?: string | null;
-  parent?: (string | null) | Category;
-  breadcrumbs?:
-    | {
-        doc?: (string | null) | Category;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  alt: string;
+  caption?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   updatedAt: string;
   createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -541,40 +546,6 @@ export interface Island {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: string;
-  alt: string;
-  caption?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -598,6 +569,39 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: string;
+  title: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  /**
+   * Short description of this category
+   */
+  description?: string | null;
+  /**
+   * Icon name (e.g., MapPin, Camera, Waves, Fish, Fork)
+   */
+  icon?: string | null;
+  /**
+   * Hex color code for category (e.g., #FF6B6B)
+   */
+  color?: string | null;
+  parent?: (string | null) | Category;
+  breadcrumbs?:
+    | {
+        doc?: (string | null) | Category;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1548,47 +1552,6 @@ export interface Event {
         id?: string | null;
       }[]
     | null;
-  /**
-   * Sticky price / booking card shown on the right.
-   */
-  priceCard: {
-    /**
-     * e.g. "TOP"
-     */
-    badge?: string | null;
-    /**
-     * e.g. "9 days"
-     */
-    durationLabel?: string | null;
-    /**
-     * e.g. "Osaka to Tokyo"
-     */
-    route?: string | null;
-    price: number;
-    originalPrice?: number | null;
-    currency?: string | null;
-    /**
-     * e.g. "Jul 24, 2026"
-     */
-    validOn?: string | null;
-    /**
-     * e.g. "AJJ5"
-     */
-    tripCode?: string | null;
-    buttonLabel?: string | null;
-    buttonUrl?: string | null;
-    /**
-     * Icon row under the button, e.g. Flight / Hotels / Tours.
-     */
-    includes?:
-      | {
-          icon?: ('flight' | 'hotels' | 'tours') | null;
-          label?: string | null;
-          sublabel?: string | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
   overviewTitle?: string | null;
   overviewDescription?: string | null;
   includedTitle?: string | null;
@@ -2536,9 +2499,9 @@ export interface TripOverviewBlockSelect<T extends boolean = true> {
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
+  coverImage?: T;
   content?: T;
   relatedPosts?: T;
-  categories?: T;
   island?: T;
   meta?:
     | T
@@ -2549,6 +2512,7 @@ export interface PostsSelect<T extends boolean = true> {
       };
   publishedAt?: T;
   authors?: T;
+  categories?: T;
   populatedAuthors?:
     | T
     | {
@@ -2587,28 +2551,6 @@ export interface EventsSelect<T extends boolean = true> {
         label?: T;
         sublabel?: T;
         id?: T;
-      };
-  priceCard?:
-    | T
-    | {
-        badge?: T;
-        durationLabel?: T;
-        route?: T;
-        price?: T;
-        originalPrice?: T;
-        currency?: T;
-        validOn?: T;
-        tripCode?: T;
-        buttonLabel?: T;
-        buttonUrl?: T;
-        includes?:
-          | T
-          | {
-              icon?: T;
-              label?: T;
-              sublabel?: T;
-              id?: T;
-            };
       };
   overviewTitle?: T;
   overviewDescription?: T;

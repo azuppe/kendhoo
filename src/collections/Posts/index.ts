@@ -66,6 +66,14 @@ export const Posts: CollectionConfig = {
       required: true,
     },
     {
+      name: 'coverImage',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Cover photo shown on the post hero and post cards',
+      },
+    },
+    {
       type: 'tabs',
       tabs: [
         {
@@ -109,15 +117,6 @@ export const Posts: CollectionConfig = {
               },
               hasMany: true,
               relationTo: 'posts',
-            },
-            {
-              name: 'categories',
-              type: 'relationship',
-              admin: {
-                position: 'sidebar',
-              },
-              hasMany: true,
-              relationTo: 'categories',
             },
             {
               name: 'island',
@@ -187,6 +186,15 @@ export const Posts: CollectionConfig = {
       },
       hasMany: true,
       relationTo: 'users',
+    },
+    {
+      name: 'categories',
+      type: 'relationship',
+      admin: {
+        position: 'sidebar',
+      },
+      hasMany: true,
+      relationTo: 'categories',
     },
     // This field is only used to populate the user data via the `populateAuthors` hook
     // This is because the `user` collection has access control locked to protect user privacy

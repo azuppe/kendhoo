@@ -6,11 +6,7 @@ import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 
-import { TripHeaderBlock } from '@/blocks/TripHeader/Component'
-import { TripOverviewBlock } from '@/blocks/TripOverview/Component'
-import { WhatsIncludedBlock } from '@/blocks/WhatsIncluded/Component'
-import { EventTimelineBlock } from '@/blocks/EventTimeline/Component'
-import { RecommendedToursBlock } from '@/blocks/RecommendedTours/Component'
+import { EventDetail } from '@/components/EventDetail'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { TypedLocale } from 'payload'
@@ -42,34 +38,12 @@ export default async function EventPage({ params: paramsPromise }: Args) {
   if (!event) return <PayloadRedirects url={url} />
 
   return (
-    <article className="pb-16">
+    <>
       <PageClient />
       <PayloadRedirects disableNotFound url={url} />
 
-      <TripHeaderBlock
-        images={event.images || []}
-        breadcrumbs={event.breadcrumbs}
-        title={event.title}
-        rating={event.rating}
-        reviewCount={event.reviewCount}
-        meta={event.tripMeta}
-        priceCard={event.priceCard}
-      />
-
-      <TripOverviewBlock title={event.overviewTitle} description={event.overviewDescription} />
-
-      {event.includedItems && event.includedItems.length > 0 && (
-        <WhatsIncludedBlock title={event.includedTitle} items={event.includedItems} />
-      )}
-
-      {event.itineraryItems && event.itineraryItems.length > 0 && (
-        <EventTimelineBlock title={event.itineraryTitle} items={event.itineraryItems} />
-      )}
-
-      {event.recommendedTours && event.recommendedTours.length > 0 && (
-        <RecommendedToursBlock title={event.recommendedTitle} tours={event.recommendedTours as any} />
-      )}
-    </article>
+      <EventDetail event={event} />
+    </>
   )
 }
 

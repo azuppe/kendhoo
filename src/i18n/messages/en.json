@@ -12,5 +12,12 @@
   "dashboard": "Dashboard",
   "previous": "Previous",
   "next": "Next",
-  "more-pages": "More pages"
+  "more-pages": "More pages",
+  "see-all": "See all",
+  "welcome-to-buletin": "Welcome to Buletin",
+  "welcome-headline": "Craft narratives that ignite <red>inspiration</red>, <red>knowledge</red>, and <red>entertainment</red>",
+  "get-first-update": "Get first update",
+  "newsletter-headline": "Get the news in front line by <red>subscribe</red> our latest updates",
+  "subscribe-button": "Subscribe",
+  "your-email": "Your email"
 }

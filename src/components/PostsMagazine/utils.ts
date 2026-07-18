@@ -1,6 +1,7 @@
 import type { Category, Media as MediaType, Post, Source, User } from '@/payload-types'
 
 export const getPostImage = (post: Post): MediaType | undefined => {
+  if (post.coverImage && typeof post.coverImage === 'object') return post.coverImage
   const image = post.meta?.image
   return image && typeof image === 'object' ? image : undefined
 }

@@ -120,25 +120,7 @@ export const TripHeaderBlock: React.FC<TripHeaderBlockProps> = ({
               {title}
             </h1>
 
-            {rating != null && (
-              <div className="flex items-center gap-2 mb-8">
-                <div className="flex items-center gap-0.5">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-4 h-4 ${
-                        i < Math.round(rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'
-                      }`}
-                    />
-                  ))}
-                </div>
-                {reviewCount != null && (
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
-                    {reviewCount} reviews
-                  </span>
-                )}
-              </div>
-            )}
+
 
             {meta && meta.length > 0 && (
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-gray-100 dark:border-gray-800">

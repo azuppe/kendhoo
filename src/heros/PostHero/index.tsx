@@ -9,15 +9,16 @@ import { useTranslations } from 'next-intl'
 export const PostHero: React.FC<{
   post: Post
 }> = ({ post }) => {
-  const { categories, meta: { image: metaImage } = {}, populatedAuthors, publishedAt, title } = post
+  const { categories, coverImage, meta: { image: metaImage } = {}, populatedAuthors, publishedAt, title } = post
+  const heroImage = coverImage && typeof coverImage === 'object' ? coverImage : metaImage
   const t = useTranslations()
 
   return (
     <div className="relative flex flex-col gap-0">
       {/* Post image */}
       <div className="w-full aspect-[3/1] md:aspect-[3/1.2] rounded-2xl overflow-hidden bg-gray-200 mb-6">
-        {metaImage && typeof metaImage !== 'string' && (
-          <Media fill imgClassName="object-cover w-full h-full" resource={metaImage} />
+        {heroImage && typeof heroImage !== 'string' && (
+          <Media fill imgClassName="object-cover w-full h-full" resource={heroImage} />
         )}
       </div>
       <div className="relative z-10 px-0 md:px-6 -mt-16 md:-mt-24">

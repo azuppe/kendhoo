@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { ArrowUpRight } from 'lucide-react'
 import React from 'react'
 
 import type { Post } from '@/payload-types'
@@ -17,8 +18,14 @@ export const PostCard: React.FC<{ post: Post; locale: string; className?: string
 
   return (
     <article className={className}>
-      <Link href={href} className="block aspect-[4/3] w-full overflow-hidden rounded-2xl bg-gray-100">
+      <Link
+        href={href}
+        className="relative block aspect-[4/3] w-full overflow-hidden rounded-2xl bg-gray-100"
+      >
         {image && <Media resource={image} imgClassName="object-cover w-full h-full aspect-[4/3]" />}
+        <span className="absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-xl bg-gray-900 text-white shadow-lg">
+          <ArrowUpRight className="h-4 w-4" />
+        </span>
       </Link>
       <div className="pt-3 space-y-2">
         <PostSourceLine post={post} />
@@ -43,9 +50,12 @@ export const PostCardCompact: React.FC<{ post: Post; locale: string; className?:
     <article className={`flex gap-3 ${className || ''}`}>
       <Link
         href={href}
-        className="shrink-0 block w-20 h-20 overflow-hidden rounded-xl bg-gray-100"
+        className="relative shrink-0 block w-20 h-20 overflow-hidden rounded-xl bg-gray-100"
       >
         {image && <Media resource={image} imgClassName="object-cover w-20 h-20" />}
+        <span className="absolute bottom-1 right-1 flex h-6 w-6 items-center justify-center rounded-lg bg-gray-900 text-white shadow">
+          <ArrowUpRight className="h-3 w-3" />
+        </span>
       </Link>
       <div className="space-y-1.5 min-w-0">
         <PostSourceLine post={post} />
