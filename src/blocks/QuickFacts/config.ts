@@ -23,6 +23,45 @@ export const QuickFacts: Block = {
       ],
     },
     {
+      name: 'description',
+      type: 'textarea',
+      localized: true,
+      admin: {
+        description: 'Stats layout only. Intro paragraph(s) shown next to the stats, e.g. an "About Us" blurb.',
+        condition: (_, siblingData) => siblingData?.layout !== 'mosaic',
+      },
+    },
+    {
+      name: 'button',
+      type: 'group',
+      admin: {
+        description: 'Stats layout only. Optional call-to-action shown under the description.',
+        condition: (_, siblingData) => siblingData?.layout !== 'mosaic',
+      },
+      fields: [
+        { name: 'label', type: 'text', localized: true },
+        { name: 'url', type: 'text' },
+      ],
+    },
+    {
+      name: 'image1',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Stats layout only. Large background photo of the collage.',
+        condition: (_, siblingData) => siblingData?.layout !== 'mosaic',
+      },
+    },
+    {
+      name: 'image2',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Stats layout only. Smaller rotated photo overlapping the first.',
+        condition: (_, siblingData) => siblingData?.layout !== 'mosaic',
+      },
+    },
+    {
       name: 'facts',
       type: 'array',
       required: true,

@@ -54,6 +54,7 @@ export type SupportedTimezones =
   | 'Asia/Singapore'
   | 'Asia/Tokyo'
   | 'Asia/Seoul'
+  | 'Australia/Brisbane'
   | 'Australia/Sydney'
   | 'Pacific/Guam'
   | 'Pacific/Noumea'
@@ -163,7 +164,7 @@ export interface Page {
       root: {
         type: string;
         children: {
-          type: string;
+          type: any;
           version: number;
           [k: string]: unknown;
         }[];
@@ -324,6 +325,7 @@ export interface Page {
     | MediaBlock
     | ArchiveBlock
     | BlogArchiveBlock
+    | LatestNewsV2Block
     | FormBlock
     | {
         badge?: string | null;
@@ -409,7 +411,7 @@ export interface Post {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -534,7 +536,7 @@ export interface Media {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -573,6 +575,13 @@ export interface User {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
   password?: string | null;
 }
 /**
@@ -584,7 +593,7 @@ export interface CallToActionBlock {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -630,7 +639,7 @@ export interface ContentBlock {
           root: {
             type: string;
             children: {
-              type: string;
+              type: any;
               version: number;
               [k: string]: unknown;
             }[];
@@ -683,7 +692,7 @@ export interface ArchiveBlock {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -713,35 +722,56 @@ export interface ArchiveBlock {
  * via the `definition` "BlogArchiveBlock".
  */
 export interface BlogArchiveBlock {
-  introContent?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  /**
+   * Small pill label shown above the section, e.g. "Latest News".
+   */
+  badge?: string | null;
+  /**
+   * Short line shown under the badge.
+   */
+  subtitle?: string | null;
+  /**
+   * Large heading shown on the right, e.g. "What's Happening Across the Islands?".
+   */
+  heading?: string | null;
+  /**
+   * The most recent post is featured large; the next two appear as thumbnails; the fourth is shown as a highlighted excerpt.
+   */
   limit?: number | null;
-  showCategories?: boolean | null;
-  showIslands?: boolean | null;
-  /**
-   * Leave empty to show all categories
-   */
-  categories?: (string | Category)[] | null;
-  /**
-   * Leave empty to show all islands
-   */
-  islands?: (string | Island)[] | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'blogArchive';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LatestNewsV2Block".
+ */
+export interface LatestNewsV2Block {
+  /**
+   * Large heading shown on the left, e.g. "Latest News".
+   */
+  heading?: string | null;
+  /**
+   * Short paragraph shown under the heading.
+   */
+  subtitle?: string | null;
+  link: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?: {
+      relationTo: 'pages';
+      value: string | Page;
+    } | null;
+    url?: string | null;
+    label: string;
+  };
+  /**
+   * How many recent posts to list on the right.
+   */
+  limit?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'latestNewsV2';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -754,7 +784,7 @@ export interface FormBlock {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -811,7 +841,7 @@ export interface Form {
               root: {
                 type: string;
                 children: {
-                  type: string;
+                  type: any;
                   version: number;
                   [k: string]: unknown;
                 }[];
@@ -841,6 +871,7 @@ export interface Form {
             label?: string | null;
             width?: number | null;
             defaultValue?: string | null;
+            placeholder?: string | null;
             options?:
               | {
                   label: string;
@@ -893,7 +924,7 @@ export interface Form {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -925,7 +956,7 @@ export interface Form {
           root: {
             type: string;
             children: {
-              type: string;
+              type: any;
               version: number;
               [k: string]: unknown;
             }[];
@@ -948,16 +979,69 @@ export interface Form {
  */
 export interface QuickFactsBlock {
   title?: string | null;
+  layout?: ('stats' | 'mosaic') | null;
   /**
-   * e.g. Population, Size, Atoll, Distance from Malé, Ferry Duration, Speedboat Duration, Airport, Time Zone, Language, Currency, Island Code
+   * Stats layout only. Intro paragraph(s) shown next to the stats, e.g. an "About Us" blurb.
+   */
+  description?: string | null;
+  /**
+   * Stats layout only. Optional call-to-action shown under the description.
+   */
+  button?: {
+    label?: string | null;
+    url?: string | null;
+  };
+  /**
+   * Stats layout only. Large background photo of the collage.
+   */
+  image1?: (string | null) | Media;
+  /**
+   * Stats layout only. Smaller rotated photo overlapping the first.
+   */
+  image2?: (string | null) | Media;
+  /**
+   * Stats layout e.g. Population, Size, Atoll, Distance from Malé, Ferry Duration, Speedboat Duration, Airport, Time Zone, Language, Currency, Island Code. Mosaic layout e.g. Spa, Explore, Native Cuisine, Weddings, Luxury Resorts.
    */
   facts: {
     /**
-     * Lucide icon name, e.g. Users, MapPin, Ship, Plane, Globe, Clock
+     * Stats layout only. Lucide icon name, e.g. Users, MapPin, Ship, Plane, Globe, Clock
      */
     icon?: string | null;
-    label: string;
-    value: string;
+    /**
+     * Stats layout: the value's caption. Mosaic layout: the tile heading, e.g. "SPA".
+     */
+    label?: string | null;
+    /**
+     * Stats layout only, e.g. "12,000".
+     */
+    value?: string | null;
+    /**
+     * Mosaic layout only. Short paragraph shown under the tile heading.
+     */
+    description?: string | null;
+    /**
+     * Mosaic layout only.
+     */
+    variant?: ('image' | 'color') | null;
+    /**
+     * Mosaic layout, photo tile only.
+     */
+    image?: (string | null) | Media;
+    /**
+     * Mosaic layout, color tile only.
+     */
+    color?: ('blue' | 'white') | null;
+    /**
+     * Mosaic layout only. Controls how many grid cells this tile fills.
+     */
+    span?: ('normal' | 'wide' | 'tall') | null;
+    /**
+     * Mosaic layout only. Optional call-to-action shown on the tile.
+     */
+    button?: {
+      label?: string | null;
+      url?: string | null;
+    };
     id?: string | null;
   }[];
   id?: string | null;
@@ -969,11 +1053,35 @@ export interface QuickFactsBlock {
  * via the `definition` "GalleryBlock".
  */
 export interface GalleryBlock {
+  /**
+   * Small label above the title, e.g. "GALLERY". Only used by the Coverflow layout.
+   */
+  eyebrow?: string | null;
   title?: string | null;
-  layout?: ('grid' | 'masonry' | 'slider') | null;
+  /**
+   * Short subheading below the title. Only used by the Coverflow layout.
+   */
+  description?: string | null;
+  layout?: ('grid' | 'masonry' | 'slider' | 'coverflow') | null;
+  /**
+   * Only used by the Coverflow layout.
+   */
+  viewMoreLabel?: string | null;
+  /**
+   * Only used by the Coverflow layout.
+   */
+  viewMoreUrl?: string | null;
   images: {
     image: string | Media;
     caption?: string | null;
+    /**
+     * Filter pill label for this image, e.g. "Italy", "Dubai". Only used by the Coverflow layout.
+     */
+    location?: string | null;
+    /**
+     * Shows a play icon on the card. Only used by the Coverflow layout.
+     */
+    isVideo?: boolean | null;
     id?: string | null;
   }[];
   id?: string | null;
@@ -1038,6 +1146,15 @@ export interface TimelineBlock {
  */
 export interface ContactInfoBlock {
   title?: string | null;
+  description?: string | null;
+  /**
+   * Large background photo
+   */
+  image1?: (string | null) | Media;
+  /**
+   * Smaller overlapping photo
+   */
+  image2?: (string | null) | Media;
   address?: string | null;
   phone?: string | null;
   email?: string | null;
@@ -1051,10 +1168,13 @@ export interface ContactInfoBlock {
          * e.g. Hospital, Police, Fire, Council, Harbor Master
          */
         label: string;
+        icon?: ('shield' | 'flame' | 'lifeBuoy' | 'cross' | 'phone') | null;
         phone: string;
         id?: string | null;
       }[]
     | null;
+  emergencyNoteTitle?: string | null;
+  emergencyNoteDescription?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'contactInfo';
@@ -1620,6 +1740,7 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         blogArchive?: T | BlogArchiveBlockSelect<T>;
+        latestNewsV2?: T | LatestNewsV2BlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         faq?:
           | T
@@ -1751,12 +1872,30 @@ export interface ArchiveBlockSelect<T extends boolean = true> {
  * via the `definition` "BlogArchiveBlock_select".
  */
 export interface BlogArchiveBlockSelect<T extends boolean = true> {
-  introContent?: T;
+  badge?: T;
+  subtitle?: T;
+  heading?: T;
   limit?: T;
-  showCategories?: T;
-  showIslands?: T;
-  categories?: T;
-  islands?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LatestNewsV2Block_select".
+ */
+export interface LatestNewsV2BlockSelect<T extends boolean = true> {
+  heading?: T;
+  subtitle?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+      };
+  limit?: T;
   id?: T;
   blockName?: T;
 }
@@ -1777,12 +1916,33 @@ export interface FormBlockSelect<T extends boolean = true> {
  */
 export interface QuickFactsBlockSelect<T extends boolean = true> {
   title?: T;
+  layout?: T;
+  description?: T;
+  button?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  image1?: T;
+  image2?: T;
   facts?:
     | T
     | {
         icon?: T;
         label?: T;
         value?: T;
+        description?: T;
+        variant?: T;
+        image?: T;
+        color?: T;
+        span?: T;
+        button?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+            };
         id?: T;
       };
   id?: T;
@@ -1793,13 +1953,19 @@ export interface QuickFactsBlockSelect<T extends boolean = true> {
  * via the `definition` "GalleryBlock_select".
  */
 export interface GalleryBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
   title?: T;
+  description?: T;
   layout?: T;
+  viewMoreLabel?: T;
+  viewMoreUrl?: T;
   images?:
     | T
     | {
         image?: T;
         caption?: T;
+        location?: T;
+        isVideo?: T;
         id?: T;
       };
   id?: T;
@@ -1853,6 +2019,9 @@ export interface TimelineBlockSelect<T extends boolean = true> {
  */
 export interface ContactInfoBlockSelect<T extends boolean = true> {
   title?: T;
+  description?: T;
+  image1?: T;
+  image2?: T;
   address?: T;
   phone?: T;
   email?: T;
@@ -1861,9 +2030,12 @@ export interface ContactInfoBlockSelect<T extends boolean = true> {
     | T
     | {
         label?: T;
+        icon?: T;
         phone?: T;
         id?: T;
       };
+  emergencyNoteTitle?: T;
+  emergencyNoteDescription?: T;
   id?: T;
   blockName?: T;
 }
@@ -2208,6 +2380,13 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2290,6 +2469,7 @@ export interface FormsSelect<T extends boolean = true> {
               label?: T;
               width?: T;
               defaultValue?: T;
+              placeholder?: T;
               options?:
                 | T
                 | {
@@ -2462,6 +2642,41 @@ export interface Header {
  */
 export interface Footer {
   id: string;
+  ctaHeading?: string | null;
+  ctaDescription?: string | null;
+  ctaButton: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?: {
+      relationTo: 'pages';
+      value: string | Page;
+    } | null;
+    url?: string | null;
+    label: string;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: ('default' | 'outline') | null;
+  };
+  /**
+   * e.g. "Do you have more questions? Send us an email!"
+   */
+  contactPrompt?: string | null;
+  contactEmail?: string | null;
+  address?: string | null;
+  phone?: string | null;
+  /**
+   * e.g. "Questions and suggestions"
+   */
+  phoneNote?: string | null;
+  socialLinks?:
+    | {
+        label: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  navColumnTitle?: string | null;
   navItems?:
     | {
         link: {
@@ -2477,6 +2692,11 @@ export interface Footer {
         id?: string | null;
       }[]
     | null;
+  copyrightText?: string | null;
+  privacyPolicyLabel?: string | null;
+  privacyPolicyUrl?: string | null;
+  creditText?: string | null;
+  creditUrl?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2508,6 +2728,31 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  ctaHeading?: T;
+  ctaDescription?: T;
+  ctaButton?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        appearance?: T;
+      };
+  contactPrompt?: T;
+  contactEmail?: T;
+  address?: T;
+  phone?: T;
+  phoneNote?: T;
+  socialLinks?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  navColumnTitle?: T;
   navItems?:
     | T
     | {
@@ -2522,6 +2767,11 @@ export interface FooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  copyrightText?: T;
+  privacyPolicyLabel?: T;
+  privacyPolicyUrl?: T;
+  creditText?: T;
+  creditUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -2536,7 +2786,7 @@ export interface BannerBlock {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -2559,17 +2809,6 @@ export interface BannerBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'banner';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CodeBlock".
- */
-export interface CodeBlock {
-  language?: ('typescript' | 'javascript' | 'css') | null;
-  code: string;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'code';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

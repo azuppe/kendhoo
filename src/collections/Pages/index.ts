@@ -4,6 +4,7 @@ import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Archive } from '../../blocks/ArchiveBlock/config'
 import { BlogArchive } from '../../blocks/BlogArchive/config'
+import { LatestNewsV2 } from '../../blocks/LatestNewsV2/config'
 import { CallToAction } from '../../blocks/CallToAction/config'
 import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
@@ -93,6 +94,7 @@ export const Pages: CollectionConfig = {
                 MediaBlock,
                 Archive,
                 BlogArchive,
+                LatestNewsV2,
                 FormBlock,
                 FaqBlock,
                 QuickFacts,

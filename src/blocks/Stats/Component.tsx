@@ -42,7 +42,7 @@ export const StatsBlock: React.FC<StatsBlockProps> = ({ title, description, imag
         <div className="grid grid-cols-1 lg:grid-cols-[1.8fr_1fr_1fr] lg:grid-rows-2 gap-6">
           <div className="lg:col-start-1 lg:row-start-1 flex flex-col justify-center">
             {title && (
-              <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-gray-100 leading-tight">
+              <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 leading-tight text-start">
                 {title}
               </h2>
             )}

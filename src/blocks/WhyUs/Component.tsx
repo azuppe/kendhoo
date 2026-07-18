@@ -28,7 +28,7 @@ export const WhyUsBlock: React.FC<WhyUsBlockProps> = ({
     <section className="py-16">
       <div className="container mx-auto px-4 max-w-5xl">
         {title && (
-          <h2 className="text-4xl md:text-5xl font-extrabold text-center text-gray-900 dark:text-gray-100 mb-16">
+          <h2 className="font-serif text-4xl md:text-5xl font-bold text-start text-gray-900 dark:text-gray-100 mb-16">
             {title}
           </h2>
         )}

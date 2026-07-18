@@ -29,7 +29,7 @@ export const RecommendedToursBlock: React.FC<RecommendedToursBlockProps> = ({ ti
     <section className="py-12">
       <div className="container mx-auto px-4 max-w-6xl">
         {title && (
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-8">
+          <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-8 text-start">
             {title}
           </h2>
         )}

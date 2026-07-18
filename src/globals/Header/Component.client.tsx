@@ -53,15 +53,17 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
   }, [])
 
   return (
-    <header
-      id="header"
-      className="w-full z-50 top-0 bg-white/80 backdrop-blur-md h-[74px] fixed inset-0 transition-all duration-300 border-b border-gray-100 shadow-sm"
-    >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-8 py-3">
-        <Link href="/" className="me-auto flex items-center gap-2 group">
-          <span className="text-2xl font-extrabold tracking-tight text-primary group-hover:text-blue-700 transition-colors">KendhooOnline</span>
+    <div className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-6 md:pt-4 transition-all duration-300">
+      <header
+        id="header"
+        className="max-w-6xl mx-auto flex items-center justify-between gap-4 rounded-full border border-white/40 bg-white/60 backdrop-blur-lg px-4 py-2 md:px-5 shadow-[0_4px_24px_rgba(0,0,0,0.06)] transition-all duration-300"
+      >
+        <Link href="/" className="me-auto flex items-center gap-2 group shrink-0">
           <span className="p-2 bg-blue-100 rounded-full border border-blue-200 group-hover:bg-blue-200 transition-colors">
             <Waves size={20} className="text-blue-500" />
+          </span>
+          <span className="text-xl font-extrabold tracking-tight text-primary group-hover:text-blue-700 transition-colors">
+            KendhooOnline
           </span>
         </Link>
 
@@ -72,7 +74,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
         <div className="flex items-center gap-2 md:gap-3">
           <Link
             href="/search"
-            className="flex items-center gap-1 bg-white border border-gray-300 px-3 py-2 rounded-full shadow-sm hover:bg-gray-50 transition-colors"
+            className="flex items-center gap-1 p-2 rounded-full hover:bg-black/5 transition-colors"
           >
             <span className="sr-only">{t('search')}</span>
             <SearchIcon className="w-5 text-blue-500" />
@@ -81,8 +83,8 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
         </div>
 
         {/* Mobile nav toggle (optional, for future expansion) */}
-      </div>
-    </header>
+      </header>
+    </div>
   )
 }
 

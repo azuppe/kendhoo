@@ -49,7 +49,7 @@ export const FaqBlock: React.FC<FaqBlockProps> = ({
             </span>
           )}
           {title && (
-            <h2 className="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 leading-tight text-start">
               {title}
             </h2>
           )}

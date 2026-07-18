@@ -17,7 +17,9 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({ title, ite
   return (
     <section className="py-12 bg-gray-50 dark:bg-gray-950">
       <div className="container mx-auto px-4 max-w-6xl">
-        {title && <h2 className="text-2xl md:text-3xl font-bold mb-10 text-center">{title}</h2>}
+        {title && (
+          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-10 text-start">{title}</h2>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {items?.map((item, i) => (
             <blockquote

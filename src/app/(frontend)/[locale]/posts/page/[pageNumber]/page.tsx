@@ -1,5 +1,6 @@
 import type { Metadata } from 'next/types'
 
+import { CategoryNav } from '@/components/CategoryNav'
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
@@ -18,16 +19,29 @@ type Args = {
     pageNumber: string
     locale: TypedLocale
   }>
+  searchParams: Promise<{
+    category?: string
+  }>
 }
 
-export default async function Page({ params: paramsPromise }: Args) {
+export default async function Page({ params: paramsPromise, searchParams }: Args) {
   const { pageNumber, locale } = await paramsPromise
+  const { category } = await searchParams
   const payload = await getPayload({ config: configPromise })
   const t = await getTranslations()
 
   const sanitizedPageNumber = Number(pageNumber)
 
   if (!Number.isInteger(sanitizedPageNumber)) notFound()
+
+  const categories = await payload.find({
+    collection: 'categories',
+    locale,
+    depth: 0,
+    limit: 100,
+    sort: 'title',
+    overrideAccess: false,
+  })
 
   const posts = await payload.find({
     collection: 'posts',
@@ -36,6 +50,13 @@ export default async function Page({ params: paramsPromise }: Args) {
     locale,
     page: sanitizedPageNumber,
     overrideAccess: false,
+    where: category
+      ? {
+          'categories.slug': {
+            equals: category,
+          },
+        }
+      : undefined,
   })
 
   return (
@@ -45,6 +66,10 @@ export default async function Page({ params: paramsPromise }: Args) {
         <div className="prose  max-w-none">
           <h1>{t('posts')}</h1>
         </div>
+      </div>
+
+      <div className="mb-8">
+        <CategoryNav categories={categories.docs} activeSlug={category} />
       </div>
 
       <div className="container mb-8">
@@ -60,7 +85,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       <div className="container">
         {posts.totalPages > 1 && posts.page && (
-          <Pagination page={posts.page} totalPages={posts.totalPages} />
+          <Pagination page={posts.page} totalPages={posts.totalPages} category={category} />
         )}
       </div>
     </div>

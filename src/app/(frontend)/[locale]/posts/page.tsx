@@ -1,5 +1,6 @@
 import type { Metadata } from 'next/types'
 
+import { CategoryNav } from '@/components/CategoryNav'
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
@@ -16,12 +17,25 @@ type Args = {
   params: Promise<{
     locale: TypedLocale
   }>
+  searchParams: Promise<{
+    category?: string
+  }>
 }
 
-export default async function Page({ params }: Args) {
+export default async function Page({ params, searchParams }: Args) {
   const { locale = 'en' } = await params
+  const { category } = await searchParams
   const t = await getTranslations()
   const payload = await getPayload({ config: configPromise })
+
+  const categories = await payload.find({
+    collection: 'categories',
+    locale,
+    depth: 0,
+    limit: 100,
+    sort: 'title',
+    overrideAccess: false,
+  })
 
   const posts = await payload.find({
     collection: 'posts',
@@ -29,6 +43,13 @@ export default async function Page({ params }: Args) {
     depth: 1,
     limit: 12,
     overrideAccess: false,
+    where: category
+      ? {
+          'categories.slug': {
+            equals: category,
+          },
+        }
+      : undefined,
   })
 
   return (
@@ -38,6 +59,10 @@ export default async function Page({ params }: Args) {
         <div className="  max-w-none">
           <h1>{t('posts')}</h1>
         </div>
+      </div>
+
+      <div className="mb-8">
+        <CategoryNav categories={categories.docs} activeSlug={category} />
       </div>
 
       <div className="container mb-8">
@@ -53,7 +78,7 @@ export default async function Page({ params }: Args) {
 
       <div className="container">
         {posts.totalPages > 1 && posts.page && (
-          <Pagination page={posts.page} totalPages={posts.totalPages} />
+          <Pagination page={posts.page} totalPages={posts.totalPages} category={category} />
         )}
       </div>
     </div>

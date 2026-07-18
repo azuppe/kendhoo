@@ -15,7 +15,9 @@ export const TimelineBlock: React.FC<TimelineBlockProps> = ({ title, events }) =
   return (
     <section className="py-12">
       <div className="container mx-auto px-4 max-w-3xl">
-        {title && <h2 className="text-2xl md:text-3xl font-bold mb-10 text-center">{title}</h2>}
+        {title && (
+          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-10 text-start">{title}</h2>
+        )}
         <ol className="relative border-s border-gray-200 dark:border-gray-800 ms-3">
           {events?.map((event, i) => (
             <li key={i} className="mb-10 ms-6">

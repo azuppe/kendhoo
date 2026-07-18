@@ -1,69 +1,45 @@
 import type { Block } from 'payload'
 
-import {
-  FixedToolbarFeature,
-  HeadingFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
-
 export const BlogArchive: Block = {
   slug: 'blogArchive',
   interfaceName: 'BlogArchiveBlock',
   fields: [
     {
-      name: 'introContent',
-      type: 'richText',
+      name: 'badge',
+      type: 'text',
       localized: true,
-      editor: lexicalEditor({
-        features: ({ rootFeatures }) => {
-          return [
-            ...rootFeatures,
-            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-            FixedToolbarFeature(),
-            InlineToolbarFeature(),
-          ]
-        },
-      }),
-      label: 'Intro Content',
+      defaultValue: 'Latest News',
+      admin: {
+        description: 'Small pill label shown above the section, e.g. "Latest News".',
+      },
+    },
+    {
+      name: 'subtitle',
+      type: 'text',
+      localized: true,
+      admin: {
+        description: 'Short line shown under the badge.',
+      },
+    },
+    {
+      name: 'heading',
+      type: 'text',
+      localized: true,
+      admin: {
+        description: 'Large heading shown on the right, e.g. "What\'s Happening Across the Islands?".',
+      },
     },
     {
       name: 'limit',
       type: 'number',
-      defaultValue: 12,
-      label: 'Posts Per Page',
-    },
-    {
-      name: 'showCategories',
-      type: 'checkbox',
-      defaultValue: true,
-      label: 'Show Category Filter',
-    },
-    {
-      name: 'showIslands',
-      type: 'checkbox',
-      defaultValue: true,
-      label: 'Show Island Filter',
-    },
-    {
-      name: 'categories',
-      type: 'relationship',
-      relationTo: 'categories',
-      hasMany: true,
-      label: 'Featured Categories',
+      defaultValue: 4,
+      label: 'Number Of Posts',
       admin: {
-        description: 'Leave empty to show all categories',
-      },
-    },
-    {
-      name: 'islands',
-      type: 'relationship',
-      relationTo: 'islands' as any,
-      hasMany: true,
-      label: 'Featured Islands',
-      admin: {
-        description: 'Leave empty to show all islands',
+        description:
+          'The most recent post is featured large; the next two appear as thumbnails; the fourth is shown as a highlighted excerpt.',
       },
     },
   ],
 }
+
+export default BlogArchive

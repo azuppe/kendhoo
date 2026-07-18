@@ -5,6 +5,7 @@ import type { Page } from '@/payload-types'
 
 import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
 import { BlogArchiveBlock } from '@/blocks/BlogArchive/Component'
+import { LatestNewsV2Block } from '@/blocks/LatestNewsV2/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
@@ -29,6 +30,7 @@ import { TypedLocale } from 'payload'
 const blockComponents = {
   archive: ArchiveBlock,
   blogArchive: BlogArchiveBlock,
+  latestNewsV2: LatestNewsV2Block,
   content: ContentBlock,
   cta: CallToActionBlock,
   formBlock: FormBlock,

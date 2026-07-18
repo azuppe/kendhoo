@@ -41,33 +41,27 @@ export const PlacesGridBlock: React.FC<PlacesGridBlockProps> = async ({
   return (
     <section className="py-12">
       <div className="container mx-auto px-4 max-w-6xl">
-        {title && <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">{title}</h2>}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {title && (
+          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-8 text-start">{title}</h2>
+        )}
+        <div className="grid grid-cols-2 md:grid-cols-3">
           {places.map((place: any) => (
             <article
               key={place.id}
-              className="rounded-2xl overflow-hidden bg-white dark:bg-gray-900 shadow hover:shadow-lg transition-shadow"
+              className="group relative aspect-square overflow-hidden bg-gray-900"
             >
               {place.image && (
-                <div className="h-48 bg-gray-100 dark:bg-gray-800">
-                  <Media resource={place.image} imgClassName="w-full h-48 object-cover" />
-                </div>
+                <Media
+                  resource={place.image}
+                  imgClassName="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  fill
+                />
               )}
-              <div className="p-4">
-                <h3 className="text-lg font-bold mb-1">{place.name}</h3>
-                {place.location?.latitude && place.location?.longitude && (
-                  <p className="text-xs text-gray-500 mb-2">
-                    📍 {place.location.latitude}, {place.location.longitude}
-                  </p>
-                )}
-                {place.description && (
-                  <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
-                    {place.description}
-                  </p>
-                )}
-                {place.openingHours && (
-                  <p className="text-xs text-gray-500 mt-2">🕐 {place.openingHours}</p>
-                )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute inset-0 flex items-center justify-center p-4">
+                <h3 className="text-white text-center text-base md:text-lg font-bold leading-snug drop-shadow-md">
+                  {place.name}
+                </h3>
               </div>
             </article>
           ))}

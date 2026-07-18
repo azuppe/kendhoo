@@ -1,308 +1,158 @@
-'use client'
-
-import { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
-import { useLocale } from 'next-intl'
+import configPromise from '@payload-config'
+import { getPayload, TypedLocale } from 'payload'
+import { ArrowRight, ArrowUpRight, Plus } from 'lucide-react'
 
-import type { Post, Category } from '@/payload-types'
-import RichText from '@/components/RichText'
+import type { Post } from '@/payload-types'
+import { Media } from '@/components/Media'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 
-interface BlogArchiveBlockProps {
-  introContent?: any
-  limit?: number
-  showCategories?: boolean
-  showIslands?: boolean
-  categories?: (Category | string)[]
-  islands?: any[]
+export type BlogArchiveBlockProps = {
+  badge?: string | null
+  subtitle?: string | null
+  heading?: string | null
+  limit?: number | null
+  locale: TypedLocale
 }
 
-type PostWithRelations = Post & {
-  island?: any
-}
-
-export const BlogArchiveBlock: React.FC<BlogArchiveBlockProps> = ({
-  introContent,
-  limit = 12,
-  showCategories = true,
-  showIslands = true,
-  categories: initialCategories = [],
-  islands: initialIslands = [],
-}) => {
-  const locale = useLocale()
-  const [posts, setPosts] = useState<PostWithRelations[]>([])
-  const [allCategories, setAllCategories] = useState<Category[]>([])
-  const [allIslands, setAllIslands] = useState<any[]>([])
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
-  const [selectedIslands, setSelectedIslands] = useState<string[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-
-  // Fetch all posts, categories, and islands
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true)
-
-        // Fetch posts
-        const postsRes = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/posts?limit=999&where[_status][equals]=published`,
-        )
-        const { docs: allPosts } = await postsRes.json()
-        setPosts(allPosts || [])
-
-        // Fetch all categories
-        if (showCategories) {
-          const categoriesRes = await fetch(
-            `${process.env.NEXT_PUBLIC_SERVER_URL}/api/categories?limit=999`,
-          )
-          const { docs: cats } = await categoriesRes.json()
-          setAllCategories(cats || [])
-        }
-
-        // Fetch all islands
-        if (showIslands) {
-          try {
-            const islandsRes = await fetch(
-              `${process.env.NEXT_PUBLIC_SERVER_URL}/api/islands?limit=999`,
-            )
-            const { docs: isles } = await islandsRes.json()
-            setAllIslands(isles || [])
-          } catch (err) {
-            console.warn('Islands collection not yet available')
-          }
-        }
-      } catch (err) {
-        console.error('Error fetching blog data:', err)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchData()
-  }, [showCategories, showIslands])
-
-  // Filter posts based on selected categories and islands
-  const filteredPosts = posts.filter((post) => {
-    const matchesCategory =
-      selectedCategories.length === 0 ||
-      (Array.isArray(post.categories) &&
-        post.categories.some((cat: any) => {
-          const catId = typeof cat === 'string' ? cat : cat?.id
-          return selectedCategories.includes(catId)
-        }))
-
-    const matchesIsland =
-      selectedIslands.length === 0 ||
-      (post.island &&
-        selectedIslands.includes(typeof post.island === 'string' ? post.island : post.island?.id))
-
-    return matchesCategory && matchesIsland
+const postHref = (post: Post, locale: TypedLocale) =>
+  generatePreviewPath({
+    slug: typeof post.slug === 'string' ? post.slug : '',
+    collection: 'posts',
+    locale,
   })
 
-  const handleCategoryToggle = useCallback((categoryId: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(categoryId) ? prev.filter((id) => id !== categoryId) : [...prev, categoryId],
-    )
-  }, [])
+export const BlogArchiveBlock: React.FC<BlogArchiveBlockProps> = async ({
+  badge,
+  subtitle,
+  heading,
+  limit = 4,
+  locale,
+}) => {
+  const payload = await getPayload({ config: configPromise })
 
-  const handleIslandToggle = useCallback((islandId: string) => {
-    setSelectedIslands((prev) =>
-      prev.includes(islandId) ? prev.filter((id) => id !== islandId) : [...prev, islandId],
-    )
-  }, [])
+  const { docs: posts } = await payload.find({
+    collection: 'posts',
+    depth: 2,
+    locale,
+    limit: limit || 4,
+    sort: '-publishedAt',
+    where: { _status: { equals: 'published' } },
+  })
 
-  const getCategoryColor = (cat: any) => {
-    if (!cat) return '#3B82F6'
-    if (typeof cat === 'string') return '#3B82F6'
-    return (cat as any)?.color || '#3B82F6'
-  }
+  if (!posts?.length) return null
+
+  const [heroPost, ...rest] = posts
+  const thumbPosts = rest.slice(0, 2)
+  const quotePost = rest[2]
+
+  const heroAuthors = (heroPost.populatedAuthors || [])
+    .map((a) => a?.name)
+    .filter((n): n is string => !!n)
 
   return (
-    <section className="py-16">
-      <div className="container mx-auto px-4 max-w-7xl">
-        {/* Intro Content */}
-        {introContent && (
-          <div className="mb-12 prose prose-lg dark:prose-invert max-w-none">
-            <RichText content={introContent} />
+    <section className="py-16 bg-lime-50/60 dark:bg-lime-950/10 rounded-3xl">
+      <div className="container mx-auto px-4 max-w-6xl">
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-10">
+          <div className="max-w-xs">
+            {badge && (
+              <span className="inline-flex items-center gap-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-full px-4 py-2 text-sm font-medium mb-4">
+                <span className="w-2 h-2 rounded-full bg-lime-500" />
+                {badge}
+              </span>
+            )}
+            {subtitle && <p className="text-gray-600 dark:text-gray-400">{subtitle}</p>}
           </div>
-        )}
-
-        {/* Filters */}
-        <div className="mb-12 space-y-6">
-          {/* Category Filter */}
-          {showCategories && allCategories.length > 0 && (
-            <div>
-              <h3 className="text-lg font-semibold mb-4 rtl:text-right">
-                {locale === 'dv' ? 'ވިސްނޫນުތަކާއި ތާވަލެއް' : 'Categories'}
-              </h3>
-              <div className="flex flex-wrap gap-2 rtl:justify-end">
-                {allCategories.map((category) => {
-                  const catId = category?.id || (typeof category === 'string' ? category : '')
-                  return (
-                    <button
-                      key={catId}
-                      onClick={() => handleCategoryToggle(catId)}
-                      className={`px-4 py-2 rounded-full transition-all ${
-                        selectedCategories.includes(catId)
-                          ? 'text-white'
-                          : 'bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700'
-                      }`}
-                      style={
-                        selectedCategories.includes(catId)
-                          ? { backgroundColor: getCategoryColor(category) }
-                          : undefined
-                      }
-                    >
-                      {typeof category === 'string' ? category : (category as any)?.title}
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* Island Filter */}
-          {showIslands && allIslands.length > 0 && (
-            <div>
-              <h3 className="text-lg font-semibold mb-4 rtl:text-right">
-                {locale === 'dv' ? 'ތިރާވެތް' : 'Islands'}
-              </h3>
-              <div className="flex flex-wrap gap-2 rtl:justify-end">
-                {allIslands.map((island) => {
-                  const islandId = island?.id || (typeof island === 'string' ? island : '')
-                  return (
-                    <button
-                      key={islandId}
-                      onClick={() => handleIslandToggle(islandId)}
-                      className={`px-4 py-2 rounded-full transition-all ${
-                        selectedIslands.includes(islandId)
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700'
-                      }`}
-                    >
-                      {typeof island === 'string' ? island : island?.name}
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
+          {heading && (
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-start lg:max-w-xl leading-tight text-gray-900 dark:text-gray-50">
+              {heading}
+            </h2>
           )}
         </div>
 
-        {/* Blog Posts Grid */}
-        {isLoading ? (
-          <div className="text-center py-12">
-            <p className="text-gray-600 dark:text-gray-400">
-              {locale === 'dv' ? 'ދިރާސަކުރަނީ...' : 'Loading...'}
-            </p>
-          </div>
-        ) : filteredPosts.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-gray-600 dark:text-gray-400 text-lg">
-              {locale === 'dv' ? 'ކިޔަވެ ދެވިފަދާ އިبارަތްތަކެއް ނެތް.' : 'No posts found.'}
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredPosts.slice(0, limit).map((post) => {
-              const postCategories = Array.isArray(post.categories) ? post.categories : []
-              const postSlug = typeof post.slug === 'string' ? post.slug : ''
-              const postTitle = typeof post.title === 'string' ? post.title : 'Untitled'
-
-              return (
-                <Link
-                  key={post.id}
-                  href={generatePreviewPath({
-                    slug: postSlug,
-                    collection: 'posts',
-                    locale: locale,
-                  })}
-                  className="group block"
-                >
-                  <article className="h-full flex flex-col bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow">
-                    {/* Featured Image */}
-                    {post.meta?.image && (
-                      <div className="h-48 overflow-hidden bg-gray-200 dark:bg-gray-800">
-                        <img
-                          src={
-                            typeof post.meta.image === 'string'
-                              ? post.meta.image
-                              : `${process.env.NEXT_PUBLIC_SERVER_URL}${(post.meta.image as any)?.url}`
-                          }
-                          alt={postTitle}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                        />
-                      </div>
-                    )}
-
-                    <div className="flex flex-col flex-grow p-4">
-                      {/* Categories */}
-                      {postCategories.length > 0 && (
-                        <div className="flex flex-wrap gap-2 mb-3 rtl:justify-end">
-                          {postCategories.slice(0, 2).map((cat: any) => {
-                            const catId =
-                              typeof cat === 'string' ? cat : (cat as Category)?.id || ''
-                            const catTitle =
-                              typeof cat === 'string' ? cat : (cat as Category)?.title || ''
-                            return (
-                              <span
-                                key={catId}
-                                className="px-2 py-1 text-xs text-white rounded"
-                                style={{
-                                  backgroundColor: getCategoryColor(cat),
-                                }}
-                              >
-                                {catTitle}
-                              </span>
-                            )
-                          })}
-                        </div>
-                      )}
-
-                      {/* Island Badge */}
-                      {post.island && (
-                        <div className="mb-2">
-                          <span className="px-2 py-1 text-xs bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200 rounded">
-                            📍{' '}
-                            {typeof post.island === 'string'
-                              ? post.island
-                              : (post.island as any)?.name}
-                          </span>
-                        </div>
-                      )}
-
-                      {/* Title */}
-                      <h3 className="text-lg font-bold mb-2 group-hover:text-blue-600 transition-colors rtl:text-right line-clamp-2">
-                        {postTitle}
-                      </h3>
-
-                      {/* Date */}
-                      {post.publishedAt && (
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-auto rtl:text-right">
-                          {new Date(post.publishedAt).toLocaleDateString(
-                            locale === 'dv' ? 'dv-MV' : 'en-US',
-                          )}
-                        </p>
-                      )}
-                    </div>
-                  </article>
-                </Link>
-              )
-            })}
-          </div>
-        )}
-
-        {/* Show More Button */}
-        {filteredPosts.length > limit && (
-          <div className="mt-12 text-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {heroPost && (
             <Link
-              href="/blog"
-              className="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+              href={postHref(heroPost, locale)}
+              className="group relative rounded-3xl overflow-hidden aspect-[4/5] sm:aspect-square lg:aspect-auto lg:h-[520px] block"
             >
-              {locale === 'dv' ? 'އިތުރު ބަސްވަެވްޖާ ކިޔަވާ' : 'View All Posts'}
+              {heroPost.meta?.image && (
+                <Media
+                  resource={heroPost.meta.image}
+                  fill
+                  imgClassName="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <span className="absolute top-5 right-5 w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-lg">
+                <ArrowUpRight className="w-5 h-5 text-gray-900" />
+              </span>
+              <div className="absolute bottom-6 left-6 right-6 text-white">
+                <h3 className="text-3xl md:text-4xl font-bold mb-2 line-clamp-2">
+                  {heroPost.title}
+                </h3>
+                {heroPost.meta?.description && (
+                  <p className="text-white/85 mb-4 max-w-md line-clamp-2">
+                    {heroPost.meta.description}
+                  </p>
+                )}
+                <div className="flex items-center -space-x-3">
+                  {heroAuthors.slice(0, 3).map((name, i) => (
+                    <span
+                      key={i}
+                      className="w-9 h-9 rounded-full bg-gray-700 border-2 border-white flex items-center justify-center text-xs font-bold uppercase"
+                    >
+                      {name.charAt(0)}
+                    </span>
+                  ))}
+                  <span className="w-9 h-9 rounded-full bg-lime-500 border-2 border-white flex items-center justify-center">
+                    <Plus className="w-4 h-4 text-white" />
+                  </span>
+                </div>
+              </div>
             </Link>
+          )}
+
+          <div className="flex flex-col gap-6">
+            {!!thumbPosts.length && (
+              <div className="grid grid-cols-2 gap-4">
+                {thumbPosts.map((post) => (
+                  <Link
+                    key={post.id}
+                    href={postHref(post, locale)}
+                    className="group relative rounded-3xl overflow-hidden aspect-square block bg-gray-100 dark:bg-gray-800"
+                  >
+                    {post.meta?.image && (
+                      <Media
+                        resource={post.meta.image}
+                        fill
+                        imgClassName="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    )}
+                    <span className="absolute top-3 right-3 w-9 h-9 rounded-full bg-lime-500 flex items-center justify-center shadow group-hover:rotate-90 transition-transform duration-300">
+                      <Plus className="w-4 h-4 text-white" />
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            )}
+
+            {quotePost && (
+              <div>
+                <p className="text-2xl md:text-3xl leading-snug font-medium text-gray-900 dark:text-gray-50 mb-4">
+                  {quotePost.meta?.description || quotePost.title}
+                </p>
+                <Link
+                  href={postHref(quotePost, locale)}
+                  className="inline-flex items-center gap-2 font-medium text-gray-900 dark:text-gray-50 hover:gap-3 transition-all"
+                >
+                  Read More <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </section>
   )

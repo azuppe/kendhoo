@@ -345,7 +345,14 @@ export const seed = async ({
   const homeLayout = (locale: 'en' | 'dv') => [
     {
       blockType: 'quickFacts',
-      title: locale === 'en' ? 'Quick Facts' : 'ކުއިކް ފެކްޓްސް',
+      title: locale === 'en' ? 'About This Guide' : 'މި ގައިޑާ ބެހޭ',
+      description:
+        locale === 'en'
+          ? 'We believe exploring the Maldives is more than reaching a destination—it\'s about the moments you collect along the way. Whether you\'re seeking adventure, relaxation, or local culture, this guide helps you plan around what truly matters to you.\nWith up-to-date island info, trusted local businesses, and a passion for these islands, we make travel planning effortless and inspiring.'
+          : 'ދިވެހިރާއްޖޭގެ ރަށްރަށް ބެލުމަކީ ހަމައެކަނި މަންޒިލަކަށް ދިއުމަށްވުރެ ބޮޑު ކަމެއް ކަމަށް އަޅުގަނޑުމެން ގަބޫލުކުރަން. މި ގައިޑް އެހީތެރިވެދޭނެ ތިޔަބޭފުޅުންނަށް އެންމެ މުހިންމު ކަންތައްތަކާ ގުޅިގެން ދަތުރު ރޭވުމަށް.',
+      button: { label: locale === 'en' ? 'More about' : 'އިތުރަށް', url: '/about' },
+      image1: imageHomeDoc.id,
+      image2: image3Doc.id,
       facts: quickFactsData.map((f) => ({ icon: f.icon, label: f[locale].label, value: f[locale].value })),
     },
     {
@@ -368,13 +375,14 @@ export const seed = async ({
     },
     {
       blockType: 'blogArchive',
-      introContent: lexicalText(
-        locale === 'en' ? 'The latest news from the islands.' : 'ރަށްރަށުގެ އެންމެ ފަހުގެ ޚަބަރުތައް.',
-        locale === 'en' ? 'Latest News' : 'އެންމެ ފަހުގެ ޚަބަރު',
-      ),
-      limit: 6,
-      showCategories: true,
-      showIslands: true,
+      badge: locale === 'en' ? 'Latest News' : 'އެންމެ ފަހުގެ ޚަބަރު',
+      subtitle:
+        locale === 'en'
+          ? 'Fresh stories and updates from the islands.'
+          : 'ރަށްރަށުގެ އެންމެ ފަހުގެ ވާހަކަތަކާއި މައުލޫމާތު.',
+      heading:
+        locale === 'en' ? "What's Happening Across the Islands?" : 'ރަށްރަށުގައި ހިނގަނީ ކޮންކަމެއް؟',
+      limit: 4,
     },
     {
       blockType: 'testimonials',
@@ -388,10 +396,21 @@ export const seed = async ({
     {
       blockType: 'contactInfo',
       title: locale === 'en' ? 'Contact & Emergency' : 'ގުޅުއްވުމަށާއި އިމަރޖެންސީ',
+      description:
+        locale === 'en'
+          ? 'Reach out to us for general inquiries or assistance. For urgent help, please use the emergency numbers below.'
+          : 'އާންމު މައުލޫމާތަށް ނުވަތަ އެހީތެރިކަމަށް ގުޅުއްވާ. އަވަސް އެހީއަކަށް ބޭނުންވެއްޖެނަމަ ތިރީގައިވާ އިމަރޖެންސީ ނަންބަރުތަކަށް ގުޅުއްވާ.',
+      image1: imageHomeDoc.id,
+      image2: image1Doc.id,
       address: locale === 'en' ? 'Kaafu Atoll, Maldives' : 'ކާފު އަތޮޅު، ދިވެހިރާއްޖެ',
       phone: '+960 330 0000',
       email: 'info@islandguide.mv',
       emergencyContacts: emergencyContactsData[locale],
+      emergencyNoteTitle: locale === 'en' ? 'In an emergency?' : 'އިމަރޖެންސީއެއްގައި؟',
+      emergencyNoteDescription:
+        locale === 'en'
+          ? "Please call the relevant emergency number immediately. We're here to help keep everyone safe."
+          : 'ވަގުތުން ކަމާގުޅޭ އިމަރޖެންސީ ނަންބަރަށް ގުޅުއްވާ. ހުރިހާ އެންމެންގެ ސަލާމަތަށް ތިބީ ތިޔަބޭފުޅުންނާއެކު.',
     },
   ]
 
@@ -475,10 +494,27 @@ export const seed = async ({
     slug: 'footer',
     locale: 'en',
     data: {
+      ctaHeading: 'Stories Worth\nSharing',
+      ctaDescription: 'Explore, discover, and stay connected to island life.',
+      ctaButton: { type: 'custom', url: '/posts', label: 'Read the News' },
+      contactPrompt: 'Do you have more questions? Send us an email!',
+      contactEmail: 'hello@kendhoo.com',
+      address: 'Kendhoo, Baa Atoll, Maldives',
+      phone: '+960 660 1234',
+      phoneNote: 'Questions and suggestions',
+      socialLinks: [
+        { label: 'Instagram', url: 'https://instagram.com' },
+        { label: 'Twitter (X)', url: 'https://twitter.com' },
+        { label: 'Facebook', url: 'https://facebook.com' },
+      ],
+      navColumnTitle: 'Explore',
       navItems: [
         { link: { type: 'custom', label: 'Admin', url: '/admin' } },
         { link: { type: 'custom', label: 'Home', url: '/' } },
       ],
+      copyrightText: '© 2024 KendhooOnline. All rights reserved.',
+      privacyPolicyLabel: 'Privacy Policy',
+      privacyPolicyUrl: '/',
     },
     req,
   })
@@ -486,10 +522,18 @@ export const seed = async ({
     slug: 'footer',
     locale: 'dv',
     data: {
+      ctaHeading: 'ހިއްސާކުރުމަށް\nޤާބިލު ވާހަކަތައް',
+      ctaDescription: 'ރަށުގެ ދިރިއުޅުމާ ބެހޭ ޚަބަރު ހޯއްދަވާ، ބައްލަވާ.',
+      ctaButton: { type: 'custom', url: '/posts', label: 'ޚަބަރު ބައްލަވާ' },
+      contactPrompt: 'އިތުރު ސުވާލެއް އޮތްތޯ؟ އީމެއިލް ކުރައްވާ!',
+      phoneNote: 'ސުވާލާއި ހުށަހެޅުންތައް',
+      navColumnTitle: 'ބައްލަވާ',
       navItems: [
         { id: footer.navItems![0].id, link: { type: 'custom', url: '/admin', label: 'ޕެނަލް' } },
         { id: footer.navItems![1].id, link: { type: 'custom', url: '/', label: 'މައި ޞަފްޙާ' } },
       ],
+      copyrightText: '© 2024 ކެންދޫއޮންލައިން. ހުރިހާ ހައްޤުތަކެއް ރައްކާތެރިކުރެވިފައި.',
+      privacyPolicyLabel: 'ޕްރައިވެސީ ޕޮލިސީ',
     },
     req,
   })

@@ -235,13 +235,13 @@ export const quickFactsData = [
 
 export const emergencyContactsData = {
   en: [
-    { label: 'Police', phone: '119' },
-    { label: 'Ambulance / Fire', phone: '102' },
-    { label: 'Coast Guard', phone: '191' },
+    { label: 'Police', phone: '119', icon: 'shield' },
+    { label: 'Ambulance / Fire', phone: '102', icon: 'flame' },
+    { label: 'Coast Guard', phone: '191', icon: 'lifeBuoy' },
   ],
   dv: [
-    { label: 'ފުލުހުން', phone: '119' },
-    { label: 'އެމްބިއުލާންސް / ފަޔަރ', phone: '102' },
-    { label: 'ކޯސްޓް ގާޑް', phone: '191' },
+    { label: 'ފުލުހުން', phone: '119', icon: 'shield' },
+    { label: 'އެމްބިއުލާންސް / ފަޔަރ', phone: '102', icon: 'flame' },
+    { label: 'ކޯސްޓް ގާޑް', phone: '191', icon: 'lifeBuoy' },
   ],
 }

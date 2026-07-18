@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 import { cn } from '@/utilities/ui'
 import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
+import { Lato } from 'next/font/google'
 import React from 'react'
 
 import { Footer } from '@/globals/Footer/Component'
@@ -18,6 +18,13 @@ import { NextIntlClientProvider } from 'next-intl'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 import localization from '@/i18n/localization'
+
+const lato = Lato({
+  subsets: ['latin'],
+  weight: ['100', '300', '400', '700', '900'],
+  variable: '--font-lato',
+  display: 'swap',
+})
 
 type Args = {
   children: React.ReactNode
@@ -41,7 +48,7 @@ export default async function RootLayout({ children, params }: Args) {
 
   return (
     <html
-      className={cn(GeistSans.variable, GeistMono.variable)}
+      className={cn(lato.variable, GeistMono.variable)}
       lang={locale}
       dir={direction}
       suppressHydrationWarning
@@ -50,8 +57,8 @@ export default async function RootLayout({ children, params }: Args) {
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
-      <body>
-      
+      <body className="font-sans">
+
           <NextIntlClientProvider messages={messages}>
             <LivePreviewListener />
             <Header locale={locale} />
