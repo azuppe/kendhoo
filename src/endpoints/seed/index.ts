@@ -471,6 +471,8 @@ export const seed = async ({
       navItems: [
         { link: { type: 'custom', label: 'Home', url: '/' } },
         { link: { type: 'custom', label: 'News', url: '/posts' } },
+        { link: { type: 'custom', label: 'Search', url: '/search' } },
+        { link: { type: 'custom', label: 'Admin', url: '/admin', newTab: true } },
       ],
     },
     req,
@@ -483,6 +485,11 @@ export const seed = async ({
       navItems: [
         { id: header.navItems![0].id, link: { type: 'custom', url: '/', label: 'މައި ޞަފްޙާ' } },
         { id: header.navItems![1].id, link: { type: 'custom', url: '/posts', label: 'ޚަބަރު' } },
+        { id: header.navItems![2].id, link: { type: 'custom', url: '/search', label: 'ހޯއްދަވާ' } },
+        {
+          id: header.navItems![3].id,
+          link: { type: 'custom', url: '/admin', label: 'ޕެނަލް', newTab: true },
+        },
       ],
     },
     req,
