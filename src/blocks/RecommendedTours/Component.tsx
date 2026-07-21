@@ -29,7 +29,7 @@ export const RecommendedToursBlock: React.FC<RecommendedToursBlockProps> = ({ ti
     <section className="py-12">
       <div className="container mx-auto px-4  ">
         {title && (
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-8 text-start">
+          <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-8 text-start">
             {title}
           </h2>
         )}
@@ -41,7 +41,7 @@ export const RecommendedToursBlock: React.FC<RecommendedToursBlockProps> = ({ ti
               <CardTag
                 key={i}
                 {...(tour.link ? { href: tour.link } : {})}
-                className="rounded-2xl overflow-hidden bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg transition-shadow flex flex-col"
+                className="rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-shadow flex flex-col"
               >
                 <div className="relative h-48">
                   {tour.image && typeof tour.image === 'object' && (
@@ -62,7 +62,7 @@ export const RecommendedToursBlock: React.FC<RecommendedToursBlockProps> = ({ ti
                 </div>
 
                 <div className="p-4 flex flex-col gap-2 flex-1">
-                  <h3 className="font-bold text-gray-900 dark:text-gray-100">{tour.title}</h3>
+                  <h3 className="font-bold text-gray-900">{tour.title}</h3>
 
                   <div className="flex items-center gap-3 text-xs text-gray-500">
                     {tour.durationLabel && <span>{tour.durationLabel}</span>}
@@ -70,7 +70,7 @@ export const RecommendedToursBlock: React.FC<RecommendedToursBlockProps> = ({ ti
                   </div>
 
                   <div className="flex items-baseline gap-2">
-                    <span className="text-lg font-extrabold text-gray-900 dark:text-gray-100">
+                    <span className="text-lg font-extrabold text-gray-900">
                       {tour.currency} ${tour.price?.toLocaleString()}
                     </span>
                     {tour.originalPrice != null && (
@@ -89,7 +89,7 @@ export const RecommendedToursBlock: React.FC<RecommendedToursBlockProps> = ({ ti
                       {tour.tags.map((tag, ti) => (
                         <span
                           key={ti}
-                          className="px-2 py-0.5 text-[11px] rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
+                          className="px-2 py-0.5 text-[11px] rounded-full bg-gray-100 text-gray-600"
                         >
                           {tag.label}
                         </span>
@@ -107,7 +107,7 @@ export const RecommendedToursBlock: React.FC<RecommendedToursBlockProps> = ({ ti
                     <button
                       type="button"
                       aria-label="Save"
-                      className="w-10 h-10 shrink-0 flex items-center justify-center rounded-full border border-gray-200 dark:border-gray-800 text-gray-400 hover:text-gray-900 transition-colors"
+                      className="w-10 h-10 shrink-0 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 hover:text-gray-900 transition-colors"
                     >
                       <Heart className="w-4 h-4" />
                     </button>

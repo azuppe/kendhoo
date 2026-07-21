@@ -52,20 +52,20 @@ export const BlogArchiveBlock: React.FC<BlogArchiveBlockProps> = async ({
     .filter((n): n is string => !!n)
 
   return (
-    <section className="py-16 bg-gray-50 dark:bg-gray-900/40 rounded-3xl">
+    <section className="py-16 bg-gray-50 rounded-3xl">
       <div className="container mx-auto px-4  ">
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-10">
           <div className="max-w-xs">
             {badge && (
-              <span className="inline-flex items-center gap-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-full px-4 py-2 text-sm font-medium mb-4">
+              <span className="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-full px-4 py-2 text-sm font-medium mb-4">
                 <span className="w-2 h-2 rounded-full bg-gray-900" />
                 {badge}
               </span>
             )}
-            {subtitle && <p className="text-gray-600 dark:text-gray-400">{subtitle}</p>}
+            {subtitle && <p className="text-gray-600">{subtitle}</p>}
           </div>
           {heading && (
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-start lg:max-w-xl leading-tight text-gray-900 dark:text-gray-50">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-start lg:max-w-xl leading-tight text-gray-900">
               {heading}
             </h2>
           )}
@@ -121,7 +121,7 @@ export const BlogArchiveBlock: React.FC<BlogArchiveBlockProps> = async ({
                   <Link
                     key={post.id}
                     href={postHref(post, locale)}
-                    className="group relative rounded-3xl overflow-hidden aspect-square block bg-gray-100 dark:bg-gray-800"
+                    className="group relative rounded-3xl overflow-hidden aspect-square block bg-gray-100"
                   >
                     {post.meta?.image && (
                       <Media
@@ -140,12 +140,12 @@ export const BlogArchiveBlock: React.FC<BlogArchiveBlockProps> = async ({
 
             {quotePost && (
               <div>
-                <p className="text-2xl md:text-3xl leading-snug font-medium text-gray-900 dark:text-gray-50 mb-4">
+                <p className="text-2xl md:text-3xl leading-snug font-medium text-gray-900 mb-4">
                   {quotePost.meta?.description || quotePost.title}
                 </p>
                 <Link
                   href={postHref(quotePost, locale)}
-                  className="inline-flex items-center gap-2 font-medium text-gray-900 dark:text-gray-50 hover:gap-3 transition-all"
+                  className="inline-flex items-center gap-2 font-medium text-gray-900 hover:gap-3 transition-all"
                 >
                   Read More <ArrowRight className="w-4 h-4" />
                 </Link>

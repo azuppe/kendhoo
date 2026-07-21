@@ -45,7 +45,7 @@ export const GalleryCoverflow: React.FC<{
       <div className="container mx-auto px-4   text-center">
         {eyebrow && <p className="text-sm font-semibold tracking-wide text-gray-900 mb-3">{eyebrow}</p>}
         {title && (
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-4 text-start">
+          <h2 className="  text-4xl md:text-5xl font-bold text-gray-900 mb-4 text-start">
             {title}
           </h2>
         )}

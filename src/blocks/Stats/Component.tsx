@@ -18,12 +18,12 @@ export type StatsBlockProps = {
 }
 
 const StatCard: React.FC<{ stat: StatItem; className?: string }> = ({ stat, className }) => (
-  <div className={`rounded-2xl bg-gray-50 dark:bg-gray-900 p-6 flex flex-col ${className || ''}`}>
-    <p className="text-4xl font-extrabold text-gray-900 dark:text-gray-100">{stat.number}</p>
-    <p className="text-gray-500 dark:text-gray-400 mt-2">{stat.label}</p>
+  <div className={`rounded-2xl bg-gray-50 p-6 flex flex-col ${className || ''}`}>
+    <p className="text-4xl font-extrabold text-gray-900">{stat.number}</p>
+    <p className="text-gray-500 mt-2">{stat.label}</p>
     {stat.link?.label && (
       <CMSLink
-        className="mt-6 inline-flex items-center gap-1.5 self-start rounded-full bg-white dark:bg-gray-800 px-4 py-2 text-sm font-medium"
+        className="mt-6 inline-flex items-center gap-1.5 self-start rounded-full bg-white px-4 py-2 text-sm font-medium"
         appearance="default"
         {...stat.link}
       >
@@ -42,12 +42,12 @@ export const StatsBlock: React.FC<StatsBlockProps> = ({ title, description, imag
         <div className="grid grid-cols-1 lg:grid-cols-[1.8fr_1fr_1fr] lg:grid-rows-2 gap-6">
           <div className="lg:col-start-1 lg:row-start-1 flex flex-col justify-center">
             {title && (
-              <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 leading-tight text-start">
+              <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 leading-tight text-start">
                 {title}
               </h2>
             )}
             {description && (
-              <p className="text-gray-500 dark:text-gray-400 leading-relaxed mt-6 max-w-md">
+              <p className="text-gray-500 leading-relaxed mt-6 max-w-md">
                 {description}
               </p>
             )}

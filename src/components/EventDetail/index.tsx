@@ -68,12 +68,12 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
           )}
 
           {breadcrumbs && breadcrumbs.length > 0 && (
-            <nav className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-3">
+            <nav className="flex items-center gap-2 text-xs text-gray-500 mb-3">
               {breadcrumbs.map((crumb, i) => (
                 <React.Fragment key={crumb.id || i}>
                   {i > 0 && <span>/</span>}
                   {crumb.url ? (
-                    <a href={crumb.url} className="hover:text-gray-800 dark:hover:text-gray-200">
+                    <a href={crumb.url} className="hover:text-gray-800">
                       {crumb.label}
                     </a>
                   ) : (
@@ -84,23 +84,23 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
             </nav>
           )}
 
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-3">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
             {title}
           </h1>
 
           {tripMeta && tripMeta.length > 0 && (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-gray-100 dark:border-gray-800">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-gray-100">
               {tripMeta.map((item, i) => {
                 const Icon = metaIcons[item.icon || 'duration']
                 return (
                   <div key={item.id || i} className="flex items-start gap-2">
                     <Icon className="w-5 h-5 text-gray-400 mt-0.5 shrink-0" />
                     <div>
-                      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 leading-tight">
+                      <p className="text-sm font-semibold text-gray-900 leading-tight">
                         {item.label}
                       </p>
                       {item.sublabel && (
-                        <p className="text-xs text-gray-500 dark:text-gray-400 leading-tight">
+                        <p className="text-xs text-gray-500 leading-tight">
                           {item.sublabel}
                         </p>
                       )}
@@ -118,11 +118,11 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
         <section className="py-12">
           <div className="container mx-auto px-4">
             {overviewTitle && (
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 text-start">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 text-start">
                 {overviewTitle}
               </h2>
             )}
-            <div className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed space-y-4">
+            <div className="text-sm text-gray-600 leading-relaxed space-y-4">
               {overviewDescription
                 .split(/\n+/)
                 .filter(Boolean)
@@ -139,15 +139,15 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
         <section className="py-12">
           <div className="container mx-auto px-4">
             {includedTitle && (
-              <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-start">
+              <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-start">
                 {includedTitle}
               </h2>
             )}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 rounded-2xl bg-gray-50 border border-gray-100 p-6">
               {includedItems.map((item, i) => (
                 <div key={item.id || i} className="flex items-start gap-2">
                   <CheckCircle2 className="w-5 h-5 text-gray-900 shrink-0 mt-0.5" />
-                  <span className="text-sm text-gray-700 dark:text-gray-300">{item.label}</span>
+                  <span className="text-sm text-gray-700">{item.label}</span>
                 </div>
               ))}
             </div>
@@ -160,13 +160,13 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
         <section className="py-12">
           <div className="container mx-auto px-4">
             {itineraryTitle && (
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-start">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 text-start">
                 {itineraryTitle}
               </h2>
             )}
 
             <div className="relative">
-              <div className="absolute left-[7px] top-2 bottom-2 w-px bg-gray-200 dark:bg-gray-800" />
+              <div className="absolute left-[7px] top-2 bottom-2 w-px bg-gray-200" />
 
               {itineraryItems.map((item, i) => {
                 const isOpen = openDay === i
@@ -175,10 +175,10 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
                 return (
                   <div
                     key={item.id || i}
-                    className={isLast ? '' : 'border-b border-gray-100 dark:border-gray-800 mb-6 pb-6'}
+                    className={isLast ? '' : 'border-b border-gray-100 mb-6 pb-6'}
                   >
                     <div className="relative flex items-start gap-4">
-                      <span className="relative z-10 mt-1.5 shrink-0 w-3.5 h-3.5 rounded-full border-2 border-gray-900 dark:border-gray-100 bg-white dark:bg-gray-950" />
+                      <span className="relative z-10 mt-1.5 shrink-0 w-3.5 h-3.5 rounded-full border-2 border-gray-900 bg-white" />
 
                       <button
                         type="button"
@@ -186,7 +186,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
                         className="flex-1 flex items-start justify-between gap-4 text-left"
                         aria-expanded={isOpen}
                       >
-                        <span className="inline-block px-3 py-1 rounded-full border border-gray-200 dark:border-gray-700 text-xs font-medium text-gray-600 dark:text-gray-400">
+                        <span className="inline-block px-3 py-1 rounded-full border border-gray-200 text-xs font-medium text-gray-600">
                           {item.dayLabel}
                         </span>
                         {isOpen ? (
@@ -198,14 +198,14 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
                     </div>
 
                     <div className="ml-[26px] mt-2">
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                      <h3 className="text-lg font-bold text-gray-900">
                         {item.title}
                       </h3>
 
                       {isOpen && (
                         <>
                           {item.description && (
-                            <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mt-2">
+                            <p className="text-sm text-gray-500 leading-relaxed mt-2">
                               {item.description}
                             </p>
                           )}
@@ -240,7 +240,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
         <section className="py-12">
           <div className="container mx-auto ">
             {recommendedTitle && (
-              <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-8 text-start">
+              <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-8 text-start">
                 {recommendedTitle}
               </h2>
             )}
@@ -252,7 +252,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
                   <CardTag
                     key={tour.id || i}
                     {...(tour.link ? { href: tour.link } : {})}
-                    className="rounded-2xl overflow-hidden bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg transition-shadow flex flex-col"
+                    className="rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-shadow flex flex-col"
                   >
                     <div className="relative h-48">
                       {tour.image && typeof tour.image === 'object' && (
@@ -273,7 +273,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
                     </div>
 
                     <div className="p-4 flex flex-col gap-2 flex-1">
-                      <h3 className="font-bold text-gray-900 dark:text-gray-100">{tour.title}</h3>
+                      <h3 className="font-bold text-gray-900">{tour.title}</h3>
 
                       <div className="flex items-center gap-3 text-xs text-gray-500">
                         {tour.durationLabel && <span>{tour.durationLabel}</span>}
@@ -281,7 +281,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
                       </div>
 
                       <div className="flex items-baseline gap-2">
-                        <span className="text-lg font-extrabold text-gray-900 dark:text-gray-100">
+                        <span className="text-lg font-extrabold text-gray-900">
                           {tour.currency} ${tour.price?.toLocaleString()}
                         </span>
                         {tour.originalPrice != null && (
@@ -300,7 +300,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
                           {tour.tags.map((tag, ti) => (
                             <span
                               key={tag.id || ti}
-                              className="px-2 py-0.5 text-[11px] rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
+                              className="px-2 py-0.5 text-[11px] rounded-full bg-gray-100 text-gray-600"
                             >
                               {tag.label}
                             </span>
@@ -318,7 +318,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
                         <button
                           type="button"
                           aria-label="Save"
-                          className="w-10 h-10 shrink-0 flex items-center justify-center rounded-full border border-gray-200 dark:border-gray-800 text-gray-400 hover:text-gray-900 transition-colors"
+                          className="w-10 h-10 shrink-0 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 hover:text-gray-900 transition-colors"
                         >
                           <Heart className="w-4 h-4" />
                         </button>

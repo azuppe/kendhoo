@@ -10,12 +10,12 @@ export const TripOverviewBlock: React.FC<TripOverviewBlockProps> = ({ title, des
     <section className="py-12">
       <div className="container mx-auto px-4 max-w-3xl">
         {title && (
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4 text-start">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 text-start">
             {title}
           </h2>
         )}
         {description && (
-          <div className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed space-y-4">
+          <div className="text-sm text-gray-600 leading-relaxed space-y-4">
             {description
               .split(/\n+/)
               .filter(Boolean)

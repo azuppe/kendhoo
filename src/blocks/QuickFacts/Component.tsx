@@ -61,7 +61,7 @@ export const QuickFactsBlock: React.FC<QuickFactsBlockProps> = ({
               <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 text-start">{title}</h2>
             )}
             {description && (
-              <div className="text-gray-600 dark:text-gray-400 leading-relaxed space-y-4 mb-8 max-w-md">
+              <div className="text-gray-600 leading-relaxed space-y-4 mb-8 max-w-md">
                 {description
                   .split(/\n+/)
                   .filter(Boolean)
@@ -73,7 +73,7 @@ export const QuickFactsBlock: React.FC<QuickFactsBlockProps> = ({
             {button?.label && (
               <div className="relative inline-block">
                 <svg
-                  className="hidden lg:block absolute -left-24 -bottom-20 w-[420px] h-[200px] text-gray-300 dark:text-gray-700 pointer-events-none"
+                  className="hidden lg:block absolute -left-24 -bottom-20 w-[420px] h-[200px] text-gray-300 pointer-events-none"
                   viewBox="0 0 420 200"
                   fill="none"
                 >
@@ -84,7 +84,7 @@ export const QuickFactsBlock: React.FC<QuickFactsBlockProps> = ({
                     strokeDasharray="6 6"
                   />
                 </svg>
-                <Send className="hidden lg:block absolute -right-24 -bottom-8 w-5 h-5 rotate-[50deg] text-gray-400 dark:text-gray-600" />
+                <Send className="hidden lg:block absolute -right-24 -bottom-8 w-5 h-5 rotate-[50deg] text-gray-400" />
                 <a
                   href={button.url || '#'}
                   className="relative inline-flex items-center justify-center px-7 py-3 rounded-full bg-gray-900 text-white font-medium hover:bg-black transition-colors"
@@ -106,7 +106,7 @@ export const QuickFactsBlock: React.FC<QuickFactsBlockProps> = ({
                         {base}
                         {suffix && <span className="text-gray-900">{suffix}</span>}
                       </span>
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                      <span className="text-sm text-gray-500">
                         {fact.label}
                       </span>
                     </div>
@@ -119,7 +119,7 @@ export const QuickFactsBlock: React.FC<QuickFactsBlockProps> = ({
           {hasImages && (
             <div className="relative aspect-square max-w-lg mx-auto lg:mx-0 w-full">
               <svg
-                className="hidden lg:block absolute -top-14 -right-10 w-40 h-40 text-gray-300 dark:text-gray-700 pointer-events-none"
+                className="hidden lg:block absolute -top-14 -right-10 w-40 h-40 text-gray-300 pointer-events-none"
                 viewBox="0 0 160 160"
                 fill="none"
               >
@@ -136,7 +136,7 @@ export const QuickFactsBlock: React.FC<QuickFactsBlockProps> = ({
                 </div>
               )}
               {image2 && (
-                <div className="absolute bottom-[-6%] right-[-8%] w-[62%] aspect-square rounded-3xl overflow-hidden shadow-2xl rotate-[18deg] ring-8 ring-white dark:ring-gray-950">
+                <div className="absolute bottom-[-6%] right-[-8%] w-[62%] aspect-square rounded-3xl overflow-hidden shadow-2xl rotate-[18deg] ring-8 ring-white">
                   <Media resource={image2} imgClassName="w-full h-full object-cover" fill />
                 </div>
               )}

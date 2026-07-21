@@ -45,7 +45,7 @@ export const BusinessDirectoryBlock: React.FC<BusinessDirectoryBlockProps> = asy
     <section className="py-12">
       <div className="container mx-auto px-4  ">
         {title && (
-          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-8 text-start">{title}</h2>
+          <h2 className="  text-4xl md:text-5xl font-bold mb-8 text-start">{title}</h2>
         )}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {businesses.map((biz: any) => {

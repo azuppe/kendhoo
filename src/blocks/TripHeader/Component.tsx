@@ -98,12 +98,12 @@ export const TripHeaderBlock: React.FC<TripHeaderBlockProps> = ({
         )}
 
         {breadcrumbs && breadcrumbs.length > 0 && (
-          <nav className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-3">
+          <nav className="flex items-center gap-2 text-xs text-gray-500 mb-3">
             {breadcrumbs.map((crumb, i) => (
               <React.Fragment key={i}>
                 {i > 0 && <span>/</span>}
                 {crumb.url ? (
-                  <a href={crumb.url} className="hover:text-gray-800 dark:hover:text-gray-200">
+                  <a href={crumb.url} className="hover:text-gray-800">
                     {crumb.label}
                   </a>
                 ) : (
@@ -116,25 +116,25 @@ export const TripHeaderBlock: React.FC<TripHeaderBlockProps> = ({
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-3">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
               {title}
             </h1>
 
 
 
             {meta && meta.length > 0 && (
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-gray-100 dark:border-gray-800">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-gray-100">
                 {meta.map((item, i) => {
                   const Icon = metaIcons[item.icon || 'duration']
                   return (
                     <div key={i} className="flex items-start gap-2">
                       <Icon className="w-5 h-5 text-gray-400 mt-0.5 shrink-0" />
                       <div>
-                        <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 leading-tight">
+                        <p className="text-sm font-semibold text-gray-900 leading-tight">
                           {item.label}
                         </p>
                         {item.sublabel && (
-                          <p className="text-xs text-gray-500 dark:text-gray-400 leading-tight">
+                          <p className="text-xs text-gray-500 leading-tight">
                             {item.sublabel}
                           </p>
                         )}
@@ -148,7 +148,7 @@ export const TripHeaderBlock: React.FC<TripHeaderBlockProps> = ({
 
           {priceCard && (
             <div className="lg:col-span-1">
-              <div className="sticky top-24 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 shadow-sm">
+              <div className="sticky top-24 rounded-2xl border border-gray-200 p-6 shadow-sm">
                 {priceCard.badge && (
                   <span className="inline-block px-2.5 py-1 rounded-md bg-gray-900 text-white text-[10px] font-bold tracking-wide mb-3">
                     {priceCard.badge}
@@ -156,16 +156,16 @@ export const TripHeaderBlock: React.FC<TripHeaderBlockProps> = ({
                 )}
 
                 {priceCard.durationLabel && (
-                  <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                  <p className="text-sm font-semibold text-gray-900">
                     {priceCard.durationLabel}
                   </p>
                 )}
                 {priceCard.route && (
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{priceCard.route}</p>
+                  <p className="text-sm text-gray-500 mb-4">{priceCard.route}</p>
                 )}
 
                 <div className="flex items-baseline gap-2 mb-1">
-                  <span className="text-2xl font-extrabold text-gray-900 dark:text-gray-100">
+                  <span className="text-2xl font-extrabold text-gray-900">
                     {priceCard.currency} ${priceCard.price?.toLocaleString()}
                   </span>
                   {priceCard.originalPrice != null && (
@@ -176,13 +176,13 @@ export const TripHeaderBlock: React.FC<TripHeaderBlockProps> = ({
                 </div>
 
                 {priceCard.validOn && (
-                  <p className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 mb-1">
+                  <p className="flex items-center gap-1.5 text-xs text-gray-500 mb-1">
                     <Calendar className="w-3.5 h-3.5" />
                     Valid on {priceCard.validOn}
                   </p>
                 )}
                 {priceCard.tripCode && (
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-5">
+                  <p className="text-xs text-gray-500 mb-5">
                     Trip Code: {priceCard.tripCode}
                   </p>
                 )}
@@ -194,10 +194,10 @@ export const TripHeaderBlock: React.FC<TripHeaderBlockProps> = ({
                       return (
                         <div
                           key={i}
-                          className="flex flex-col items-center text-center gap-1 rounded-xl border border-gray-100 dark:border-gray-800 py-3 px-1"
+                          className="flex flex-col items-center text-center gap-1 rounded-xl border border-gray-100 py-3 px-1"
                         >
                           <Icon className="w-4 h-4 text-gray-500" />
-                          <span className="text-[11px] font-medium text-gray-700 dark:text-gray-300 leading-tight">
+                          <span className="text-[11px] font-medium text-gray-700 leading-tight">
                             {inc.label}
                           </span>
                           {inc.sublabel && (

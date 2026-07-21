@@ -15,7 +15,7 @@ export type TestimonialsBlockProps = {
 
 export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({ title, items }) => {
   return (
-    <section className="py-12 bg-gray-50 dark:bg-gray-950">
+    <section className="py-12 bg-gray-50">
       <div className="container mx-auto px-4  ">
         {title && (
           <h2 className="font-serif text-4xl md:text-5xl font-bold mb-10 text-start">{title}</h2>
@@ -24,9 +24,9 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({ title, ite
           {items?.map((item, i) => (
             <blockquote
               key={i}
-              className="p-6 rounded-2xl bg-white dark:bg-gray-900 shadow flex flex-col gap-4"
+              className="p-6 rounded-2xl bg-white shadow flex flex-col gap-4"
             >
-              <p className="text-gray-700 dark:text-gray-300 italic">&ldquo;{item.quote}&rdquo;</p>
+              <p className="text-gray-700 italic">&ldquo;{item.quote}&rdquo;</p>
               <footer className="flex items-center gap-3 mt-auto">
                 {item.photo && (
                   <div className="w-10 h-10 rounded-full overflow-hidden shrink-0">

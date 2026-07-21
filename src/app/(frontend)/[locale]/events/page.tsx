@@ -38,7 +38,7 @@ export default async function EventsPage({ params }: Args) {
       <PageClient />
 
       <div className="container mx-auto px-4  ">
-        <h1 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-12 text-start">
+        <h1 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-start">
           Most Popular Places
         </h1>
 
@@ -84,20 +84,20 @@ export default async function EventsPage({ params }: Args) {
                 </div>
 
                 <div className="w-full md:w-1/2">
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-900">
                     {event.title}
                   </h3>
                   {subtitle && (
-                    <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">{subtitle}</p>
+                    <p className="text-sm text-gray-400 mt-1">{subtitle}</p>
                   )}
                   {event.overviewDescription && (
-                    <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mt-4 max-w-md">
+                    <p className="text-sm text-gray-500 leading-relaxed mt-4 max-w-md">
                       {event.overviewDescription}
                     </p>
                   )}
                   <a
                     href={`/${locale}/events/${event.slug}`}
-                    className="inline-block mt-6 px-6 py-2.5 border border-gray-300 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-colors"
+                    className="inline-block mt-6 px-6 py-2.5 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-colors"
                   >
                     Read More
                   </a>

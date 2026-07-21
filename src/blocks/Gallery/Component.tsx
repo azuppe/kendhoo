@@ -58,7 +58,7 @@ export const GalleryBlock: React.FC<GalleryBlockProps> = ({
           {images?.map((item, i) => (
             <figure
               key={i}
-              className={`overflow-hidden rounded-2xl bg-gray-100 dark:bg-gray-900 ${
+              className={`overflow-hidden rounded-2xl bg-gray-100 ${
                 layout === 'slider' ? 'shrink-0 w-72 snap-start' : ''
               }`}
             >
@@ -68,7 +68,7 @@ export const GalleryBlock: React.FC<GalleryBlockProps> = ({
                 className="w-full h-64"
               />
               {item.caption && (
-                <figcaption className="text-sm text-gray-500 dark:text-gray-400 px-3 py-2">
+                <figcaption className="text-sm text-gray-500 px-3 py-2">
                   {item.caption}
                 </figcaption>
               )}

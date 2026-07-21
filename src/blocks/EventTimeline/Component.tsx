@@ -24,22 +24,22 @@ export const EventTimelineBlock: React.FC<EventTimelineBlockProps> = ({ title, i
     <section className="py-12">
       <div className="container mx-auto px-4">
         {title && (
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-start">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 text-start">
             {title}
           </h2>
         )}
 
         <div className="relative">
-          <div className="absolute left-[7px] top-2 bottom-2 w-px bg-gray-200 dark:bg-gray-800" />
+          <div className="absolute left-[7px] top-2 bottom-2 w-px bg-gray-200" />
 
           {items?.map((item, i) => {
             const isOpen = openIndex === i
             const isLast = i === items.length - 1
 
             return (
-              <div key={i} className={isLast ? '' : 'border-b border-gray-100 dark:border-gray-800 mb-6 pb-6'}>
+              <div key={i} className={isLast ? '' : 'border-b border-gray-100 mb-6 pb-6'}>
                 <div className="relative flex items-start gap-4">
-                  <span className="relative z-10 mt-1.5 shrink-0 w-3.5 h-3.5 rounded-full border-2 border-gray-900 dark:border-gray-100 bg-white dark:bg-gray-950" />
+                  <span className="relative z-10 mt-1.5 shrink-0 w-3.5 h-3.5 rounded-full border-2 border-gray-900 bg-white" />
 
                   <button
                     type="button"
@@ -47,7 +47,7 @@ export const EventTimelineBlock: React.FC<EventTimelineBlockProps> = ({ title, i
                     className="flex-1 flex items-start justify-between gap-4 text-left"
                     aria-expanded={isOpen}
                   >
-                    <span className="inline-block px-3 py-1 rounded-full border border-gray-200 dark:border-gray-700 text-xs font-medium text-gray-600 dark:text-gray-400">
+                    <span className="inline-block px-3 py-1 rounded-full border border-gray-200 text-xs font-medium text-gray-600">
                       {item.dayLabel}
                     </span>
                     {isOpen ? (
@@ -59,14 +59,14 @@ export const EventTimelineBlock: React.FC<EventTimelineBlockProps> = ({ title, i
                 </div>
 
                 <div className="ml-[26px] mt-2">
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                  <h3 className="text-lg font-bold text-gray-900">
                     {item.title}
                   </h3>
 
                   {isOpen && (
                     <>
                       {item.description && (
-                        <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mt-2">
+                        <p className="text-sm text-gray-500 leading-relaxed mt-2">
                           {item.description}
                         </p>
                       )}

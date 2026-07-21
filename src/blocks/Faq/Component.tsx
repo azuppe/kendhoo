@@ -49,12 +49,12 @@ export const FaqBlock: React.FC<FaqBlockProps> = ({
             </span>
           )}
           {title && (
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 leading-tight text-start">
+            <h2 className="  text-4xl md:text-5xl font-bold text-gray-900 leading-tight text-start">
               {title}
             </h2>
           )}
           {titleAccent && (
-            <p className="font-serif italic text-4xl md:text-6xl text-gray-900 leading-tight">
+            <p className="  italic text-4xl md:text-6xl text-gray-900 leading-tight">
               {titleAccent}
             </p>
           )}
@@ -133,7 +133,7 @@ export const FaqBlock: React.FC<FaqBlockProps> = ({
         {(signatureName || signatureTagline) && (
           <div className="flex flex-col items-center text-center mt-14">
             {signatureName && (
-              <p className="font-serif italic text-3xl text-gray-900">{signatureName}</p>
+              <p className="  italic text-3xl text-gray-900">{signatureName}</p>
             )}
             {signatureTagline && (
               <p className="text-xs tracking-widest text-gray-500 uppercase mt-1">

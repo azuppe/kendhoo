@@ -15,15 +15,15 @@ export const WhatsIncludedBlock: React.FC<WhatsIncludedBlockProps> = ({ title, i
     <section className="py-12">
       <div className="container mx-auto px-4 max-w-3xl">
         {title && (
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-start">
+          <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-start">
             {title}
           </h2>
         )}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 rounded-2xl bg-gray-50 border border-gray-100 p-6">
           {items?.map((item, i) => (
             <div key={i} className="flex items-start gap-2">
               <CheckCircle2 className="w-5 h-5 text-gray-900 shrink-0 mt-0.5" />
-              <span className="text-sm text-gray-700 dark:text-gray-300">{item.label}</span>
+              <span className="text-sm text-gray-700">{item.label}</span>
             </div>
           ))}
         </div>

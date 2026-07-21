@@ -54,11 +54,11 @@ export const LatestNewsV2Block: React.FC<LatestNewsV2BlockProps> = async ({
       <div className="container mx-auto px-4  ">
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_2fr] gap-10 lg:gap-16 items-start">
           <div>
-            <h2 className="font-serif text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-gray-50 mb-6 text-start">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6 text-start">
               {heading}
             </h2>
             {subtitle && (
-              <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-xs">{subtitle}</p>
+              <p className="text-gray-600 mb-8 max-w-xs">{subtitle}</p>
             )}
             {link?.label &&
               (() => {
@@ -73,7 +73,7 @@ export const LatestNewsV2Block: React.FC<LatestNewsV2BlockProps> = async ({
                       aria-hidden
                       className="w-24 h-24 md:w-28 md:h-28 rounded-full shrink-0 bg-[radial-gradient(circle_at_35%_30%,#4b5563,#1f2937_60%,#000000_100%)] group-hover:brightness-105 transition-[filter]"
                     />
-                    <span className="-ml-4 relative z-10 font-bold text-gray-900 dark:text-gray-50">
+                    <span className="-ml-4 relative z-10 font-bold text-gray-900">
                       {label}
                     </span>
                   </CMSLink>
@@ -93,7 +93,7 @@ export const LatestNewsV2Block: React.FC<LatestNewsV2BlockProps> = async ({
                   type="reference"
                   reference={{ relationTo: 'posts', value: post }}
                   appearance="inline"
-                  className="group flex items-start justify-between gap-6 rounded-3xl bg-gray-50 dark:bg-gray-900/60 px-8 py-7 hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors"
+                  className="group flex items-start justify-between gap-6 rounded-3xl bg-gray-50 px-8 py-7 hover:bg-gray-100 transition-colors"
                 >
                   <div>
                     <div className="flex items-center gap-2 mb-3 text-sm">
@@ -111,11 +111,11 @@ export const LatestNewsV2Block: React.FC<LatestNewsV2BlockProps> = async ({
                         </span>
                       )}
                     </div>
-                    <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-gray-50 group-hover:underline">
+                    <h3 className="text-lg md:text-xl font-bold text-gray-900 group-hover:underline">
                       {post.meta?.description || post.title}
                     </h3>
                   </div>
-                  <span className="shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-gray-400 group-hover:bg-white dark:group-hover:bg-gray-800 group-hover:text-gray-900 group-hover:shadow transition-colors">
+                  <span className="shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-gray-400 group-hover:bg-white group-hover:text-gray-900 group-hover:shadow transition-colors">
                     <ArrowUpRight className="w-4 h-4" />
                   </span>
                 </CMSLink>
