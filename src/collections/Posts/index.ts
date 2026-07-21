@@ -242,6 +242,15 @@ export const Posts: CollectionConfig = {
         description: 'Used for the view-count badge on cards. Leave blank to show a placeholder.',
       },
     },
+    {
+      name: 'isEditorsPick',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+        description: "Feature this post in the Editor's Pick section",
+      },
+    },
     ...slugField(),
   ],
   hooks: {

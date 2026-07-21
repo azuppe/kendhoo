@@ -470,6 +470,10 @@ export interface Post {
    * Used for the view-count badge on cards. Leave blank to show a placeholder.
    */
   viewCount?: number | null;
+  /**
+   * Feature this post in the Editor's Pick section
+   */
+  isEditorsPick?: boolean | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -2554,6 +2558,7 @@ export interface PostsSelect<T extends boolean = true> {
       };
   source?: T;
   viewCount?: T;
+  isEditorsPick?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;

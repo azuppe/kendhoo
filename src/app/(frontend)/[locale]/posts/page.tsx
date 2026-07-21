@@ -49,18 +49,31 @@ export default async function Page({ params, searchParams }: Args) {
 
   // A category filter shows a plain list of news cards, no magazine layout.
   if (category) {
-    const posts = await payload.find({
-      collection: 'posts',
-      locale,
-      depth: 2,
-      limit: 12,
-      overrideAccess: false,
-      where: {
-        'categories.slug': {
-          equals: category,
+    const [posts, editorsPickResult] = await Promise.all([
+      payload.find({
+        collection: 'posts',
+        locale,
+        depth: 2,
+        limit: 12,
+        overrideAccess: false,
+        where: {
+          'categories.slug': {
+            equals: category,
+          },
         },
-      },
-    })
+      }),
+      payload.find({
+        collection: 'posts',
+        locale,
+        depth: 2,
+        limit: 5,
+        sort: '-publishedAt',
+        overrideAccess: false,
+        where: {
+          and: [{ _status: { equals: 'published' } }, { isEditorsPick: { equals: true } }],
+        },
+      }),
+    ])
 
     const activeCategory = categories.docs.find((c) => c.slug === category)
 
@@ -75,6 +88,11 @@ export default async function Page({ params, searchParams }: Args) {
         <div className="mb-8">
           <CategoryNav categories={categories.docs} activeSlug={category} />
         </div>
+
+        <div className="container mb-16">
+          <EditorsPick posts={editorsPickResult.docs} locale={locale} />
+        </div>
+
         <div className="container mb-8">
           <PageRange
             collection="posts"
@@ -99,7 +117,7 @@ export default async function Page({ params, searchParams }: Args) {
     )
   }
 
-  const [postsResult, sourcesResult] = await Promise.all([
+  const [postsResult, sourcesResult, editorsPickResult] = await Promise.all([
     payload.find({
       collection: 'posts',
       locale,
@@ -120,6 +138,17 @@ export default async function Page({ params, searchParams }: Args) {
       limit: 12,
       overrideAccess: false,
     }),
+    payload.find({
+      collection: 'posts',
+      locale,
+      depth: 2,
+      limit: 5,
+      sort: '-publishedAt',
+      overrideAccess: false,
+      where: {
+        and: [{ _status: { equals: 'published' } }, { isEditorsPick: { equals: true } }],
+      },
+    }),
   ])
 
   const posts = postsResult.docs
@@ -134,7 +163,7 @@ export default async function Page({ params, searchParams }: Args) {
   const heroSidePosts = take(3)
   const latestNewsPosts = take(4)
   const mustReadPosts = take(4)
-  const editorsPickPosts = take(5)
+  const editorsPickPosts = editorsPickResult.docs
 
   const remainingPosts = posts.slice(cursor)
   const categoryBuckets = new Map<string, { category: Category; posts: Post[] }>()
@@ -150,7 +179,7 @@ export default async function Page({ params, searchParams }: Args) {
   }
   const categorySections = Array.from(categoryBuckets.values())
     .filter((bucket) => bucket.posts.length >= 2)
-    .slice(0, 2)
+    .slice(0, 4)
 
   const topCreators = topAuthorsFromPosts(posts, 4)
 
@@ -211,12 +240,12 @@ export default async function Page({ params, searchParams }: Args) {
       </div>
 
       {categorySections.length > 0 && (
-        <div className="container grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="container grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-16">
           {categorySections.map(({ category: cat, posts: catPosts }) => (
             <CategorySplit
               key={cat.id}
               title={cat.title}
-              posts={catPosts.slice(0, 4)}
+              posts={catPosts.slice(0, 2)}
               locale={locale}
               href={`/${locale}/posts?category=${cat.slug}`}
             />
