@@ -342,6 +342,7 @@ export interface Page {
     | ArchiveBlock
     | BlogArchiveBlock
     | LatestNewsV2Block
+    | FeaturedPostBlock
     | FormBlock
     | {
         badge?: string | null;
@@ -404,6 +405,8 @@ export interface Page {
     | WhatsIncludedBlock
     | RecommendedEventsBlock
     | PhotoGalleryBlock
+    | EditorsPickBlock
+    | EventsListBlock
   )[];
   meta?: {
     title?: string | null;
@@ -427,6 +430,10 @@ export interface Page {
 export interface Post {
   id: string;
   title: string;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
   /**
    * Cover photo shown on the post hero and post cards
    */
@@ -847,6 +854,19 @@ export interface LatestNewsV2Block {
   id?: string | null;
   blockName?: string | null;
   blockType: 'latestNewsV2';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedPostBlock".
+ */
+export interface FeaturedPostBlock {
+  /**
+   * Select the post to feature in this card.
+   */
+  post: string | Post;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featuredPost';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1486,6 +1506,43 @@ export interface PhotoGalleryBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EditorsPickBlock".
+ */
+export interface EditorsPickBlock {
+  heading?: string | null;
+  /**
+   * The large, featured post shown at the top of the section.
+   */
+  featuredPost: string | Post;
+  /**
+   * Select up to 4 posts to show in the grid below the featured post.
+   */
+  posts: (string | Post)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'editorsPick';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EventsListBlock".
+ */
+export interface EventsListBlock {
+  title?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
+  /**
+   * Select the events to display in this list.
+   */
+  events: (string | Event)[];
+  linkLabel?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'eventsList';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "events".
  */
 export interface Event {
@@ -1494,6 +1551,10 @@ export interface Event {
    * e.g. "Japan Express: Osaka to Tokyo"
    */
   title: string;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
   /**
    * Up to 4 photos for the top gallery collage (1 large left, 1 large center, 2 stacked right).
    */
@@ -1534,8 +1595,16 @@ export interface Event {
       }[]
     | null;
   overviewTitle?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  overviewTitleColor?: ('dark' | 'light') | null;
   overviewDescription?: string | null;
   includedTitle?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  includedTitleColor?: ('dark' | 'light') | null;
   /**
    * e.g. "Japan Rail (JR) pass for 7 days", "8 nights hotel accommodation"
    */
@@ -1546,6 +1615,10 @@ export interface Event {
       }[]
     | null;
   itineraryTitle?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  itineraryTitleColor?: ('dark' | 'light') | null;
   itineraryItems?:
     | {
         /**
@@ -1559,6 +1632,10 @@ export interface Event {
       }[]
     | null;
   recommendedTitle?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  recommendedTitleColor?: ('dark' | 'light') | null;
   recommendedEvents?:
     | {
         image: string | Media;
@@ -2113,6 +2190,7 @@ export interface PagesSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         blogArchive?: T | BlogArchiveBlockSelect<T>;
         latestNewsV2?: T | LatestNewsV2BlockSelect<T>;
+        featuredPost?: T | FeaturedPostBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         faq?:
           | T
@@ -2151,6 +2229,8 @@ export interface PagesSelect<T extends boolean = true> {
         whatsIncluded?: T | WhatsIncludedBlockSelect<T>;
         recommendedEvents?: T | RecommendedEventsBlockSelect<T>;
         photoGallery?: T | PhotoGalleryBlockSelect<T>;
+        editorsPick?: T | EditorsPickBlockSelect<T>;
+        eventsList?: T | EventsListBlockSelect<T>;
       };
   meta?:
     | T
@@ -2278,6 +2358,15 @@ export interface LatestNewsV2BlockSelect<T extends boolean = true> {
         label?: T;
       };
   limit?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedPostBlock_select".
+ */
+export interface FeaturedPostBlockSelect<T extends boolean = true> {
+  post?: T;
   id?: T;
   blockName?: T;
 }
@@ -2581,10 +2670,34 @@ export interface PhotoGalleryBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EditorsPickBlock_select".
+ */
+export interface EditorsPickBlockSelect<T extends boolean = true> {
+  heading?: T;
+  featuredPost?: T;
+  posts?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EventsListBlock_select".
+ */
+export interface EventsListBlockSelect<T extends boolean = true> {
+  title?: T;
+  titleColor?: T;
+  events?: T;
+  linkLabel?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
+  titleColor?: T;
   coverImage?: T;
   content?: T;
   relatedPosts?: T;
@@ -2621,6 +2734,7 @@ export interface PostsSelect<T extends boolean = true> {
  */
 export interface EventsSelect<T extends boolean = true> {
   title?: T;
+  titleColor?: T;
   images?: T;
   breadcrumbs?:
     | T
@@ -2640,8 +2754,10 @@ export interface EventsSelect<T extends boolean = true> {
         id?: T;
       };
   overviewTitle?: T;
+  overviewTitleColor?: T;
   overviewDescription?: T;
   includedTitle?: T;
+  includedTitleColor?: T;
   includedItems?:
     | T
     | {
@@ -2649,6 +2765,7 @@ export interface EventsSelect<T extends boolean = true> {
         id?: T;
       };
   itineraryTitle?: T;
+  itineraryTitleColor?: T;
   itineraryItems?:
     | T
     | {
@@ -2659,6 +2776,7 @@ export interface EventsSelect<T extends boolean = true> {
         id?: T;
       };
   recommendedTitle?: T;
+  recommendedTitleColor?: T;
   recommendedEvents?:
     | T
     | {

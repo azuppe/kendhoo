@@ -6,6 +6,7 @@ import type { Page } from '@/payload-types'
 import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
 import { BlogArchiveBlock } from '@/blocks/BlogArchive/Component'
 import { LatestNewsV2Block } from '@/blocks/LatestNewsV2/Component'
+import { FeaturedPostBlock } from '@/blocks/FeaturedPost/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
 import { RichTextBlockComponent } from '@/blocks/RichText/Component'
@@ -26,12 +27,15 @@ import { EventTimelineBlock } from '@/blocks/EventTimeline/Component'
 import { WhatsIncludedBlock } from '@/blocks/WhatsIncluded/Component'
 import { RecommendedEventsBlock } from '@/blocks/RecommendedEvents/Component'
 import { PhotoGalleryBlock } from '@/blocks/PhotoGallery/Component'
+import { EditorsPickBlock } from '@/blocks/EditorsPick/Component'
+import { EventsListBlock } from '@/blocks/EventsList/Component'
 import { TypedLocale } from 'payload'
 
 const blockComponents = {
   archive: ArchiveBlock,
   blogArchive: BlogArchiveBlock,
   latestNewsV2: LatestNewsV2Block,
+  featuredPost: FeaturedPostBlock,
   content: ContentBlock,
   richTextBlock: RichTextBlockComponent,
   cta: CallToActionBlock,
@@ -51,6 +55,8 @@ const blockComponents = {
   whatsIncluded: WhatsIncludedBlock,
   recommendedEvents: RecommendedEventsBlock,
   photoGallery: PhotoGalleryBlock,
+  editorsPick: EditorsPickBlock,
+  eventsList: EventsListBlock,
 }
 
 export const RenderBlocks: React.FC<{

@@ -5,6 +5,7 @@ import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Archive } from '../../blocks/ArchiveBlock/config'
 import { BlogArchive } from '../../blocks/BlogArchive/config'
 import { LatestNewsV2 } from '../../blocks/LatestNewsV2/config'
+import { FeaturedPost } from '../../blocks/FeaturedPost/config'
 import { CallToAction } from '../../blocks/CallToAction/config'
 import { Content } from '../../blocks/Content/config'
 import { RichTextBlock } from '../../blocks/RichText/config'
@@ -24,6 +25,8 @@ import { EventTimeline } from '../../blocks/EventTimeline/config'
 import { WhatsIncluded } from '../../blocks/WhatsIncluded/config'
 import { RecommendedEvents } from '../../blocks/RecommendedEvents/config'
 import { PhotoGallery } from '../../blocks/PhotoGallery/config'
+import { EditorsPick } from '../../blocks/EditorsPick/config'
+import { EventsList } from '../../blocks/EventsList/config'
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -97,6 +100,7 @@ export const Pages: CollectionConfig = {
                 Archive,
                 BlogArchive,
                 LatestNewsV2,
+                FeaturedPost,
                 FormBlock,
                 FaqBlock,
                 QuickFacts,
@@ -112,6 +116,8 @@ export const Pages: CollectionConfig = {
                 WhatsIncluded,
                 RecommendedEvents,
                 PhotoGallery,
+                EditorsPick,
+                EventsList,
               ],
               required: true,
             },

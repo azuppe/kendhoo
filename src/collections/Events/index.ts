@@ -5,6 +5,7 @@ import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateEvent } from './hooks/revalidateEvent'
 import { slugField } from '@/fields/slug'
+import { createTitleColorField, titleColorField } from '@/fields/titleColor'
 
 import {
   MetaDescriptionField,
@@ -60,6 +61,7 @@ export const Events: CollectionConfig = {
         description: 'e.g. "Japan Express: Osaka to Tokyo"',
       },
     },
+    titleColorField,
     {
       type: 'tabs',
       tabs: [
@@ -138,6 +140,7 @@ export const Events: CollectionConfig = {
               localized: true,
               defaultValue: 'Trip Overview',
             },
+            createTitleColorField('overviewTitleColor'),
             {
               name: 'overviewDescription',
               type: 'textarea',
@@ -154,6 +157,7 @@ export const Events: CollectionConfig = {
               localized: true,
               defaultValue: "What's Included",
             },
+            createTitleColorField('includedTitleColor'),
             {
               name: 'includedItems',
               type: 'array',
@@ -174,6 +178,7 @@ export const Events: CollectionConfig = {
               localized: true,
               defaultValue: 'Itinerary',
             },
+            createTitleColorField('itineraryTitleColor'),
             {
               name: 'itineraryItems',
               type: 'array',
@@ -201,6 +206,7 @@ export const Events: CollectionConfig = {
               localized: true,
               defaultValue: 'Recommended for you',
             },
+            createTitleColorField('recommendedTitleColor'),
             {
               name: 'recommendedEvents',
               type: 'array',

@@ -5,6 +5,7 @@ import { CheckCircle2, ChevronDown, ChevronUp, Clock3, Gauge, Heart, Hotel, User
 
 import { Media } from '@/components/Media'
 import type { Event } from '@/payload-types'
+import { getTitleColorClass } from '@/utilities/getTitleColorClass'
 
 export type EventDetailProps = {
   event: Event
@@ -24,14 +25,19 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
     images,
     breadcrumbs,
     title,
+    titleColor,
     tripMeta,
     overviewTitle,
+    overviewTitleColor,
     overviewDescription,
     includedTitle,
+    includedTitleColor,
     includedItems,
     itineraryTitle,
+    itineraryTitleColor,
     itineraryItems,
     recommendedTitle,
+    recommendedTitleColor,
     recommendedEvents,
   } = event
 
@@ -84,7 +90,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
             </nav>
           )}
 
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+          <h1 className={`text-3xl md:text-4xl font-bold mb-3 ${getTitleColorClass(titleColor)}`}>
             {title}
           </h1>
 
@@ -118,7 +124,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
         <section className="py-12">
           <div className="container mx-auto px-4">
             {overviewTitle && (
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 text-start">
+              <h2 className={`text-2xl md:text-3xl font-bold mb-4 text-start ${getTitleColorClass(overviewTitleColor)}`}>
                 {overviewTitle}
               </h2>
             )}
@@ -139,7 +145,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
         <section className="py-12">
           <div className="container mx-auto px-4">
             {includedTitle && (
-              <h2 className="  text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-start">
+              <h2 className={`  text-4xl md:text-5xl font-bold mb-6 text-start ${getTitleColorClass(includedTitleColor)}`}>
                 {includedTitle}
               </h2>
             )}
@@ -160,7 +166,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
         <section className="py-12">
           <div className="container mx-auto px-4">
             {itineraryTitle && (
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 text-start">
+              <h2 className={`text-2xl md:text-3xl font-bold mb-6 text-start ${getTitleColorClass(itineraryTitleColor)}`}>
                 {itineraryTitle}
               </h2>
             )}
@@ -240,7 +246,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
         <section className="py-12">
           <div className="container mx-auto ">
             {recommendedTitle && (
-              <h2 className="  text-4xl md:text-5xl font-bold text-gray-900 mb-8 text-start">
+              <h2 className={`  text-4xl md:text-5xl font-bold mb-8 text-start ${getTitleColorClass(recommendedTitleColor)}`}>
                 {recommendedTitle}
               </h2>
             )}

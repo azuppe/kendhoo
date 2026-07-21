@@ -5,11 +5,12 @@ import type { Post } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import { useTranslations } from 'next-intl'
+import { getTitleColorClass } from '@/utilities/getTitleColorClass'
 
 export const PostHero: React.FC<{
   post: Post
 }> = ({ post }) => {
-  const { categories, coverImage, meta: { image: metaImage } = {}, populatedAuthors, publishedAt, title } = post
+  const { categories, coverImage, meta: { image: metaImage } = {}, populatedAuthors, publishedAt, title, titleColor } = post
   const heroImage = coverImage && typeof coverImage === 'object' ? coverImage : metaImage
   const t = useTranslations()
 
@@ -29,7 +30,7 @@ export const PostHero: React.FC<{
           </span>
         )}
         {/* Title */}
-        <h1 className="mb-4 text-2xl md:text-4xl lg:text-5xl font-extrabold leading-tight text-gray-900">
+        <h1 className={`mb-4 text-2xl md:text-4xl lg:text-5xl font-extrabold leading-tight ${getTitleColorClass(titleColor)}`}>
           {title}
         </h1>
         {/* Meta info and actions */}

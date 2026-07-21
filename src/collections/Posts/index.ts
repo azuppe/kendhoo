@@ -27,6 +27,7 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { slugField } from '@/fields/slug'
+import { titleColorField } from '@/fields/titleColor'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -67,6 +68,7 @@ export const Posts: CollectionConfig = {
       localized: true,
       required: true,
     },
+    titleColorField,
     {
       name: 'coverImage',
       type: 'upload',
