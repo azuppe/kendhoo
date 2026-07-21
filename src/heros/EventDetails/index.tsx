@@ -152,12 +152,12 @@ export const EventDetailsHero: React.FC<Page['hero']> = ({
                 <CMSLink
                   {...bookLink}
                   appearance="default"
-                  className="!w-full !flex !justify-center !bg-gray-900 hover:!bg-gray-800"
+                  className="!w-full !flex !justify-center !h-auto !rounded-full !bg-gray-900 hover:!bg-black !font-medium !px-7 !py-3"
                 />
               ) : (
                 <button
                   type="button"
-                  className="w-full rounded-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-3 transition-colors"
+                  className="w-full rounded-full bg-gray-900 hover:bg-black text-white font-medium px-7 py-3 transition-colors"
                 >
                   Book Now
                 </button>

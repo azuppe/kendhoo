@@ -54,7 +54,7 @@ export const LatestNewsV2Block: React.FC<LatestNewsV2BlockProps> = async ({
       <div className="container mx-auto px-4  ">
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_2fr] gap-10 lg:gap-16 items-start">
           <div>
-            <h2 className="font-serif text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6 text-start">
+            <h2 className="  text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6 text-start">
               {heading}
             </h2>
             {subtitle && (

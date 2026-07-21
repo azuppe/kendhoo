@@ -21,7 +21,7 @@ import { Stats } from '../../blocks/Stats/config'
 import { Destinations } from '../../blocks/Destinations/config'
 import { EventTimeline } from '../../blocks/EventTimeline/config'
 import { WhatsIncluded } from '../../blocks/WhatsIncluded/config'
-import { RecommendedTours } from '../../blocks/RecommendedTours/config'
+import { RecommendedEvents } from '../../blocks/RecommendedEvents/config'
 import { TripHeader } from '../../blocks/TripHeader/config'
 import { TripOverview } from '../../blocks/TripOverview/config'
 import { hero } from '@/heros/config'
@@ -109,7 +109,7 @@ export const Pages: CollectionConfig = {
                 Destinations,
                 EventTimeline,
                 WhatsIncluded,
-                RecommendedTours,
+                RecommendedEvents,
                 TripHeader,
                 TripOverview,
               ],

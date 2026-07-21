@@ -38,7 +38,7 @@ export default async function EventsPage({ params }: Args) {
       <PageClient />
 
       <div className="container mx-auto px-4  ">
-        <h1 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-start">
+        <h1 className="  text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-start">
           Most Popular Places
         </h1>
 

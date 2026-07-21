@@ -52,7 +52,7 @@ export const BlogArchiveBlock: React.FC<BlogArchiveBlockProps> = async ({
     .filter((n): n is string => !!n)
 
   return (
-    <section className="py-16 bg-gray-50 rounded-3xl">
+    <section className="py-16  rounded-3xl">
       <div className="container mx-auto px-4  ">
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-10">
           <div className="max-w-xs">
@@ -65,7 +65,7 @@ export const BlogArchiveBlock: React.FC<BlogArchiveBlockProps> = async ({
             {subtitle && <p className="text-gray-600">{subtitle}</p>}
           </div>
           {heading && (
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-start lg:max-w-xl leading-tight text-gray-900">
+            <h2 className="  text-4xl md:text-5xl font-bold text-start lg:max-w-xl leading-tight text-gray-900">
               {heading}
             </h2>
           )}

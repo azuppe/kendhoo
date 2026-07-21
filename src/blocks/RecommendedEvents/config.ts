@@ -1,11 +1,11 @@
 import type { Block } from 'payload'
 
-export const RecommendedTours: Block = {
-  slug: 'recommendedTours',
-  interfaceName: 'RecommendedToursBlock',
+export const RecommendedEvents: Block = {
+  slug: 'recommendedEvents',
+  interfaceName: 'RecommendedEventsBlock',
   labels: {
-    singular: 'Recommended Tours Block',
-    plural: 'Recommended Tours Blocks',
+    singular: 'Recommended Events Block',
+    plural: 'Recommended Events Blocks',
   },
   fields: [
     {
@@ -15,7 +15,7 @@ export const RecommendedTours: Block = {
       defaultValue: 'Recommended for you',
     },
     {
-      name: 'tours',
+      name: 'events',
       type: 'array',
       required: true,
       minRows: 1,
@@ -50,32 +50,6 @@ export const RecommendedTours: Block = {
           admin: { description: 'e.g. "20 days"' },
         },
         {
-          name: 'route',
-          type: 'text',
-          localized: true,
-          admin: { description: 'e.g. "Nairobi to Victoria Falls"' },
-        },
-        {
-          name: 'price',
-          type: 'number',
-          required: true,
-        },
-        {
-          name: 'originalPrice',
-          type: 'number',
-        },
-        {
-          name: 'currency',
-          type: 'text',
-          defaultValue: 'USD',
-        },
-        {
-          name: 'departsOn',
-          type: 'text',
-          localized: true,
-          admin: { description: 'e.g. "Departs on Oct 05, 2026"' },
-        },
-        {
           name: 'tags',
           type: 'array',
           maxRows: 3,
@@ -94,14 +68,10 @@ export const RecommendedTours: Block = {
           localized: true,
           defaultValue: 'Book Adventure',
         },
-        {
-          name: 'link',
-          type: 'text',
-          admin: { description: 'URL this tour card links to' },
-        },
+
       ],
     },
   ],
 }
 
-export default RecommendedTours
+export default RecommendedEvents

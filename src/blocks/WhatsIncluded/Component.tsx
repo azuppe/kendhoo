@@ -15,7 +15,7 @@ export const WhatsIncludedBlock: React.FC<WhatsIncludedBlockProps> = ({ title, i
     <section className="py-12">
       <div className="container mx-auto px-4 max-w-3xl">
         {title && (
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-start">
+          <h2 className="  text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-start">
             {title}
           </h2>
         )}

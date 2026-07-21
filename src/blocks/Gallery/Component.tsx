@@ -52,7 +52,7 @@ export const GalleryBlock: React.FC<GalleryBlockProps> = ({
     <section className="py-12">
       <div className="container mx-auto px-4  ">
         {title && (
-          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-8 text-start">{title}</h2>
+          <h2 className="  text-4xl md:text-5xl font-bold mb-8 text-start">{title}</h2>
         )}
         <div className={gridClass}>
           {images?.map((item, i) => (

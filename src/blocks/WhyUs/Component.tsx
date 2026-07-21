@@ -28,7 +28,7 @@ export const WhyUsBlock: React.FC<WhyUsBlockProps> = ({
     <section className="py-16">
       <div className="container mx-auto px-4 max-w-5xl">
         {title && (
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-start text-gray-900 mb-16">
+          <h2 className="  text-4xl md:text-5xl font-bold text-start text-gray-900 mb-16">
             {title}
           </h2>
         )}
@@ -90,7 +90,7 @@ export const WhyUsBlock: React.FC<WhyUsBlockProps> = ({
               )}
               {ctaLink?.[0]?.link && (
                 <CMSLink
-                  className="inline-flex rounded-full bg-gray-900 text-white px-6 py-3 text-sm font-medium"
+                  className="inline-flex rounded-full bg-gray-900 text-white px-7 py-3 font-medium hover:bg-black transition-colors"
                   {...ctaLink[0].link}
                 />
               )}

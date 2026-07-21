@@ -23,7 +23,7 @@ import { StatsBlock } from '@/blocks/Stats/Component'
 import { DestinationsBlock } from '@/blocks/Destinations/Component'
 import { EventTimelineBlock } from '@/blocks/EventTimeline/Component'
 import { WhatsIncludedBlock } from '@/blocks/WhatsIncluded/Component'
-import { RecommendedToursBlock } from '@/blocks/RecommendedTours/Component'
+import { RecommendedEventsBlock } from '@/blocks/RecommendedEvents/Component'
 import { TripHeaderBlock } from '@/blocks/TripHeader/Component'
 import { TripOverviewBlock } from '@/blocks/TripOverview/Component'
 import { TypedLocale } from 'payload'
@@ -48,7 +48,7 @@ const blockComponents = {
   destinations: DestinationsBlock,
   eventTimeline: EventTimelineBlock,
   whatsIncluded: WhatsIncludedBlock,
-  recommendedTours: RecommendedToursBlock,
+  recommendedEvents: RecommendedEventsBlock,
   tripHeader: TripHeaderBlock,
   tripOverview: TripOverviewBlock,
 }

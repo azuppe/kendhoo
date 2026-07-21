@@ -202,7 +202,7 @@ export const Events: CollectionConfig = {
               defaultValue: 'Recommended for you',
             },
             {
-              name: 'recommendedTours',
+              name: 'recommendedEvents',
               type: 'array',
               fields: [
                 { name: 'image', type: 'upload', relationTo: 'media', required: true },

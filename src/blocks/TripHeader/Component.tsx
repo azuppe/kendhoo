@@ -16,7 +16,7 @@ type MetaItem = {
 }
 
 type IncludeItem = {
-  icon?: 'flight' | 'hotels' | 'tours' | null
+  icon?: 'flight' | 'hotels' | 'events' | null
   label?: string | null
   sublabel?: string | null
 }
@@ -55,7 +55,7 @@ const metaIcons = {
 const includeIcons = {
   flight: Plane,
   hotels: Hotel,
-  tours: Calendar,
+  events: Calendar,
 }
 
 export const TripHeaderBlock: React.FC<TripHeaderBlockProps> = ({
@@ -215,7 +215,7 @@ export const TripHeaderBlock: React.FC<TripHeaderBlockProps> = ({
                   url={priceCard.buttonUrl || '#'}
                   label={priceCard.buttonLabel || 'Book Now'}
                   appearance="default"
-                  className="w-full flex items-center justify-center rounded-full bg-gray-900 hover:bg-gray-800 text-white text-sm font-medium py-3 transition-colors"
+                  className="w-full flex items-center justify-center rounded-full bg-gray-900 hover:bg-black text-white font-medium px-7 py-3 transition-colors"
                 />
               </div>
             </div>

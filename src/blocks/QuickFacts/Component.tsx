@@ -42,7 +42,7 @@ export const QuickFactsBlock: React.FC<QuickFactsBlockProps> = ({
       <section className="py-12">
         <div className="container mx-auto px-4  ">
           {title && (
-            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-8 text-start">{title}</h2>
+            <h2 className="  text-4xl md:text-5xl font-bold mb-8 text-start">{title}</h2>
           )}
           <QuickFactsMosaic facts={facts} />
         </div>
@@ -58,7 +58,7 @@ export const QuickFactsBlock: React.FC<QuickFactsBlockProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div>
             {title && (
-              <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 text-start">{title}</h2>
+              <h2 className="  text-4xl md:text-5xl font-bold mb-6 text-start">{title}</h2>
             )}
             {description && (
               <div className="text-gray-600 leading-relaxed space-y-4 mb-8 max-w-md">
@@ -102,7 +102,7 @@ export const QuickFactsBlock: React.FC<QuickFactsBlockProps> = ({
                   const suffix = match ? match[2] : null
                   return (
                     <div key={i} className="flex flex-col gap-1">
-                      <span className="font-serif text-3xl md:text-4xl font-bold leading-none">
+                      <span className="  text-3xl md:text-4xl font-bold leading-none">
                         {base}
                         {suffix && <span className="text-gray-900">{suffix}</span>}
                       </span>

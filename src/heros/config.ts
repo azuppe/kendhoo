@@ -348,7 +348,7 @@ export const hero: Field = {
           type: 'array',
           maxRows: 4,
           admin: {
-            description: 'Small icon row, e.g. Flight Included, Hotels Comfortable Stay, Tours Expert Guides',
+            description: 'Small icon row, e.g. Flight Included, Hotels Comfortable Stay, Events Expert Guides',
           },
           fields: [
             {

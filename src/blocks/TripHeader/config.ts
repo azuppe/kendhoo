@@ -160,7 +160,7 @@ export const TripHeader: Block = {
           type: 'array',
           maxRows: 3,
           admin: {
-            description: 'Icon row under the button, e.g. Flight / Hotels / Tours.',
+            description: 'Icon row under the button, e.g. Flight / Hotels / Events.',
           },
           fields: [
             {
@@ -170,7 +170,7 @@ export const TripHeader: Block = {
               options: [
                 { label: 'Flight', value: 'flight' },
                 { label: 'Hotels', value: 'hotels' },
-                { label: 'Tours', value: 'tours' },
+                { label: 'Events', value: 'events' },
               ],
             },
             {

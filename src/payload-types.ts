@@ -309,7 +309,7 @@ export interface Page {
       rating?: number | null;
       reviewCount?: number | null;
       /**
-       * Small icon row, e.g. Flight Included, Hotels Comfortable Stay, Tours Expert Guides
+       * Small icon row, e.g. Flight Included, Hotels Comfortable Stay, Events Expert Guides
        */
       includes?:
         | {
@@ -386,7 +386,7 @@ export interface Page {
     | DestinationsBlock
     | EventTimelineBlock
     | WhatsIncludedBlock
-    | RecommendedToursBlock
+    | RecommendedEventsBlock
     | TripHeaderBlock
     | TripOverviewBlock
   )[];
@@ -1352,11 +1352,11 @@ export interface WhatsIncludedBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "RecommendedToursBlock".
+ * via the `definition` "RecommendedEventsBlock".
  */
-export interface RecommendedToursBlock {
+export interface RecommendedEventsBlock {
   title?: string | null;
-  tours: {
+  events: {
     image: string | Media;
     /**
      * e.g. "ON SALE"
@@ -1371,17 +1371,6 @@ export interface RecommendedToursBlock {
      * e.g. "20 days"
      */
     durationLabel?: string | null;
-    /**
-     * e.g. "Nairobi to Victoria Falls"
-     */
-    route?: string | null;
-    price: number;
-    originalPrice?: number | null;
-    currency?: string | null;
-    /**
-     * e.g. "Departs on Oct 05, 2026"
-     */
-    departsOn?: string | null;
     tags?:
       | {
           label: string;
@@ -1389,15 +1378,11 @@ export interface RecommendedToursBlock {
         }[]
       | null;
     buttonLabel?: string | null;
-    /**
-     * URL this tour card links to
-     */
-    link?: string | null;
     id?: string | null;
   }[];
   id?: string | null;
   blockName?: string | null;
-  blockType: 'recommendedTours';
+  blockType: 'recommendedEvents';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1477,11 +1462,11 @@ export interface TripHeaderBlock {
     buttonLabel?: string | null;
     buttonUrl?: string | null;
     /**
-     * Icon row under the button, e.g. Flight / Hotels / Tours.
+     * Icon row under the button, e.g. Flight / Hotels / Events.
      */
     includes?:
       | {
-          icon?: ('flight' | 'hotels' | 'tours') | null;
+          icon?: ('flight' | 'hotels' | 'events') | null;
           label?: string | null;
           sublabel?: string | null;
           id?: string | null;
@@ -1578,7 +1563,7 @@ export interface Event {
       }[]
     | null;
   recommendedTitle?: string | null;
-  recommendedTours?:
+  recommendedEvents?:
     | {
         image: string | Media;
         /**
@@ -2026,7 +2011,7 @@ export interface PagesSelect<T extends boolean = true> {
         destinations?: T | DestinationsBlockSelect<T>;
         eventTimeline?: T | EventTimelineBlockSelect<T>;
         whatsIncluded?: T | WhatsIncludedBlockSelect<T>;
-        recommendedTours?: T | RecommendedToursBlockSelect<T>;
+        recommendedEvents?: T | RecommendedEventsBlockSelect<T>;
         tripHeader?: T | TripHeaderBlockSelect<T>;
         tripOverview?: T | TripOverviewBlockSelect<T>;
       };
@@ -2404,11 +2389,11 @@ export interface WhatsIncludedBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "RecommendedToursBlock_select".
+ * via the `definition` "RecommendedEventsBlock_select".
  */
-export interface RecommendedToursBlockSelect<T extends boolean = true> {
+export interface RecommendedEventsBlockSelect<T extends boolean = true> {
   title?: T;
-  tours?:
+  events?:
     | T
     | {
         image?: T;
@@ -2416,11 +2401,6 @@ export interface RecommendedToursBlockSelect<T extends boolean = true> {
         ageRange?: T;
         title?: T;
         durationLabel?: T;
-        route?: T;
-        price?: T;
-        originalPrice?: T;
-        currency?: T;
-        departsOn?: T;
         tags?:
           | T
           | {
@@ -2428,7 +2408,6 @@ export interface RecommendedToursBlockSelect<T extends boolean = true> {
               id?: T;
             };
         buttonLabel?: T;
-        link?: T;
         id?: T;
       };
   id?: T;
@@ -2572,7 +2551,7 @@ export interface EventsSelect<T extends boolean = true> {
         id?: T;
       };
   recommendedTitle?: T;
-  recommendedTours?:
+  recommendedEvents?:
     | T
     | {
         image?: T;

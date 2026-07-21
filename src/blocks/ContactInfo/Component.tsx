@@ -67,7 +67,7 @@ export const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({
 
           <div className={hasImages ? '' : 'lg:col-span-2'}>
             {title && (
-              <h2 className="font-serif text-4xl md:text-5xl font-bold mb-3 text-start">{title}</h2>
+              <h2 className="  text-4xl md:text-5xl font-bold mb-3 text-start">{title}</h2>
             )}
             <div className="w-14 h-1.5 rounded-full bg-gray-900 mb-5" />
             {description && (
