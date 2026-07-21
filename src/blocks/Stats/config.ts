@@ -1,6 +1,7 @@
 import type { Block } from 'payload'
 
 import { link } from '@/fields/link'
+import { titleColorField } from '@/fields/titleColor'
 
 export const Stats: Block = {
   slug: 'stats',
@@ -18,6 +19,7 @@ export const Stats: Block = {
         description: 'e.g. "Your Trusted Partner In Seamless Travel"',
       },
     },
+    titleColorField,
     {
       name: 'description',
       type: 'textarea',

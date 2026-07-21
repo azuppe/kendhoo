@@ -8,6 +8,7 @@ import { BlogArchiveBlock } from '@/blocks/BlogArchive/Component'
 import { LatestNewsV2Block } from '@/blocks/LatestNewsV2/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
+import { RichTextBlockComponent } from '@/blocks/RichText/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 
@@ -24,7 +25,7 @@ import { DestinationsBlock } from '@/blocks/Destinations/Component'
 import { EventTimelineBlock } from '@/blocks/EventTimeline/Component'
 import { WhatsIncludedBlock } from '@/blocks/WhatsIncluded/Component'
 import { RecommendedEventsBlock } from '@/blocks/RecommendedEvents/Component'
-import { TripHeaderBlock } from '@/blocks/TripHeader/Component'
+import { PhotoGalleryBlock } from '@/blocks/PhotoGallery/Component'
 import { TypedLocale } from 'payload'
 
 const blockComponents = {
@@ -32,6 +33,7 @@ const blockComponents = {
   blogArchive: BlogArchiveBlock,
   latestNewsV2: LatestNewsV2Block,
   content: ContentBlock,
+  richTextBlock: RichTextBlockComponent,
   cta: CallToActionBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
@@ -48,7 +50,7 @@ const blockComponents = {
   eventTimeline: EventTimelineBlock,
   whatsIncluded: WhatsIncludedBlock,
   recommendedEvents: RecommendedEventsBlock,
-  tripHeader: TripHeaderBlock,
+  photoGallery: PhotoGalleryBlock,
 }
 
 export const RenderBlocks: React.FC<{

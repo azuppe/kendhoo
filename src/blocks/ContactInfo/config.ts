@@ -1,5 +1,7 @@
 import type { Block } from 'payload'
 
+import { titleColorField } from '@/fields/titleColor'
+
 export const ContactInfo: Block = {
   slug: 'contactInfo',
   interfaceName: 'ContactInfoBlock',
@@ -13,6 +15,7 @@ export const ContactInfo: Block = {
       type: 'text',
       localized: true,
     },
+    titleColorField,
     {
       name: 'description',
       type: 'text',

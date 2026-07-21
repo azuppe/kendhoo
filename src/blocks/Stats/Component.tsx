@@ -3,6 +3,7 @@ import { ArrowUpRight } from 'lucide-react'
 
 import { Media } from '@/components/Media'
 import { CMSLink } from '@/components/Link'
+import { getTitleColorClass } from '@/utilities/getTitleColorClass'
 
 type StatItem = {
   number: string
@@ -12,6 +13,7 @@ type StatItem = {
 
 export type StatsBlockProps = {
   title?: string | null
+  titleColor?: ('dark' | 'light') | null
   description?: string | null
   image: any
   stats: StatItem[]
@@ -33,7 +35,7 @@ const StatCard: React.FC<{ stat: StatItem; className?: string }> = ({ stat, clas
   </div>
 )
 
-export const StatsBlock: React.FC<StatsBlockProps> = ({ title, description, image, stats }) => {
+export const StatsBlock: React.FC<StatsBlockProps> = ({ title, titleColor, description, image, stats }) => {
   const [first, second, third, ...rest] = stats || []
 
   return (
@@ -42,7 +44,7 @@ export const StatsBlock: React.FC<StatsBlockProps> = ({ title, description, imag
         <div className="grid grid-cols-1 lg:grid-cols-[1.8fr_1fr_1fr] lg:grid-rows-2 gap-6">
           <div className="lg:col-start-1 lg:row-start-1 flex flex-col justify-center">
             {title && (
-              <h2 className="  text-4xl md:text-5xl font-bold text-gray-900 leading-tight text-start">
+              <h2 className={`  text-4xl md:text-5xl font-bold leading-tight text-start ${getTitleColorClass(titleColor)}`}>
                 {title}
               </h2>
             )}

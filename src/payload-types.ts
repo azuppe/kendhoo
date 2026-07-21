@@ -164,7 +164,7 @@ export interface Page {
       | 'lowImpact'
       | 'heroCarousel'
       | 'adventure'
-      | 'cosmetic'
+      | 'people'
       | 'eventDetails';
     /**
      * For Medium Impact, this is the large headline shown bottom-left, e.g. "Let's plan your dream trip together."
@@ -251,13 +251,13 @@ export interface Page {
      */
     phone?: string | null;
     /**
-     * e.g. "Dr. Isabella Cruz, MD"
+     * The featured person's name, e.g. "Dr. Isabella Cruz, MD"
      */
-    doctorName?: string | null;
+    personName?: string | null;
     /**
-     * e.g. "Aesthetic Medicine & Dermatological Care"
+     * The featured person's title or role, e.g. "Aesthetic Medicine & Dermatological Care"
      */
-    doctorTitle?: string | null;
+    personTitle?: string | null;
     /**
      * The larger, first card in the gallery strip
      */
@@ -337,6 +337,7 @@ export interface Page {
   layout: (
     | CallToActionBlock
     | ContentBlock
+    | RichTextBlockType
     | MediaBlock
     | ArchiveBlock
     | BlogArchiveBlock
@@ -352,6 +353,10 @@ export interface Page {
          * Rendered in italic serif on its own line, e.g. "Questions"
          */
         titleAccent?: string | null;
+        /**
+         * Choose the title color (use light on dark backgrounds).
+         */
+        titleColor?: ('dark' | 'light') | null;
         /**
          * e.g. "hello@vistaire.com"
          */
@@ -398,7 +403,7 @@ export interface Page {
     | EventTimelineBlock
     | WhatsIncludedBlock
     | RecommendedEventsBlock
-    | TripHeaderBlock
+    | PhotoGalleryBlock
   )[];
   meta?: {
     title?: string | null;
@@ -720,6 +725,30 @@ export interface ContentBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichTextBlockType".
+ */
+export interface RichTextBlockType {
+  richText: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'richTextBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "MediaBlock".
  */
 export interface MediaBlock {
@@ -1025,6 +1054,10 @@ export interface Form {
  */
 export interface QuickFactsBlock {
   title?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
   layout?: ('stats' | 'mosaic') | null;
   /**
    * Stats layout only. Intro paragraph(s) shown next to the stats, e.g. an "About Us" blurb.
@@ -1105,6 +1138,10 @@ export interface GalleryBlock {
   eyebrow?: string | null;
   title?: string | null;
   /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
+  /**
    * Short subheading below the title. Only used by the Coverflow layout.
    */
   description?: string | null;
@@ -1140,6 +1177,10 @@ export interface GalleryBlock {
  */
 export interface PlacesGridBlock {
   title?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
   type: 'thingsToDo' | 'placesToVisit' | 'beach';
   /**
    * Leave empty to show places from all islands
@@ -1156,6 +1197,10 @@ export interface PlacesGridBlock {
  */
 export interface BusinessDirectoryBlock {
   title?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
   category?: ('all' | 'restaurant' | 'shop' | 'accommodation' | 'service') | null;
   /**
    * Leave empty to show businesses from all islands
@@ -1173,6 +1218,10 @@ export interface BusinessDirectoryBlock {
  */
 export interface ContactInfoBlock {
   title?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
   description?: string | null;
   /**
    * Large background photo
@@ -1212,6 +1261,10 @@ export interface ContactInfoBlock {
  */
 export interface TestimonialsBlock {
   title?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
   items: {
     quote: string;
     name: string;
@@ -1235,6 +1288,10 @@ export interface WhyUsBlock {
    * e.g. "Why Aviatour"
    */
   title?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
   items: {
     image: string | Media;
     title: string;
@@ -1278,6 +1335,10 @@ export interface StatsBlock {
    * e.g. "Your Trusted Partner In Seamless Travel"
    */
   title?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
   description?: string | null;
   image: string | Media;
   stats: {
@@ -1333,6 +1394,10 @@ export interface EventTimelineBlock {
    * e.g. "Itinerary"
    */
   title?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
   items: {
     /**
      * e.g. "Day 1" or "Day 4 - 5"
@@ -1354,6 +1419,10 @@ export interface EventTimelineBlock {
 export interface WhatsIncludedBlock {
   title?: string | null;
   /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
+  /**
    * e.g. "Japan Rail (JR) pass for 7 days", "8 nights hotel accommodation"
    */
   items: {
@@ -1370,6 +1439,10 @@ export interface WhatsIncludedBlock {
  */
 export interface RecommendedEventsBlock {
   title?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
   events: {
     image: string | Media;
     /**
@@ -1400,30 +1473,16 @@ export interface RecommendedEventsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TripHeaderBlock".
+ * via the `definition` "PhotoGalleryBlock".
  */
-export interface TripHeaderBlock {
+export interface PhotoGalleryBlock {
   /**
    * Up to 4 photos for the top gallery collage (1 large left, 1 large center, 2 stacked right).
    */
   images?: (string | Media)[] | null;
-  /**
-   * e.g. "Classic", "Far East AU5"
-   */
-  breadcrumbs?:
-    | {
-        label: string;
-        url?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * e.g. "Japan Express: Osaka to Tokyo"
-   */
-  title: string;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'tripHeader';
+  blockType: 'photoGallery';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2003,8 +2062,8 @@ export interface PagesSelect<T extends boolean = true> {
         joinedLabel?: T;
         description?: T;
         phone?: T;
-        doctorName?: T;
-        doctorTitle?: T;
+        personName?: T;
+        personTitle?: T;
         featuredImage?: T;
         featuredTitle?: T;
         featuredDescription?: T;
@@ -2049,6 +2108,7 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         cta?: T | CallToActionBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
+        richTextBlock?: T | RichTextBlockTypeSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         blogArchive?: T | BlogArchiveBlockSelect<T>;
@@ -2060,6 +2120,7 @@ export interface PagesSelect<T extends boolean = true> {
               badge?: T;
               title?: T;
               titleAccent?: T;
+              titleColor?: T;
               email?: T;
               ctaLabel?: T;
               ctaLink?: T;
@@ -2089,7 +2150,7 @@ export interface PagesSelect<T extends boolean = true> {
         eventTimeline?: T | EventTimelineBlockSelect<T>;
         whatsIncluded?: T | WhatsIncludedBlockSelect<T>;
         recommendedEvents?: T | RecommendedEventsBlockSelect<T>;
-        tripHeader?: T | TripHeaderBlockSelect<T>;
+        photoGallery?: T | PhotoGalleryBlockSelect<T>;
       };
   meta?:
     | T
@@ -2152,6 +2213,15 @@ export interface ContentBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichTextBlockType_select".
+ */
+export interface RichTextBlockTypeSelect<T extends boolean = true> {
+  richText?: T;
   id?: T;
   blockName?: T;
 }
@@ -2228,6 +2298,7 @@ export interface FormBlockSelect<T extends boolean = true> {
  */
 export interface QuickFactsBlockSelect<T extends boolean = true> {
   title?: T;
+  titleColor?: T;
   layout?: T;
   description?: T;
   button?:
@@ -2267,6 +2338,7 @@ export interface QuickFactsBlockSelect<T extends boolean = true> {
 export interface GalleryBlockSelect<T extends boolean = true> {
   eyebrow?: T;
   title?: T;
+  titleColor?: T;
   description?: T;
   layout?: T;
   viewMoreLabel?: T;
@@ -2289,6 +2361,7 @@ export interface GalleryBlockSelect<T extends boolean = true> {
  */
 export interface PlacesGridBlockSelect<T extends boolean = true> {
   title?: T;
+  titleColor?: T;
   type?: T;
   island?: T;
   limit?: T;
@@ -2301,6 +2374,7 @@ export interface PlacesGridBlockSelect<T extends boolean = true> {
  */
 export interface BusinessDirectoryBlockSelect<T extends boolean = true> {
   title?: T;
+  titleColor?: T;
   category?: T;
   island?: T;
   featuredOnly?: T;
@@ -2314,6 +2388,7 @@ export interface BusinessDirectoryBlockSelect<T extends boolean = true> {
  */
 export interface ContactInfoBlockSelect<T extends boolean = true> {
   title?: T;
+  titleColor?: T;
   description?: T;
   image1?: T;
   image2?: T;
@@ -2340,6 +2415,7 @@ export interface ContactInfoBlockSelect<T extends boolean = true> {
  */
 export interface TestimonialsBlockSelect<T extends boolean = true> {
   title?: T;
+  titleColor?: T;
   items?:
     | T
     | {
@@ -2358,6 +2434,7 @@ export interface TestimonialsBlockSelect<T extends boolean = true> {
  */
 export interface WhyUsBlockSelect<T extends boolean = true> {
   title?: T;
+  titleColor?: T;
   items?:
     | T
     | {
@@ -2392,6 +2469,7 @@ export interface WhyUsBlockSelect<T extends boolean = true> {
  */
 export interface StatsBlockSelect<T extends boolean = true> {
   title?: T;
+  titleColor?: T;
   description?: T;
   image?: T;
   stats?:
@@ -2436,6 +2514,7 @@ export interface DestinationsBlockSelect<T extends boolean = true> {
  */
 export interface EventTimelineBlockSelect<T extends boolean = true> {
   title?: T;
+  titleColor?: T;
   items?:
     | T
     | {
@@ -2454,6 +2533,7 @@ export interface EventTimelineBlockSelect<T extends boolean = true> {
  */
 export interface WhatsIncludedBlockSelect<T extends boolean = true> {
   title?: T;
+  titleColor?: T;
   items?:
     | T
     | {
@@ -2469,6 +2549,7 @@ export interface WhatsIncludedBlockSelect<T extends boolean = true> {
  */
 export interface RecommendedEventsBlockSelect<T extends boolean = true> {
   title?: T;
+  titleColor?: T;
   events?:
     | T
     | {
@@ -2491,18 +2572,10 @@ export interface RecommendedEventsBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TripHeaderBlock_select".
+ * via the `definition` "PhotoGalleryBlock_select".
  */
-export interface TripHeaderBlockSelect<T extends boolean = true> {
+export interface PhotoGalleryBlockSelect<T extends boolean = true> {
   images?: T;
-  breadcrumbs?:
-    | T
-    | {
-        label?: T;
-        url?: T;
-        id?: T;
-      };
-  title?: T;
   id?: T;
   blockName?: T;
 }
@@ -3256,6 +3329,35 @@ export interface FooterSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SocialEmbedBlock".
+ */
+export interface SocialEmbedBlock {
+  platform: 'youtube' | 'twitter';
+  /**
+   * Paste the full post URL, e.g. https://www.youtube.com/watch?v=... or https://x.com/user/status/...
+   */
+  url: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'socialEmbed';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QuoteBlock".
+ */
+export interface QuoteBlock {
+  quote: string;
+  name: string;
+  /**
+   * e.g. SVP, Client Services
+   */
+  role?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'quote';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

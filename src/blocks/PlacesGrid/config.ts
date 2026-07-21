@@ -1,5 +1,7 @@
 import type { Block } from 'payload'
 
+import { titleColorField } from '@/fields/titleColor'
+
 export const PlacesGrid: Block = {
   slug: 'placesGrid',
   interfaceName: 'PlacesGridBlock',
@@ -13,6 +15,7 @@ export const PlacesGrid: Block = {
       type: 'text',
       localized: true,
     },
+    titleColorField,
     {
       name: 'type',
       type: 'select',

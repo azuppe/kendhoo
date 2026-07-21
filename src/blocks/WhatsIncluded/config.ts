@@ -1,5 +1,7 @@
 import type { Block } from 'payload'
 
+import { titleColorField } from '@/fields/titleColor'
+
 export const WhatsIncluded: Block = {
   slug: 'whatsIncluded',
   interfaceName: 'WhatsIncludedBlock',
@@ -14,6 +16,7 @@ export const WhatsIncluded: Block = {
       localized: true,
       defaultValue: "What's Included",
     },
+    titleColorField,
     {
       name: 'items',
       type: 'array',

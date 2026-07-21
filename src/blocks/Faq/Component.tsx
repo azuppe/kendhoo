@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { Mail, Plus } from 'lucide-react'
 
 import { Media } from '@/components/Media'
+import { getTitleColorClass } from '@/utilities/getTitleColorClass'
 
 export type FaqItem = {
   question: string
@@ -13,6 +14,7 @@ export type FaqItem = {
 export type FaqBlockProps = {
   badge?: string
   title?: string
+  titleColor?: ('dark' | 'light') | null
   titleAccent?: string
   email?: string
   ctaLabel?: string
@@ -27,6 +29,7 @@ export type FaqBlockProps = {
 export const FaqBlock: React.FC<FaqBlockProps> = ({
   badge,
   title,
+  titleColor,
   titleAccent,
   email,
   ctaLabel,
@@ -49,12 +52,12 @@ export const FaqBlock: React.FC<FaqBlockProps> = ({
             </span>
           )}
           {title && (
-            <h2 className="  text-4xl md:text-5xl font-bold text-gray-900 leading-tight text-start">
+            <h2 className={`  text-4xl md:text-5xl font-bold leading-tight text-start ${getTitleColorClass(titleColor)}`}>
               {title}
             </h2>
           )}
           {titleAccent && (
-            <p className="  italic text-4xl md:text-6xl text-gray-900 leading-tight">
+            <p className={`  italic text-4xl md:text-6xl leading-tight ${getTitleColorClass(titleColor)}`}>
               {titleAccent}
             </p>
           )}

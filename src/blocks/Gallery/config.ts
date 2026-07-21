@@ -1,5 +1,7 @@
 import type { Block } from 'payload'
 
+import { titleColorField } from '@/fields/titleColor'
+
 export const Gallery: Block = {
   slug: 'gallery',
   interfaceName: 'GalleryBlock',
@@ -21,6 +23,7 @@ export const Gallery: Block = {
       type: 'text',
       localized: true,
     },
+    titleColorField,
     {
       name: 'description',
       type: 'text',

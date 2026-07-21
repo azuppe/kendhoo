@@ -2,6 +2,7 @@ import React from 'react'
 
 import { Media } from '@/components/Media'
 import { CMSLink } from '@/components/Link'
+import { getTitleColorClass } from '@/utilities/getTitleColorClass'
 
 type WhyUsItem = {
   image: any
@@ -11,6 +12,7 @@ type WhyUsItem = {
 
 export type WhyUsBlockProps = {
   title?: string | null
+  titleColor?: ('dark' | 'light') | null
   items: WhyUsItem[]
   ctaTitle?: string | null
   ctaDescription?: string | null
@@ -19,6 +21,7 @@ export type WhyUsBlockProps = {
 
 export const WhyUsBlock: React.FC<WhyUsBlockProps> = ({
   title,
+  titleColor,
   items,
   ctaTitle,
   ctaDescription,
@@ -28,7 +31,7 @@ export const WhyUsBlock: React.FC<WhyUsBlockProps> = ({
     <section className="py-16">
       <div className="container mx-auto px-4 max-w-5xl">
         {title && (
-          <h2 className="  text-4xl md:text-5xl font-bold text-start text-gray-900 mb-16">
+          <h2 className={`  text-4xl md:text-5xl font-bold text-start mb-16 ${getTitleColorClass(titleColor)}`}>
             {title}
           </h2>
         )}

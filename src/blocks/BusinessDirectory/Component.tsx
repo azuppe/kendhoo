@@ -3,9 +3,11 @@ import configPromise from '@payload-config'
 import { getPayload, TypedLocale } from 'payload'
 import { Star, Heart } from 'lucide-react'
 import { Media } from '@/components/Media'
+import { getTitleColorClass } from '@/utilities/getTitleColorClass'
 
 export type BusinessDirectoryBlockProps = {
   title?: string | null
+  titleColor?: ('dark' | 'light') | null
   category?: 'all' | 'restaurant' | 'shop' | 'accommodation' | 'service' | null
   island?: any
   featuredOnly?: boolean | null
@@ -15,6 +17,7 @@ export type BusinessDirectoryBlockProps = {
 
 export const BusinessDirectoryBlock: React.FC<BusinessDirectoryBlockProps> = async ({
   title,
+  titleColor,
   category = 'all',
   island,
   featuredOnly,
@@ -45,7 +48,7 @@ export const BusinessDirectoryBlock: React.FC<BusinessDirectoryBlockProps> = asy
     <section className="py-12">
       <div className="container mx-auto px-4  ">
         {title && (
-          <h2 className="  text-4xl md:text-5xl font-bold mb-8 text-start">{title}</h2>
+          <h2 className={`  text-4xl md:text-5xl font-bold mb-8 text-start ${getTitleColorClass(titleColor)}`}>{title}</h2>
         )}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {businesses.map((biz: any) => {

@@ -1,5 +1,7 @@
 import type { Block } from 'payload'
 
+import { titleColorField } from '@/fields/titleColor'
+
 export const BusinessDirectory: Block = {
   slug: 'businessDirectory',
   interfaceName: 'BusinessDirectoryBlock',
@@ -13,6 +15,7 @@ export const BusinessDirectory: Block = {
       type: 'text',
       localized: true,
     },
+    titleColorField,
     {
       name: 'category',
       type: 'select',

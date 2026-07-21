@@ -1,5 +1,7 @@
 import type { Block } from 'payload'
 
+import { titleColorField } from '@/fields/titleColor'
+
 export const Testimonials: Block = {
   slug: 'testimonials',
   interfaceName: 'TestimonialsBlock',
@@ -13,6 +15,7 @@ export const Testimonials: Block = {
       type: 'text',
       localized: true,
     },
+    titleColorField,
     {
       name: 'items',
       type: 'array',

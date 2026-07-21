@@ -4,6 +4,7 @@ import React, { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Play } from 'lucide-react'
 import { Media } from '@/components/Media'
+import { getTitleColorClass } from '@/utilities/getTitleColorClass'
 
 type DiaryImage = {
   image: any
@@ -15,11 +16,12 @@ type DiaryImage = {
 export const GalleryCoverflow: React.FC<{
   eyebrow?: string | null
   title?: string | null
+  titleColor?: ('dark' | 'light') | null
   description?: string | null
   images: DiaryImage[]
   viewMoreLabel?: string | null
   viewMoreUrl?: string | null
-}> = ({ eyebrow, title, description, images, viewMoreLabel, viewMoreUrl }) => {
+}> = ({ eyebrow, title, titleColor, description, images, viewMoreLabel, viewMoreUrl }) => {
   const locations = useMemo(
     () => Array.from(new Set((images || []).map((item) => item.location).filter(Boolean))) as string[],
     [images],
@@ -45,7 +47,7 @@ export const GalleryCoverflow: React.FC<{
       <div className="container mx-auto px-4   text-center">
         {eyebrow && <p className="text-sm font-semibold tracking-wide text-gray-900 mb-3">{eyebrow}</p>}
         {title && (
-          <h2 className="  text-4xl md:text-5xl font-bold text-gray-900 mb-4 text-start">
+          <h2 className={`  text-4xl md:text-5xl font-bold mb-4 text-start ${getTitleColorClass(titleColor)}`}>
             {title}
           </h2>
         )}

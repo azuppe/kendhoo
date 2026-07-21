@@ -1,5 +1,7 @@
 import type { Block } from 'payload'
 
+import { titleColorField } from '@/fields/titleColor'
+
 export const QuickFacts: Block = {
   slug: 'quickFacts',
   interfaceName: 'QuickFactsBlock',
@@ -13,6 +15,7 @@ export const QuickFacts: Block = {
       type: 'text',
       localized: true,
     },
+    titleColorField,
     {
       name: 'layout',
       type: 'select',

@@ -13,7 +13,8 @@ import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Banner } from '../../blocks/Banner/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
-import { TripHeader } from '../../blocks/TripHeader/config'
+import { PhotoGallery } from '../../blocks/PhotoGallery/config'
+import { SocialEmbed } from '../../blocks/SocialEmbed/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { populateAuthors } from './hooks/populateAuthors'
 import { revalidatePost } from './hooks/revalidatePost'
@@ -88,7 +89,7 @@ export const Posts: CollectionConfig = {
                   return [
                     ...rootFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, MediaBlock, TripHeader] }),
+                    BlocksFeature({ blocks: [Banner, MediaBlock, PhotoGallery, SocialEmbed] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),

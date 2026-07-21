@@ -1,6 +1,7 @@
 import type { Block } from 'payload'
 
 import { linkGroup } from '@/fields/linkGroup'
+import { titleColorField } from '@/fields/titleColor'
 
 export const WhyUs: Block = {
   slug: 'whyUs',
@@ -18,6 +19,7 @@ export const WhyUs: Block = {
         description: 'e.g. "Why Aviatour"',
       },
     },
+    titleColorField,
     {
       name: 'items',
       type: 'array',

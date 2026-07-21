@@ -7,6 +7,7 @@ import { BlogArchive } from '../../blocks/BlogArchive/config'
 import { LatestNewsV2 } from '../../blocks/LatestNewsV2/config'
 import { CallToAction } from '../../blocks/CallToAction/config'
 import { Content } from '../../blocks/Content/config'
+import { RichTextBlock } from '../../blocks/RichText/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import FaqBlock from '../../blocks/Faq/config'
@@ -22,7 +23,7 @@ import { Destinations } from '../../blocks/Destinations/config'
 import { EventTimeline } from '../../blocks/EventTimeline/config'
 import { WhatsIncluded } from '../../blocks/WhatsIncluded/config'
 import { RecommendedEvents } from '../../blocks/RecommendedEvents/config'
-import { TripHeader } from '../../blocks/TripHeader/config'
+import { PhotoGallery } from '../../blocks/PhotoGallery/config'
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -91,6 +92,7 @@ export const Pages: CollectionConfig = {
               blocks: [
                 CallToAction,
                 Content,
+                RichTextBlock,
                 MediaBlock,
                 Archive,
                 BlogArchive,
@@ -109,7 +111,7 @@ export const Pages: CollectionConfig = {
                 EventTimeline,
                 WhatsIncluded,
                 RecommendedEvents,
-                TripHeader,
+                PhotoGallery,
               ],
               required: true,
             },

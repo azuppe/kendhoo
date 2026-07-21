@@ -1,6 +1,7 @@
 import React from 'react'
 import { Media } from '@/components/Media'
 import { GalleryCoverflow } from './Coverflow'
+import { getTitleColorClass } from '@/utilities/getTitleColorClass'
 
 type GalleryImage = {
   image: any
@@ -12,6 +13,7 @@ type GalleryImage = {
 export type GalleryBlockProps = {
   eyebrow?: string | null
   title?: string | null
+  titleColor?: ('dark' | 'light') | null
   description?: string | null
   layout?: 'grid' | 'masonry' | 'slider' | 'coverflow' | null
   images: GalleryImage[]
@@ -22,6 +24,7 @@ export type GalleryBlockProps = {
 export const GalleryBlock: React.FC<GalleryBlockProps> = ({
   eyebrow,
   title,
+  titleColor,
   description,
   layout = 'grid',
   images,
@@ -33,6 +36,7 @@ export const GalleryBlock: React.FC<GalleryBlockProps> = ({
       <GalleryCoverflow
         eyebrow={eyebrow}
         title={title}
+        titleColor={titleColor}
         description={description}
         images={images}
         viewMoreLabel={viewMoreLabel}
@@ -52,7 +56,7 @@ export const GalleryBlock: React.FC<GalleryBlockProps> = ({
     <section className="py-12">
       <div className="container mx-auto px-4  ">
         {title && (
-          <h2 className="  text-4xl md:text-5xl font-bold mb-8 text-start">{title}</h2>
+          <h2 className={`  text-4xl md:text-5xl font-bold mb-8 text-start ${getTitleColorClass(titleColor)}`}>{title}</h2>
         )}
         <div className={gridClass}>
           {images?.map((item, i) => (

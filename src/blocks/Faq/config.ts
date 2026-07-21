@@ -1,5 +1,7 @@
 import { Block } from 'payload'
 
+import { titleColorField } from '@/fields/titleColor'
+
 const FaqBlock: Block = {
   slug: 'faq',
   labels: {
@@ -31,6 +33,7 @@ const FaqBlock: Block = {
         description: 'Rendered in italic serif on its own line, e.g. "Questions"',
       },
     },
+    titleColorField,
     {
       name: 'email',
       type: 'text',

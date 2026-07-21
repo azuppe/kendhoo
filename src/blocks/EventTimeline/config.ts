@@ -1,5 +1,7 @@
 import type { Block } from 'payload'
 
+import { titleColorField } from '@/fields/titleColor'
+
 export const EventTimeline: Block = {
   slug: 'eventTimeline',
   interfaceName: 'EventTimelineBlock',
@@ -16,6 +18,7 @@ export const EventTimeline: Block = {
         description: 'e.g. "Itinerary"',
       },
     },
+    titleColorField,
     {
       name: 'items',
       type: 'array',

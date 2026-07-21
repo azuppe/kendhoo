@@ -8,7 +8,7 @@ import { MediumImpactHero } from '@/heros/MediumImpact'
 import { LandingPage } from '@/heros/Landing'
 import HeroCarousel from './HeroCarousel'
 import { AdventureHero } from '@/heros/Adventure'
-import { CosmeticHero } from '@/heros/Cosmetic'
+import { PeopleHero } from '@/heros/People'
 import { EventDetailsHero } from '@/heros/EventDetails'
 
 const heroes = {
@@ -18,7 +18,7 @@ const heroes = {
   landing: LandingPage,
   heroCarousel: HeroCarousel,
   adventure: AdventureHero,
-  cosmetic: CosmeticHero,
+  people: PeopleHero,
   eventDetails: EventDetailsHero,
 }
 

@@ -9,7 +9,7 @@ import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 import { CMSLink } from '@/components/Link'
 
-export const CosmeticHero: React.FC<Page['hero']> = ({
+export const PeopleHero: React.FC<Page['hero']> = ({
   title,
   media,
   richText,
@@ -17,8 +17,8 @@ export const CosmeticHero: React.FC<Page['hero']> = ({
   phone,
   description,
   links,
-  doctorName,
-  doctorTitle,
+  personName,
+  personTitle,
 }) => {
   return (
     <div className="relative min-h-screen font-sans text-white overflow-hidden">
@@ -105,11 +105,11 @@ export const CosmeticHero: React.FC<Page['hero']> = ({
           </div>
         </div>
 
-        {(doctorName || doctorTitle) && (
+        {(personName || personTitle) && (
           <div className="px-4 md:px-8 pb-8 flex justify-end">
             <div className="rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md px-5 py-3 text-right">
-              {doctorName && <p className="font-semibold">{doctorName}</p>}
-              {doctorTitle && <p className="text-sm text-white/75">{doctorTitle}</p>}
+              {personName && <p className="font-semibold">{personName}</p>}
+              {personTitle && <p className="text-sm text-white/75">{personTitle}</p>}
             </div>
           </div>
         )}
@@ -118,4 +118,4 @@ export const CosmeticHero: React.FC<Page['hero']> = ({
   )
 }
 
-export default CosmeticHero
+export default PeopleHero

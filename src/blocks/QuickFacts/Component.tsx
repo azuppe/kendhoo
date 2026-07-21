@@ -5,6 +5,7 @@ import { Media } from '@/components/Media'
 import type { Media as MediaType } from '@/payload-types'
 
 import { QuickFactsMosaic } from './Mosaic'
+import { getTitleColorClass } from '@/utilities/getTitleColorClass'
 
 type QuickFact = {
   icon?: string | null
@@ -20,6 +21,7 @@ type QuickFact = {
 
 export type QuickFactsBlockProps = {
   title?: string | null
+  titleColor?: ('dark' | 'light') | null
   layout?: 'stats' | 'mosaic' | null
   description?: string | null
   button?: { label?: string | null; url?: string | null } | null
@@ -30,6 +32,7 @@ export type QuickFactsBlockProps = {
 
 export const QuickFactsBlock: React.FC<QuickFactsBlockProps> = ({
   title,
+  titleColor,
   layout = 'stats',
   description,
   button,
@@ -42,7 +45,7 @@ export const QuickFactsBlock: React.FC<QuickFactsBlockProps> = ({
       <section className="py-12">
         <div className="container mx-auto px-4  ">
           {title && (
-            <h2 className="  text-4xl md:text-5xl font-bold mb-8 text-start">{title}</h2>
+            <h2 className={`  text-4xl md:text-5xl font-bold mb-8 text-start ${getTitleColorClass(titleColor)}`}>{title}</h2>
           )}
           <QuickFactsMosaic facts={facts} />
         </div>
@@ -58,7 +61,7 @@ export const QuickFactsBlock: React.FC<QuickFactsBlockProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div>
             {title && (
-              <h2 className="  text-4xl md:text-5xl font-bold mb-6 text-start">{title}</h2>
+              <h2 className={`  text-4xl md:text-5xl font-bold mb-6 text-start ${getTitleColorClass(titleColor)}`}>{title}</h2>
             )}
             {description && (
               <div className="text-gray-600 leading-relaxed space-y-4 mb-8 max-w-md">

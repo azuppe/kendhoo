@@ -3,6 +3,7 @@ import { Flame, LifeBuoy, MapPin, Mail, Phone, PhoneCall, Shield, Plus, ArrowRig
 
 import { Media } from '@/components/Media'
 import type { Media as MediaType } from '@/payload-types'
+import { getTitleColorClass } from '@/utilities/getTitleColorClass'
 
 type EmergencyContact = {
   label: string
@@ -12,6 +13,7 @@ type EmergencyContact = {
 
 export type ContactInfoBlockProps = {
   title?: string | null
+  titleColor?: ('dark' | 'light') | null
   description?: string | null
   image1?: (string | null) | MediaType
   image2?: (string | null) | MediaType
@@ -34,6 +36,7 @@ const emergencyIcons: Record<string, React.ElementType> = {
 
 export const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({
   title,
+  titleColor,
   description,
   image1,
   image2,
@@ -67,7 +70,7 @@ export const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({
 
           <div className={hasImages ? '' : 'lg:col-span-2'}>
             {title && (
-              <h2 className="  text-4xl md:text-5xl font-bold mb-3 text-start">{title}</h2>
+              <h2 className={`  text-4xl md:text-5xl font-bold mb-3 text-start ${getTitleColorClass(titleColor)}`}>{title}</h2>
             )}
             <div className="w-14 h-1.5 rounded-full bg-gray-900 mb-5" />
             {description && (

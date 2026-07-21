@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 
 import { Media } from '@/components/Media'
+import { getTitleColorClass } from '@/utilities/getTitleColorClass'
 
 type EventTimelineItem = {
   dayLabel: string
@@ -14,17 +15,18 @@ type EventTimelineItem = {
 
 export type EventTimelineBlockProps = {
   title?: string | null
+  titleColor?: ('dark' | 'light') | null
   items: EventTimelineItem[]
 }
 
-export const EventTimelineBlock: React.FC<EventTimelineBlockProps> = ({ title, items }) => {
+export const EventTimelineBlock: React.FC<EventTimelineBlockProps> = ({ title, titleColor, items }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   return (
     <section className="py-12">
       <div className="container mx-auto px-4">
         {title && (
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 text-start">
+          <h2 className={`text-2xl md:text-3xl font-bold mb-6 text-start ${getTitleColorClass(titleColor)}`}>
             {title}
           </h2>
         )}

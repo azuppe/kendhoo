@@ -1,5 +1,6 @@
 import React from 'react'
 import { CheckCircle2 } from 'lucide-react'
+import { getTitleColorClass } from '@/utilities/getTitleColorClass'
 
 type IncludedItem = {
   label: string
@@ -7,15 +8,16 @@ type IncludedItem = {
 
 export type WhatsIncludedBlockProps = {
   title?: string | null
+  titleColor?: ('dark' | 'light') | null
   items: IncludedItem[]
 }
 
-export const WhatsIncludedBlock: React.FC<WhatsIncludedBlockProps> = ({ title, items }) => {
+export const WhatsIncludedBlock: React.FC<WhatsIncludedBlockProps> = ({ title, titleColor, items }) => {
   return (
     <section className="py-12">
       <div className="container mx-auto px-4 max-w-3xl">
         {title && (
-          <h2 className="  text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-start">
+          <h2 className={`  text-4xl md:text-5xl font-bold mb-6 text-start ${getTitleColorClass(titleColor)}`}>
             {title}
           </h2>
         )}

@@ -1,5 +1,7 @@
 import type { Block } from 'payload'
 
+import { titleColorField } from '@/fields/titleColor'
+
 export const RecommendedEvents: Block = {
   slug: 'recommendedEvents',
   interfaceName: 'RecommendedEventsBlock',
@@ -14,6 +16,7 @@ export const RecommendedEvents: Block = {
       localized: true,
       defaultValue: 'Recommended for you',
     },
+    titleColorField,
     {
       name: 'events',
       type: 'array',

@@ -2,6 +2,7 @@ import React from 'react'
 import { Heart } from 'lucide-react'
 
 import { Media } from '@/components/Media'
+import { getTitleColorClass } from '@/utilities/getTitleColorClass'
 
 type RecommendedEvent = {
   image: any
@@ -21,18 +22,20 @@ type RecommendedEvent = {
 
 export type RecommendedEventsBlockProps = {
   title?: string | null
+  titleColor?: ('dark' | 'light') | null
   events: RecommendedEvent[]
 }
 
 export const RecommendedEventsBlock: React.FC<RecommendedEventsBlockProps> = ({
   title,
+  titleColor,
   events,
 }) => {
   return (
     <section className="py-12">
       <div className="container mx-auto px-4  ">
         {title && (
-          <h2 className="  text-4xl md:text-5xl font-bold text-gray-900 mb-8 text-start">
+          <h2 className={`  text-4xl md:text-5xl font-bold mb-8 text-start ${getTitleColorClass(titleColor)}`}>
             {title}
           </h2>
         )}

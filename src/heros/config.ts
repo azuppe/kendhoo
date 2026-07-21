@@ -50,8 +50,8 @@ export const hero: Field = {
           value: 'adventure',
         },
         {
-          label: 'Cosmetic',
-          value: 'cosmetic',
+          label: 'People',
+          value: 'people',
         },
         {
           label: 'Event Details',
@@ -103,7 +103,7 @@ export const hero: Field = {
       type: 'upload',
       admin: {
         condition: (_, { type } = {}) =>
-          ['highImpact', 'mediumImpact', 'landing', 'adventure', 'cosmetic', 'eventDetails'].includes(
+          ['highImpact', 'mediumImpact', 'landing', 'adventure', 'people', 'eventDetails'].includes(
             type,
           ),
         description:
@@ -127,7 +127,7 @@ export const hero: Field = {
       type: 'array',
       maxRows: 6,
       admin: {
-        condition: (_, { type } = {}) => ['adventure', 'cosmetic', 'mediumImpact'].includes(type),
+        condition: (_, { type } = {}) => ['adventure', 'people', 'mediumImpact'].includes(type),
         description: 'Nav links shown over the hero image',
       },
       fields: [
@@ -183,7 +183,7 @@ export const hero: Field = {
       localized: true,
       admin: {
         condition: (_, { type } = {}) =>
-          ['adventure', 'cosmetic', 'eventDetails', 'mediumImpact'].includes(type),
+          ['adventure', 'people', 'eventDetails', 'mediumImpact'].includes(type),
         description:
           'For Medium Impact, this is the small line shown bottom-right, e.g. "We\'ll take care of every detail."',
       },
@@ -192,26 +192,26 @@ export const hero: Field = {
       name: 'phone',
       type: 'text',
       admin: {
-        condition: (_, { type } = {}) => type === 'cosmetic',
+        condition: (_, { type } = {}) => type === 'people',
         description: 'Phone number shown in the top nav, e.g. "+1 (555) 123-4567"',
       },
     },
     {
-      name: 'doctorName',
+      name: 'personName',
       type: 'text',
       localized: true,
       admin: {
-        condition: (_, { type } = {}) => type === 'cosmetic',
-        description: 'e.g. "Dr. Isabella Cruz, MD"',
+        condition: (_, { type } = {}) => type === 'people',
+        description: 'The featured person\'s name, e.g. "Dr. Isabella Cruz, MD"',
       },
     },
     {
-      name: 'doctorTitle',
+      name: 'personTitle',
       type: 'text',
       localized: true,
       admin: {
-        condition: (_, { type } = {}) => type === 'cosmetic',
-        description: 'e.g. "Aesthetic Medicine & Dermatological Care"',
+        condition: (_, { type } = {}) => type === 'people',
+        description: 'The featured person\'s title or role, e.g. "Aesthetic Medicine & Dermatological Care"',
       },
     },
     {
