@@ -2,7 +2,6 @@ import React from 'react'
 import { Calendar, Hotel, Plane, Star } from 'lucide-react'
 
 import { Media } from '@/components/Media'
-import { CMSLink } from '@/components/Link'
 
 type Breadcrumb = {
   label: string

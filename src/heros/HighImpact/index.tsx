@@ -31,11 +31,18 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
               />
             )}
             {Array.isArray(links) && links.length > 0 && (
-              <ul className="flex gap-4">
+              <ul className="flex flex-wrap gap-4">
                 {links.map(({ link }, i) => {
                   return (
                     <li key={i}>
-                      <CMSLink {...link} />
+                      <CMSLink
+                        className={`rounded-full px-8 py-2.5 text-sm font-medium transition-colors ${
+                          i === 0
+                            ? 'bg-white text-gray-900 hover:bg-white/90'
+                            : 'bg-white/10 text-white border border-white/30 backdrop-blur-sm hover:bg-white/20'
+                        }`}
+                        {...link}
+                      />
                     </li>
                   )
                 })}
