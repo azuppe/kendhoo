@@ -166,6 +166,9 @@ export interface Page {
       | 'adventure'
       | 'cosmetic'
       | 'eventDetails';
+    /**
+     * For Medium Impact, this is the large headline shown bottom-left, e.g. "Let's plan your dream trip together."
+     */
     richText?: {
       root: {
         type: string;
@@ -182,6 +185,9 @@ export interface Page {
       [k: string]: unknown;
     } | null;
     posts?: (string | Post)[] | null;
+    /**
+     * For Medium Impact, the first link is the "Plan your trip" button (bottom-left) and the second is the "Contact us" button (top nav, right).
+     */
     links?:
       | {
           link: {
@@ -236,6 +242,9 @@ export interface Page {
      * e.g. "People Joined"
      */
     joinedLabel?: string | null;
+    /**
+     * For Medium Impact, this is the small line shown bottom-right, e.g. "We'll take care of every detail."
+     */
     description?: string | null;
     /**
      * Phone number shown in the top nav, e.g. "+1 (555) 123-4567"

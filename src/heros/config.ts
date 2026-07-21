@@ -64,6 +64,10 @@ export const hero: Field = {
       name: 'richText',
       type: 'richText',
       localized: true,
+      admin: {
+        description:
+          'For Medium Impact, this is the large headline shown bottom-left, e.g. "Let\'s plan your dream trip together."',
+      },
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [
@@ -88,6 +92,10 @@ export const hero: Field = {
     linkGroup({
       overrides: {
         maxRows: 2,
+        admin: {
+          description:
+            'For Medium Impact, the first link is the "Plan your trip" button (bottom-left) and the second is the "Contact us" button (top nav, right).',
+        },
       },
     }),
     {
@@ -119,7 +127,7 @@ export const hero: Field = {
       type: 'array',
       maxRows: 6,
       admin: {
-        condition: (_, { type } = {}) => ['adventure', 'cosmetic'].includes(type),
+        condition: (_, { type } = {}) => ['adventure', 'cosmetic', 'mediumImpact'].includes(type),
         description: 'Nav links shown over the hero image',
       },
       fields: [
@@ -174,7 +182,10 @@ export const hero: Field = {
       type: 'textarea',
       localized: true,
       admin: {
-        condition: (_, { type } = {}) => ['adventure', 'cosmetic', 'eventDetails'].includes(type),
+        condition: (_, { type } = {}) =>
+          ['adventure', 'cosmetic', 'eventDetails', 'mediumImpact'].includes(type),
+        description:
+          'For Medium Impact, this is the small line shown bottom-right, e.g. "We\'ll take care of every detail."',
       },
     },
     {

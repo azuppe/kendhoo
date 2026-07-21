@@ -49,7 +49,7 @@ export default function HeroCarousel({ ...props }) {
   }
 
   return (
-    <div className="w-full  container mx-auto pt-[74px]">
+    <div className="w-full  container mx-auto pt-[110px]">
       {props.posts && (
         <div className="relative h-[500px] md:h-[600px] rounded-3xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-300">
           <AnimatePresence initial={false} custom={direction} mode="wait">
