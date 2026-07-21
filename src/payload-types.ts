@@ -70,6 +70,7 @@ export interface Config {
     pages: Page;
     posts: Post;
     events: Event;
+    activities: Activity;
     media: Media;
     categories: Category;
     sources: Source;
@@ -91,6 +92,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
+    activities: ActivitiesSelect<false> | ActivitiesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     sources: SourcesSelect<false> | SourcesSelect<true>;
@@ -1407,72 +1409,6 @@ export interface TripHeaderBlock {
    * e.g. "Japan Express: Osaka to Tokyo"
    */
   title: string;
-  /**
-   * e.g. 5
-   */
-  rating?: number | null;
-  /**
-   * e.g. 296
-   */
-  reviewCount?: number | null;
-  /**
-   * Trip meta row, e.g. Duration / Group Size / Pacing / Accommodation.
-   */
-  meta?:
-    | {
-        icon?: ('duration' | 'groupSize' | 'pacing' | 'accommodation') | null;
-        /**
-         * e.g. "9 Days"
-         */
-        label?: string | null;
-        /**
-         * e.g. "Max 16, Aug 13"
-         */
-        sublabel?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Sticky price / booking card shown on the right.
-   */
-  priceCard: {
-    /**
-     * e.g. "TOP"
-     */
-    badge?: string | null;
-    /**
-     * e.g. "9 days"
-     */
-    durationLabel?: string | null;
-    /**
-     * e.g. "Osaka to Tokyo"
-     */
-    route?: string | null;
-    price: number;
-    originalPrice?: number | null;
-    currency?: string | null;
-    /**
-     * e.g. "Jul 24, 2026"
-     */
-    validOn?: string | null;
-    /**
-     * e.g. "AJJ5"
-     */
-    tripCode?: string | null;
-    buttonLabel?: string | null;
-    buttonUrl?: string | null;
-    /**
-     * Icon row under the button, e.g. Flight / Hotels / Events.
-     */
-    includes?:
-      | {
-          icon?: ('flight' | 'hotels' | 'events') | null;
-          label?: string | null;
-          sublabel?: string | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'tripHeader';
@@ -1609,6 +1545,142 @@ export interface Event {
   publishedAt?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "activities".
+ */
+export interface Activity {
+  id: string;
+  /**
+   * e.g. "Snorkelling in Kendhoo"
+   */
+  title: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  heroImage: string | Media;
+  /**
+   * One-sentence introduction, e.g. "Explore the clear lagoon and colourful house reef with trusted local guides."
+   */
+  intro?: string | null;
+  /**
+   * e.g. "Ocean & Adventure"
+   */
+  categoryTag?: string | null;
+  island?: (string | null) | Island;
+  /**
+   * Overrides the island name if set, e.g. "B. Kendhoo, Maldives"
+   */
+  locationLabel?: string | null;
+  /**
+   * e.g. "1.5 - 2.5 hours"
+   */
+  duration?: string | null;
+  /**
+   * e.g. "Year-round" or "Morning"
+   */
+  bestTime?: string | null;
+  /**
+   * e.g. "From MVR 350"
+   */
+  priceRange?: string | null;
+  difficulty?: ('easy' | 'moderate' | 'challenging') | null;
+  aboutTitle?: string | null;
+  /**
+   * Two or three short paragraphs (separate with a blank line): what visitors will experience, what makes it special here, and who it suits (beginners, children, families).
+   */
+  aboutDescription?: string | null;
+  highlightsTitle?: string | null;
+  /**
+   * e.g. "Suitable for beginners and families"
+   */
+  highlights?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  providersTitle?: string | null;
+  /**
+   * Every provider is shown directly on the page. Avoid ranking one above others unless there is a clear reason (mark it Verified instead).
+   */
+  providers?:
+    | {
+        name: string;
+        logo?: (string | null) | Media;
+        description?: string | null;
+        /**
+         * e.g. "From MVR 350"
+         */
+        startingPrice?: string | null;
+        /**
+         * e.g. "1.5 - 2 hours"
+         */
+        duration?: string | null;
+        /**
+         * e.g. "Snorkel gear, guide, water"
+         */
+        included?: string | null;
+        /**
+         * e.g. "Daily, 8am - 4pm"
+         */
+        availableTimes?: string | null;
+        phone?: string | null;
+        /**
+         * Phone number in international format, e.g. 9609991234
+         */
+        whatsapp?: string | null;
+        verified?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Activity, underwater, location photos, and photos submitted by local providers.
+   */
+  galleryImages?: (string | Media)[] | null;
+  beforeYouGoTitle?: string | null;
+  /**
+   * What to bring, recommended clothing, minimum age, swimming requirements, weather limitations, safety information.
+   */
+  beforeYouGoItems?:
+    | {
+        icon?: ('sunscreen' | 'clothing' | 'weather' | 'safety' | 'age' | 'swimming' | 'time' | 'info') | null;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  locationTitle?: string | null;
+  /**
+   * Meeting location and simple directions from the harbour.
+   */
+  locationDescription?: string | null;
+  locationNote?: string | null;
+  /**
+   * Static map preview image (optional).
+   */
+  mapImage?: (string | null) | Media;
+  /**
+   * URL for the "View on map" button, e.g. a Google Maps link.
+   */
+  mapLink?: string | null;
+  coordinates?: {
+    latitude?: number | null;
+    longitude?: number | null;
+  };
+  relatedTitle?: string | null;
+  relatedActivities?: (string | Activity)[] | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1788,6 +1860,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'events';
         value: string | Event;
+      } | null)
+    | ({
+        relationTo: 'activities';
+        value: string | Activity;
       } | null)
     | ({
         relationTo: 'media';
@@ -2427,38 +2503,6 @@ export interface TripHeaderBlockSelect<T extends boolean = true> {
         id?: T;
       };
   title?: T;
-  rating?: T;
-  reviewCount?: T;
-  meta?:
-    | T
-    | {
-        icon?: T;
-        label?: T;
-        sublabel?: T;
-        id?: T;
-      };
-  priceCard?:
-    | T
-    | {
-        badge?: T;
-        durationLabel?: T;
-        route?: T;
-        price?: T;
-        originalPrice?: T;
-        currency?: T;
-        validOn?: T;
-        tripCode?: T;
-        buttonLabel?: T;
-        buttonUrl?: T;
-        includes?:
-          | T
-          | {
-              icon?: T;
-              label?: T;
-              sublabel?: T;
-              id?: T;
-            };
-      };
   id?: T;
   blockName?: T;
 }
@@ -2584,6 +2628,82 @@ export interface EventsSelect<T extends boolean = true> {
   publishedAt?: T;
   slug?: T;
   slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "activities_select".
+ */
+export interface ActivitiesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  slugLock?: T;
+  heroImage?: T;
+  intro?: T;
+  categoryTag?: T;
+  island?: T;
+  locationLabel?: T;
+  duration?: T;
+  bestTime?: T;
+  priceRange?: T;
+  difficulty?: T;
+  aboutTitle?: T;
+  aboutDescription?: T;
+  highlightsTitle?: T;
+  highlights?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  providersTitle?: T;
+  providers?:
+    | T
+    | {
+        name?: T;
+        logo?: T;
+        description?: T;
+        startingPrice?: T;
+        duration?: T;
+        included?: T;
+        availableTimes?: T;
+        phone?: T;
+        whatsapp?: T;
+        verified?: T;
+        id?: T;
+      };
+  galleryImages?: T;
+  beforeYouGoTitle?: T;
+  beforeYouGoItems?:
+    | T
+    | {
+        icon?: T;
+        label?: T;
+        id?: T;
+      };
+  locationTitle?: T;
+  locationDescription?: T;
+  locationNote?: T;
+  mapImage?: T;
+  mapLink?: T;
+  coordinates?:
+    | T
+    | {
+        latitude?: T;
+        longitude?: T;
+      };
+  relatedTitle?: T;
+  relatedActivities?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

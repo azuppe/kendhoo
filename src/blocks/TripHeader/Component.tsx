@@ -1,5 +1,5 @@
 import React from 'react'
-import { Calendar, Clock3, Gauge, Hotel, Plane, Star, Users } from 'lucide-react'
+import { Calendar, Hotel, Plane, Star } from 'lucide-react'
 
 import { Media } from '@/components/Media'
 import { CMSLink } from '@/components/Link'
@@ -7,12 +7,6 @@ import { CMSLink } from '@/components/Link'
 type Breadcrumb = {
   label: string
   url?: string | null
-}
-
-type MetaItem = {
-  icon?: 'duration' | 'groupSize' | 'pacing' | 'accommodation' | null
-  label?: string | null
-  sublabel?: string | null
 }
 
 type IncludeItem = {
@@ -41,31 +35,14 @@ export type TripHeaderBlockProps = {
   title: string
   rating?: number | null
   reviewCount?: number | null
-  meta?: MetaItem[] | null
   priceCard?: PriceCard | null
 }
 
-const metaIcons = {
-  duration: Clock3,
-  groupSize: Users,
-  pacing: Gauge,
-  accommodation: Hotel,
-}
-
-const includeIcons = {
-  flight: Plane,
-  hotels: Hotel,
-  events: Calendar,
-}
 
 export const TripHeaderBlock: React.FC<TripHeaderBlockProps> = ({
   images,
   breadcrumbs,
   title,
-  rating,
-  reviewCount,
-  meta,
-  priceCard,
 }) => {
   const [img1, img2, img3, img4] = images || []
 
@@ -119,107 +96,9 @@ export const TripHeaderBlock: React.FC<TripHeaderBlockProps> = ({
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
               {title}
             </h1>
-
-
-
-            {meta && meta.length > 0 && (
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-gray-100">
-                {meta.map((item, i) => {
-                  const Icon = metaIcons[item.icon || 'duration']
-                  return (
-                    <div key={i} className="flex items-start gap-2">
-                      <Icon className="w-5 h-5 text-gray-400 mt-0.5 shrink-0" />
-                      <div>
-                        <p className="text-sm font-semibold text-gray-900 leading-tight">
-                          {item.label}
-                        </p>
-                        {item.sublabel && (
-                          <p className="text-xs text-gray-500 leading-tight">
-                            {item.sublabel}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            )}
           </div>
 
-          {priceCard && (
-            <div className="lg:col-span-1">
-              <div className="sticky top-24 rounded-2xl border border-gray-200 p-6 shadow-sm">
-                {priceCard.badge && (
-                  <span className="inline-block px-2.5 py-1 rounded-md bg-gray-900 text-white text-[10px] font-bold tracking-wide mb-3">
-                    {priceCard.badge}
-                  </span>
-                )}
-
-                {priceCard.durationLabel && (
-                  <p className="text-sm font-semibold text-gray-900">
-                    {priceCard.durationLabel}
-                  </p>
-                )}
-                {priceCard.route && (
-                  <p className="text-sm text-gray-500 mb-4">{priceCard.route}</p>
-                )}
-
-                <div className="flex items-baseline gap-2 mb-1">
-                  <span className="text-2xl font-extrabold text-gray-900">
-                    {priceCard.currency} ${priceCard.price?.toLocaleString()}
-                  </span>
-                  {priceCard.originalPrice != null && (
-                    <span className="text-sm text-gray-400 line-through">
-                      ${priceCard.originalPrice?.toLocaleString()}
-                    </span>
-                  )}
-                </div>
-
-                {priceCard.validOn && (
-                  <p className="flex items-center gap-1.5 text-xs text-gray-500 mb-1">
-                    <Calendar className="w-3.5 h-3.5" />
-                    Valid on {priceCard.validOn}
-                  </p>
-                )}
-                {priceCard.tripCode && (
-                  <p className="text-xs text-gray-500 mb-5">
-                    Trip Code: {priceCard.tripCode}
-                  </p>
-                )}
-
-                {priceCard.includes && priceCard.includes.length > 0 && (
-                  <div className="grid grid-cols-3 gap-2 mb-5">
-                    {priceCard.includes.map((inc, i) => {
-                      const Icon = includeIcons[inc.icon || 'flight']
-                      return (
-                        <div
-                          key={i}
-                          className="flex flex-col items-center text-center gap-1 rounded-xl border border-gray-100 py-3 px-1"
-                        >
-                          <Icon className="w-4 h-4 text-gray-500" />
-                          <span className="text-[11px] font-medium text-gray-700 leading-tight">
-                            {inc.label}
-                          </span>
-                          {inc.sublabel && (
-                            <span className="text-[10px] text-gray-400 leading-tight">
-                              {inc.sublabel}
-                            </span>
-                          )}
-                        </div>
-                      )
-                    })}
-                  </div>
-                )}
-
-                <CMSLink
-                  url={priceCard.buttonUrl || '#'}
-                  label={priceCard.buttonLabel || 'Book Now'}
-                  appearance="default"
-                  className="w-full flex items-center justify-center rounded-full bg-gray-900 hover:bg-black text-white font-medium px-7 py-3 transition-colors"
-                />
-              </div>
-            </div>
-          )}
+         
         </div>
       </div>
     </section>

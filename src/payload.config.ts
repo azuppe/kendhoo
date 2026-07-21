@@ -20,6 +20,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 
+import { Activities } from './collections/Activities'
 import Categories from './collections/Categories'
 import { Comments } from './collections/Comments'
 import Islands from './collections/Islands'
@@ -135,6 +136,7 @@ export default buildConfig({
     Pages,
     Posts,
     Events,
+    Activities,
     Media,
     Categories,
     Sources,
