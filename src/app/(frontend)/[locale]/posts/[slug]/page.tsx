@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 
-import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
+import Link from 'next/link'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
+import { Media } from '@/components/Media'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
@@ -50,7 +51,7 @@ export default async function Post({ params: paramsPromise }: Args) {
   const relatedPosts = post.relatedPosts?.filter((p) => typeof p === 'object') || [];
 
   return (
-    <article className="pt-32 pb-16 bg-gray-50 min-h-screen">
+    <article className="pt-32 pb-16  min-h-screen">
       <PageClient />
       <PayloadRedirects disableNotFound url={url} />
 
@@ -67,49 +68,61 @@ export default async function Post({ params: paramsPromise }: Args) {
           </div>
 
           <Comments postId={post.id} />
-        </div>
 
-        {/* Related News */}
-        {relatedPosts.length > 0 && (
-          <div className="bg-white rounded-2xl shadow-sm p-6 mt-10">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold">Related News</h2>
-              <a href="#" className="text-sm text-gray-900 hover:underline">See all</a>
+          {/* More News */}
+          {relatedPosts.length > 0 && (
+            <div className="mt-10">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">More News</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {relatedPosts.slice(0, 3).map((related) => {
+                  const image =
+                    related.coverImage && typeof related.coverImage === 'object'
+                      ? related.coverImage
+                      : related.meta?.image && typeof related.meta.image === 'object'
+                        ? related.meta.image
+                        : undefined
+
+                  return (
+                    <div
+                      key={related.id}
+                      className="bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col"
+                    >
+                      <div className="w-full aspect-[16/10] bg-gray-100">
+                        {image && (
+                          <Media
+                            resource={image}
+                            imgClassName="object-cover w-full h-full"
+                          />
+                        )}
+                      </div>
+                      <div className="p-6 flex flex-col flex-1">
+                        <span className="text-sm text-gray-500 mb-2">
+                          {related.publishedAt &&
+                            new Date(related.publishedAt).toLocaleDateString('en-US', {
+                              month: 'long',
+                              day: 'numeric',
+                              year: 'numeric',
+                            })}
+                        </span>
+                        <h3 className="text-lg font-bold text-gray-900 leading-snug mb-4">
+                          {related.title}
+                        </h3>
+                        <div className="mt-auto pt-4 border-t border-gray-200">
+                          <Link
+                            href={`/${locale}/posts/${related.slug}`}
+                            className="text-blue-600 hover:underline font-medium"
+                          >
+                            Read More
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {relatedPosts.slice(0, 3).map((related, idx) => (
-                <div key={idx} className="flex gap-3 items-start">
-                  {/* Image */}
-                  {related.meta?.image && typeof related.meta.image !== 'string' && (
-                    <div className="w-20 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
-                      <img
-                        src={related.meta.image.url || undefined}
-                        alt={related.title}
-                        className="object-cover w-full h-full"
-                      />
-                    </div>
-                  )}
-                  <div className="flex-1 min-w-0">
-                    {/* Category badge */}
-                    {Array.isArray(related.categories) && related.categories.length > 0 && (
-                      <span className="inline-block mb-1 px-2 py-0.5 text-xs font-semibold rounded-full bg-gray-100 text-gray-700">
-                        {typeof related.categories[0] === 'object' ? related.categories[0].title : ''}
-                      </span>
-                    )}
-                    <div className="font-medium text-sm leading-tight line-clamp-2 mb-1">
-                      {related.title}
-                    </div>
-                    <div className="flex items-center text-xs text-gray-500 gap-2">
-                      <span>2.5m</span>
-                      <span>•</span>
-                      <span>{related.publishedAt ? new Date(related.publishedAt).toLocaleDateString() : ''}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </article>
   )

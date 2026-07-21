@@ -60,25 +60,13 @@ export const LatestNewsV2Block: React.FC<LatestNewsV2BlockProps> = async ({
             {subtitle && (
               <p className="text-gray-600 mb-8 max-w-xs">{subtitle}</p>
             )}
-            {link?.label &&
-              (() => {
-                const { label, ...linkRest } = link
-                return (
-                  <CMSLink
-                    {...linkRest}
-                    appearance="inline"
-                    className="group relative inline-flex items-center"
-                  >
-                    <span
-                      aria-hidden
-                      className="w-24 h-24 md:w-28 md:h-28 rounded-full shrink-0 bg-[radial-gradient(circle_at_35%_30%,#4b5563,#1f2937_60%,#000000_100%)] group-hover:brightness-105 transition-[filter]"
-                    />
-                    <span className="-ml-4 relative z-10 font-bold text-gray-900">
-                      {label}
-                    </span>
-                  </CMSLink>
-                )
-              })()}
+            {link?.label && (
+              <CMSLink
+                {...link}
+                appearance="default"
+                className="w-fit rounded-full bg-gray-900 text-white px-5 py-2.5 text-sm font-medium hover:bg-gray-800 transition-colors"
+              />
+            )}
           </div>
 
           <div className="flex flex-col gap-4">

@@ -23,7 +23,6 @@ import { EventTimeline } from '../../blocks/EventTimeline/config'
 import { WhatsIncluded } from '../../blocks/WhatsIncluded/config'
 import { RecommendedEvents } from '../../blocks/RecommendedEvents/config'
 import { TripHeader } from '../../blocks/TripHeader/config'
-import { TripOverview } from '../../blocks/TripOverview/config'
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -111,7 +110,6 @@ export const Pages: CollectionConfig = {
                 WhatsIncluded,
                 RecommendedEvents,
                 TripHeader,
-                TripOverview,
               ],
               required: true,
             },

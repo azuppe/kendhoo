@@ -25,7 +25,6 @@ import { EventTimelineBlock } from '@/blocks/EventTimeline/Component'
 import { WhatsIncludedBlock } from '@/blocks/WhatsIncluded/Component'
 import { RecommendedEventsBlock } from '@/blocks/RecommendedEvents/Component'
 import { TripHeaderBlock } from '@/blocks/TripHeader/Component'
-import { TripOverviewBlock } from '@/blocks/TripOverview/Component'
 import { TypedLocale } from 'payload'
 
 const blockComponents = {
@@ -50,7 +49,6 @@ const blockComponents = {
   whatsIncluded: WhatsIncludedBlock,
   recommendedEvents: RecommendedEventsBlock,
   tripHeader: TripHeaderBlock,
-  tripOverview: TripOverviewBlock,
 }
 
 export const RenderBlocks: React.FC<{

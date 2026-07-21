@@ -188,7 +188,7 @@ export default async function Page({ params, searchParams }: Args) {
       <PageClient />
 
       <div className="container">
-        <div className="rounded-2xl bg-gray-50 border border-gray-200 px-6 py-8 text-center">
+        <div className="rounded-2xl  border border-gray-200 px-6 py-8 text-center">
           <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-2">
             {t('welcome-to-buletin')}
           </p>

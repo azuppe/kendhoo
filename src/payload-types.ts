@@ -399,7 +399,6 @@ export interface Page {
     | WhatsIncludedBlock
     | RecommendedEventsBlock
     | TripHeaderBlock
-    | TripOverviewBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1428,17 +1427,6 @@ export interface TripHeaderBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TripOverviewBlock".
- */
-export interface TripOverviewBlock {
-  title?: string | null;
-  description?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'tripOverview';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "events".
  */
 export interface Event {
@@ -2102,7 +2090,6 @@ export interface PagesSelect<T extends boolean = true> {
         whatsIncluded?: T | WhatsIncludedBlockSelect<T>;
         recommendedEvents?: T | RecommendedEventsBlockSelect<T>;
         tripHeader?: T | TripHeaderBlockSelect<T>;
-        tripOverview?: T | TripOverviewBlockSelect<T>;
       };
   meta?:
     | T
@@ -2516,16 +2503,6 @@ export interface TripHeaderBlockSelect<T extends boolean = true> {
         id?: T;
       };
   title?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TripOverviewBlock_select".
- */
-export interface TripOverviewBlockSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
   id?: T;
   blockName?: T;
 }

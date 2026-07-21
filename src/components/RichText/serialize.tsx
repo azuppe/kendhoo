@@ -1,10 +1,12 @@
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
+import { TripHeaderBlock } from '@/blocks/TripHeader/Component'
 import React, { Fragment, JSX } from 'react'
 import { CMSLink } from '@/components/Link'
 import { DefaultNodeTypes, SerializedBlockNode } from '@payloadcms/richtext-lexical'
 import type { BannerBlock as BannerBlockProps } from '@/payload-types'
+import type { TripHeaderBlock as TripHeaderBlockProps } from '@/payload-types'
 
 import {
   IS_BOLD,
@@ -23,7 +25,7 @@ export type NodeTypes =
       | Extract<Page['layout'][0], { blockType: 'cta' }>
       | Extract<Page['layout'][0], { blockType: 'mediaBlock' }>
       | BannerBlockProps
-      
+      | TripHeaderBlockProps
     >
 
 type Props = {
@@ -121,6 +123,8 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
               )
             case 'banner':
               return <BannerBlock className="col-start-2 mb-4" key={index} {...block} />
+            case 'tripHeader':
+              return <TripHeaderBlock key={index} {...block} />
 
             default:
               return null
