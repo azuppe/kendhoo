@@ -6,21 +6,11 @@ import React, { useEffect, useState, useTransition } from 'react'
 
 import type { Header } from '@/payload-types'
 
-import { Logo } from '@/components/Logo/Logo'
 import { HeaderNav } from './Nav'
 import { useLocale, useTranslations } from 'next-intl'
 import localization from '@/i18n/localization'
 
-import {
-  ChevronDown,
-  ExternalLink,
-  Heart,
-  Menu,
-  SearchIcon,
-  User,
-  Waves,
-  X,
-} from 'lucide-react'
+import { ChevronDown, ExternalLink, Heart, Menu, SearchIcon, User, X } from 'lucide-react'
 import {
   Select,
   SelectContent,
@@ -53,14 +43,14 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
       >
         <Link
           href="/"
-          className="me-auto flex items-center gap-2 group shrink-0 bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 border border-white/10 rounded-full pl-2 pr-4 py-1.5 hover:bg-slate-950/50 transition-colors"
+          className="me-auto flex items-center shrink-0 bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 border border-white/10 rounded-full px-3 py-1.5 hover:bg-slate-950/50 transition-colors"
         >
-          <span className="p-2 bg-white/10 rounded-full border border-white/20 group-hover:bg-white/20 transition-colors">
-            <Waves size={20} className="text-white" />
-          </span>
-          <span className="text-xl font-extrabold tracking-tight text-white group-hover:text-white/80 transition-colors">
-            KendhooOnline
-          </span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/kendhoo-logo-white-web.png"
+            alt="Kendhoo Online"
+            className="h-12 w-auto rounded-xl object-contain"
+          />
         </Link>
 
         <nav className="hidden md:flex items-center gap-1 bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 rounded-full px-1.5 py-1.5 border border-white/10">

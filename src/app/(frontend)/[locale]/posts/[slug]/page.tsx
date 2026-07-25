@@ -14,8 +14,11 @@ import type { Post } from '@/payload-types'
 import { PostHero } from '@/heros/PostHero'
 import { Comments } from '@/components/Comments'
 import { generateMeta } from '@/utilities/generateMeta'
+import { JsonLd } from '@/components/JsonLd'
 import PageClient from './page.client'
 import { TypedLocale } from 'payload'
+
+const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'https://kendhoo.online'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -50,10 +53,39 @@ export default async function Post({ params: paramsPromise }: Args) {
   // Filter related posts for sidebar
   const relatedPosts = post.relatedPosts?.filter((p) => typeof p === 'object') || [];
 
+  const coverImage =
+    post.coverImage && typeof post.coverImage === 'object'
+      ? post.coverImage
+      : post.meta?.image && typeof post.meta.image === 'object'
+        ? post.meta.image
+        : undefined
+  const authorName = post.populatedAuthors?.[0]?.name
+
   return (
     <article className="pt-32 pb-16  min-h-screen">
       <PageClient />
       <PayloadRedirects disableNotFound url={url} />
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'NewsArticle',
+          headline: post.title,
+          description: post.meta?.description || undefined,
+          image: coverImage?.url ? [`${baseUrl}${coverImage.url}`] : undefined,
+          datePublished: post.publishedAt || undefined,
+          dateModified: post.publishedAt || undefined,
+          author: authorName ? { '@type': 'Person', name: authorName } : undefined,
+          publisher: {
+            '@type': 'Organization',
+            name: 'Kendhoo Online',
+            logo: {
+              '@type': 'ImageObject',
+              url: `${baseUrl}/kendhoo-logo-white-web.png`,
+            },
+          },
+          mainEntityOfPage: `${baseUrl}/${locale}${url}`,
+        }}
+      />
 
       <div className="container  mx-auto px-4 md:px-8">
         {/* Main Article */}

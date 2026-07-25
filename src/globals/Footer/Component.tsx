@@ -1,7 +1,7 @@
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import Link from 'next/link'
 import React from 'react'
-import { ArrowUpRight, Waves } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 
 import type { Footer as FooterType } from '@/payload-types'
 import { CMSLink } from '@/components/Link'
@@ -19,7 +19,8 @@ export async function Footer({ locale }: { locale: TypedLocale }) {
       <div className=" container mx-auto px-4 md:px-8 py-12 md:py-16 grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8">
         <div className="flex flex-col gap-4 md:col-span-1">
           <span className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center">
-            <Waves className="w-5 h-5 text-gray-900" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/WebLogo.png" alt="Kendhoo Online" className="w-6 h-6 object-contain" />
           </span>
 
           {footer?.ctaHeading && (

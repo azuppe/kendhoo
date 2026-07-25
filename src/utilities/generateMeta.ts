@@ -13,11 +13,13 @@ export const generateMeta = async (args: { doc: Page | Post | Event | Activity }
     'url' in doc.meta.image &&
     `${process.env.NEXT_PUBLIC_SERVER_URL}${doc.meta.image.url}`
 
-  const title = doc?.meta?.title
-    ? doc?.meta?.title + ' | Payload Website Template'
-    : 'Payload Website Template'
+  const title = doc?.meta?.title ? doc?.meta?.title + ' | Kendhoo Online' : 'Kendhoo Online'
+  const path = Array.isArray(doc?.slug) ? doc?.slug.join('/') : doc?.slug || ''
 
   return {
+    alternates: {
+      canonical: path,
+    },
     description: doc?.meta?.description,
     openGraph: mergeOpenGraph({
       description: doc?.meta?.description || '',
@@ -29,7 +31,7 @@ export const generateMeta = async (args: { doc: Page | Post | Event | Activity }
           ]
         : undefined,
       title,
-      url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
+      url: path || '/',
     }),
     title,
   }

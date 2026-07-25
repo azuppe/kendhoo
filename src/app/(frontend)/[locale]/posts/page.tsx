@@ -262,6 +262,6 @@ export default async function Page({ params, searchParams }: Args) {
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Payload Website Template Posts`,
+    title: `Posts | Kendhoo Online`,
   }
 }

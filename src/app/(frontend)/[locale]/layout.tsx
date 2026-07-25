@@ -18,6 +18,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 import localization from '@/i18n/localization'
+import { JsonLd } from '@/components/JsonLd'
 
 const lato = Lato({
   subsets: ['latin'],
@@ -56,6 +57,23 @@ export default async function RootLayout({ children, params }: Args) {
       <head>
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            name: 'Kendhoo Online',
+            url: process.env.NEXT_PUBLIC_SERVER_URL || 'https://kendhoo.online',
+            logo: `${process.env.NEXT_PUBLIC_SERVER_URL || 'https://kendhoo.online'}/kendhoo-logo-white-web.png`,
+          }}
+        />
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'Kendhoo Online',
+            url: process.env.NEXT_PUBLIC_SERVER_URL || 'https://kendhoo.online',
+          }}
+        />
       </head>
       <body className="font-sans">
 
@@ -72,11 +90,21 @@ export default async function RootLayout({ children, params }: Args) {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'https://payloadcms.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'https://kendhoo.online'),
+  title: {
+    default: 'Kendhoo Online',
+    template: '%s | Kendhoo Online',
+  },
+  description: 'Kendhoo Online — news, events, activities and places to explore.',
   openGraph: mergeOpenGraph(),
   twitter: {
     card: 'summary_large_image',
-    creator: '@payloadcms',
+  },
+  alternates: {
+    languages: {
+      dv: '/dv',
+      en: '/en',
+    },
   },
 }
 

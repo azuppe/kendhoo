@@ -87,7 +87,7 @@ export const seed = async ({
     collection: 'users',
     where: {
       email: {
-        equals: 'demo-author@payloadcms.com',
+        equals: 'demo-author@kendhoo.online',
       },
     },
     req,
@@ -96,9 +96,8 @@ export const seed = async ({
   const demoAuthor = await payload.create({
     collection: 'users',
     data: {
-      collection: 'users',
       name: 'Demo Author',
-      email: 'demo-author@payloadcms.com',
+      email: 'demo-author@kendhoo.online',
       password: 'password',
     },
     req,

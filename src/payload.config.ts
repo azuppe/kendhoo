@@ -47,7 +47,7 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
-  return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
+  return doc?.title ? `${doc.title} | Kendhoo Online` : 'Kendhoo Online'
 }
 
 const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
@@ -63,9 +63,23 @@ export default buildConfig({
       // Feel free to delete this at any time. Simply remove the line below.
       beforeLogin: ['@/components/BeforeLogin'],
       afterDashboard: ['@/components/AfterDashboard'],
+      graphics: {
+        Logo: '@/components/Logo/Logo#Logo',
+        Icon: '@/components/Logo/Icon#Icon',
+      },
     },
     importMap: {
       baseDir: path.resolve(dirname),
+    },
+    meta: {
+      titleSuffix: '- Kendhoo Online',
+      icons: [
+        {
+          rel: 'icon',
+          type: 'image/x-icon',
+          url: '/favicon.ico',
+        },
+      ],
     },
     user: Users.slug,
     livePreview: {

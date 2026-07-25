@@ -83,6 +83,10 @@ export default async function Page({
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Payload Website Template Search`,
+    title: `Search | Kendhoo Online`,
+    robots: {
+      index: false,
+      follow: true,
+    },
   }
 }
