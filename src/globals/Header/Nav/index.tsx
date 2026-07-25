@@ -21,13 +21,21 @@ function resolveHref(link: NonNullable<HeaderType['navItems']>[number]['link']):
   return link.url || ''
 }
 
-export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
+export const HeaderNav: React.FC<{ header: HeaderType; variant?: 'row' | 'stacked' }> = ({
+  header,
+  variant = 'row',
+}) => {
   const navItems = header?.navItems || []
   const pathname = usePathname()
 
   return (
     <nav>
-      <div className="flex items-center w-full">
+      <div
+        className={cn(
+          'flex w-full',
+          variant === 'row' ? 'items-center' : 'flex-col items-stretch gap-1',
+        )}
+      >
         {navItems.map(({ link }, i) => {
           const href = resolveHref(link)
           const isActive = href === pathname || (href === '/' && pathname === '/')
@@ -36,6 +44,7 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
             <CMSLink
               className={cn(
                 'text-sm font-medium rounded-full px-4 py-2 transition-colors duration-150',
+                variant === 'stacked' && 'w-full text-center',
                 isActive
                   ? 'bg-white text-slate-900 hover:text-slate-900'
                   : 'text-white/70 hover:text-white',

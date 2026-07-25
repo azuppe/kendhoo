@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
-import React, { useTransition } from 'react'
+import React, { useEffect, useState, useTransition } from 'react'
 
 import type { Header } from '@/payload-types'
 
@@ -11,7 +11,16 @@ import { HeaderNav } from './Nav'
 import { useLocale, useTranslations } from 'next-intl'
 import localization from '@/i18n/localization'
 
-import { ChevronDown, ExternalLink, Heart, SearchIcon, User, Waves } from 'lucide-react'
+import {
+  ChevronDown,
+  ExternalLink,
+  Heart,
+  Menu,
+  SearchIcon,
+  User,
+  Waves,
+  X,
+} from 'lucide-react'
 import {
   Select,
   SelectContent,
@@ -21,6 +30,7 @@ import {
 } from '@/components/ui/select'
 import { TypedLocale } from 'payload'
 import { usePathname, useRouter } from '@/i18n/routing'
+import { cn } from '@/utilities/ui'
 
 interface HeaderClientProps {
   header: Header
@@ -29,6 +39,11 @@ interface HeaderClientProps {
 export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
   const pathname = usePathname()
   const t = useTranslations()
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
+
+  useEffect(() => {
+    setMobileNavOpen(false)
+  }, [pathname])
 
   return (
     <div className="fixed inset-x-0 top-0 z-50">
@@ -66,16 +81,55 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
           <span className="hidden sm:flex items-center justify-center min-w-10 h-10 rounded-full bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 hover:bg-slate-950/50 transition-colors">
             <User className="w-5 text-white" />
           </span>
-          <LocaleSwitcher />
-        </div>
+          <div className="hidden sm:block">
+            <LocaleSwitcher />
+          </div>
 
-        {/* Mobile nav toggle (optional, for future expansion) */}
+          <button
+            type="button"
+            onClick={() => setMobileNavOpen((open) => !open)}
+            className="flex md:hidden items-center justify-center w-10 h-10 rounded-full bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 hover:bg-slate-950/50 transition-colors"
+            aria-expanded={mobileNavOpen}
+            aria-controls="mobile-nav-panel"
+          >
+            <span className="sr-only">{mobileNavOpen ? t('close') : t('menu')}</span>
+            {mobileNavOpen ? (
+              <X className="w-5 text-white" />
+            ) : (
+              <Menu className="w-5 text-white" />
+            )}
+          </button>
+        </div>
       </header>
+
+      {mobileNavOpen && (
+        <div
+          id="mobile-nav-panel"
+          className="md:hidden mx-4 mt-2 rounded-3xl bg-slate-950/80 backdrop-blur-xl backdrop-saturate-150 border border-white/10 px-4 py-4 flex flex-col gap-4"
+        >
+          <nav className="flex flex-col gap-1">
+            <HeaderNav header={header} variant="stacked" />
+          </nav>
+
+          <div className="flex items-center gap-2 pt-2 border-t border-white/10 sm:hidden">
+            <span className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-colors">
+              <Heart className="w-5 text-white" />
+            </span>
+            <span className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-colors">
+              <User className="w-5 text-white" />
+            </span>
+          </div>
+
+          <div className="flex justify-end sm:hidden">
+            <LocaleSwitcher className="w-[60px]" />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
 
-function LocaleSwitcher() {
+function LocaleSwitcher({ className }: { className?: string }) {
   const locale = useLocale()
   const router = useRouter()
   const [, startTransition] = useTransition()
@@ -96,7 +150,12 @@ function LocaleSwitcher() {
 
   return (
     <Select onValueChange={onSelectChange} value={locale}>
-      <SelectTrigger className="flex items-center whitespace-nowrap gap-1 bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 border-white/20 focus:outline-none text-white px-4 py-2 rounded-full hover:bg-slate-950/50">
+      <SelectTrigger
+        className={cn(
+          'flex items-center justify-center whitespace-nowrap gap-1 bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 border-white/20 focus:outline-none text-white px-4 py-2 rounded-full hover:bg-slate-950/50',
+          className,
+        )}
+      >
         <SelectValue placeholder="" />
       </SelectTrigger>
       <SelectContent className="transparent rounded-[10px] focus:outline-none">
