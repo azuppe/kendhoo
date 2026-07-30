@@ -27,8 +27,8 @@ const generateSecurePassword = (length = 24): string => {
 }
 
 const run = async () => {
-  const email = process.env.ADMIN_EMAIL || 'admin@kendhoo.com'
-  const password = process.env.ADMIN_PASSWORD || generateSecurePassword()
+  const email =  'admin@kendhoo.com'
+  const password =  'password' // generateSecurePassword()
   const force = process.env.ADMIN_FORCE === 'true'
 
   const payload = await getPayload({ config })
