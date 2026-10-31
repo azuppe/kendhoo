@@ -52,12 +52,12 @@ export const EventsListBlock: React.FC<EventsListBlockProps> = async ({
     <section className="py-12">
       <div className="container mx-auto px-4">
         {title && (
-          <h2 className={`text-2xl md:text-3xl font-bold mb-6 text-start ${getTitleColorClass(titleColor)}`}>
+          <h2 className={`text-2xl md:text-3xl font-medium mb-6 text-start ${getTitleColorClass(titleColor)}`}>
             {title}
           </h2>
         )}
 
-        <div className="divide-y divide-gray-100">
+        <div className="divide-y divide-border">
           {fullEvents.map((event) => {
             const image = event.images?.[0]
             const href = `/${locale}/events/${event.slug}`
@@ -68,7 +68,7 @@ export const EventsListBlock: React.FC<EventsListBlockProps> = async ({
               <article key={event.id} className="flex flex-col sm:flex-row gap-4 py-6">
                 <Link
                   href={href}
-                  className="relative w-full sm:w-40 h-40 sm:h-28 shrink-0 overflow-hidden rounded-2xl bg-gray-100"
+                  className="relative w-full sm:w-40 h-40 sm:h-28 shrink-0 overflow-hidden rounded-none bg-card"
                 >
                   {image && typeof image === 'object' && (
                     <Media resource={image} fill imgClassName="object-cover" />
@@ -76,22 +76,22 @@ export const EventsListBlock: React.FC<EventsListBlockProps> = async ({
                 </Link>
 
                 <div className="flex-1 flex flex-col gap-1">
-                  <h3 className="text-lg font-bold text-gray-900">
+                  <h3 className="text-lg font-medium text-foreground">
                     <Link href={href}>{event.title}</Link>
                   </h3>
 
                   {meta?.label && (
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-muted-foreground">
                       {meta.label}
                       {meta.sublabel ? ` · ${meta.sublabel}` : ''}
                     </p>
                   )}
 
-                  {summary && <p className="text-sm text-gray-500 line-clamp-2">{summary}</p>}
+                  {summary && <p className="text-sm text-muted-foreground line-clamp-2">{summary}</p>}
 
                   <Link
                     href={href}
-                    className="inline-flex items-center gap-1 mt-2 text-sm font-semibold text-gray-900 hover:underline w-fit"
+                    className="inline-flex items-center gap-1 mt-2 text-sm font-semibold text-foreground hover:underline w-fit"
                   >
                     {linkLabel || 'View Event'}
                     <ArrowUpRight className="w-4 h-4" />

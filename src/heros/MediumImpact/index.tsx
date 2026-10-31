@@ -54,7 +54,7 @@ export const MediumImpactHero: React.FC<Page['hero']> = ({
           {contactLink?.url && (
             <Link
               href={contactLink.url}
-              className="rounded-full bg-white text-gray-900 px-6 py-2.5 text-sm font-medium hover:bg-white/90 transition-colors shrink-0"
+              className="rounded-none bg-background text-foreground px-6 py-2.5 text-sm font-medium hover:bg-white/90 transition-colors shrink-0"
             >
               {contactLink.label || 'Contact us'}
             </Link>
@@ -74,9 +74,9 @@ export const MediumImpactHero: React.FC<Page['hero']> = ({
             {primaryLink?.url && (
               <Link
                 href={primaryLink.url}
-                className="inline-flex items-center gap-3 rounded-full bg-lime-300 pl-1.5 pr-6 py-1.5 text-sm font-medium text-gray-900 hover:bg-lime-200 transition-colors"
+                className="inline-flex items-center gap-3 rounded-full bg-lime-300 ps-1.5 pe-6 py-1.5 text-sm font-medium text-foreground hover:bg-lime-200 transition-colors"
               >
-                <span className="flex items-center justify-center w-11 h-11 rounded-full bg-gray-950 text-white">
+                <span className="flex items-center justify-center w-11 h-11 rounded-full bg-foreground text-background">
                   <ArrowRight className="w-5 h-5" />
                 </span>
                 {primaryLink.label || 'Plan your trip'}
@@ -85,7 +85,7 @@ export const MediumImpactHero: React.FC<Page['hero']> = ({
           </div>
 
           {description && (
-            <p className="text-lg leading-snug text-right md:max-w-[12rem] shrink-0">
+            <p className="text-lg leading-snug text-end md:max-w-[12rem] shrink-0">
               {description}
             </p>
           )}

@@ -49,7 +49,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
       <section className="py-8">
         <div className="container mx-auto px-4">
           {images && images.length > 0 && (
-            <div className="grid grid-cols-4 grid-rows-2 gap-3 h-[380px] rounded-3xl overflow-hidden mb-8">
+            <div className="grid grid-cols-4 grid-rows-2 gap-3 h-[380px] rounded-none overflow-hidden mb-8">
               {img1 && typeof img1 === 'object' && (
                 <div className="relative col-span-1 row-span-2">
                   <Media resource={img1} fill imgClassName="object-cover" />
@@ -74,12 +74,12 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
           )}
 
           {breadcrumbs && breadcrumbs.length > 0 && (
-            <nav className="flex items-center gap-2 text-xs text-gray-500 mb-3">
+            <nav className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
               {breadcrumbs.map((crumb, i) => (
                 <React.Fragment key={crumb.id || i}>
                   {i > 0 && <span>/</span>}
                   {crumb.url ? (
-                    <a href={crumb.url} className="hover:text-gray-800">
+                    <a href={crumb.url} className="hover:text-foreground">
                       {crumb.label}
                     </a>
                   ) : (
@@ -90,23 +90,23 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
             </nav>
           )}
 
-          <h1 className={`text-3xl md:text-4xl font-bold mb-3 ${getTitleColorClass(titleColor)}`}>
+          <h1 className={`text-3xl md:text-4xl font-medium mb-3 ${getTitleColorClass(titleColor)}`}>
             {title}
           </h1>
 
           {tripMeta && tripMeta.length > 0 && (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-gray-100">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-border">
               {tripMeta.map((item, i) => {
                 const Icon = metaIcons[item.icon || 'duration']
                 return (
                   <div key={item.id || i} className="flex items-start gap-2">
-                    <Icon className="w-5 h-5 text-gray-400 mt-0.5 shrink-0" />
+                    <Icon className="w-5 h-5 text-muted-foreground mt-0.5 shrink-0" />
                     <div>
-                      <p className="text-sm font-semibold text-gray-900 leading-tight">
+                      <p className="text-sm font-semibold text-foreground leading-tight">
                         {item.label}
                       </p>
                       {item.sublabel && (
-                        <p className="text-xs text-gray-500 leading-tight">
+                        <p className="text-xs text-muted-foreground leading-tight">
                           {item.sublabel}
                         </p>
                       )}
@@ -124,11 +124,11 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
         <section className="py-12">
           <div className="container mx-auto px-4">
             {overviewTitle && (
-              <h2 className={`text-2xl md:text-3xl font-bold mb-4 text-start ${getTitleColorClass(overviewTitleColor)}`}>
+              <h2 className={`text-2xl md:text-3xl font-medium mb-4 text-start ${getTitleColorClass(overviewTitleColor)}`}>
                 {overviewTitle}
               </h2>
             )}
-            <div className="text-sm text-gray-600 leading-relaxed space-y-4">
+            <div className="text-sm text-muted-foreground leading-relaxed space-y-4">
               {overviewDescription
                 .split(/\n+/)
                 .filter(Boolean)
@@ -145,15 +145,15 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
         <section className="py-12">
           <div className="container mx-auto px-4">
             {includedTitle && (
-              <h2 className={`  text-4xl md:text-5xl font-bold mb-6 text-start ${getTitleColorClass(includedTitleColor)}`}>
+              <h2 className={`  text-4xl md:text-5xl font-medium mb-6 text-start ${getTitleColorClass(includedTitleColor)}`}>
                 {includedTitle}
               </h2>
             )}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 rounded-2xl bg-gray-50 border border-gray-100 p-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 rounded-none bg-card border border-border p-6">
               {includedItems.map((item, i) => (
                 <div key={item.id || i} className="flex items-start gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-gray-900 shrink-0 mt-0.5" />
-                  <span className="text-sm text-gray-700">{item.label}</span>
+                  <CheckCircle2 className="w-5 h-5 text-foreground shrink-0 mt-0.5" />
+                  <span className="text-sm text-foreground">{item.label}</span>
                 </div>
               ))}
             </div>
@@ -166,13 +166,13 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
         <section className="py-12">
           <div className="container mx-auto px-4">
             {itineraryTitle && (
-              <h2 className={`text-2xl md:text-3xl font-bold mb-6 text-start ${getTitleColorClass(itineraryTitleColor)}`}>
+              <h2 className={`text-2xl md:text-3xl font-medium mb-6 text-start ${getTitleColorClass(itineraryTitleColor)}`}>
                 {itineraryTitle}
               </h2>
             )}
 
             <div className="relative">
-              <div className="absolute left-[7px] top-2 bottom-2 w-px bg-gray-200" />
+              <div className="absolute start-[7px] top-2 bottom-2 w-px bg-card" />
 
               {itineraryItems.map((item, i) => {
                 const isOpen = openDay === i
@@ -181,37 +181,37 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
                 return (
                   <div
                     key={item.id || i}
-                    className={isLast ? '' : 'border-b border-gray-100 mb-6 pb-6'}
+                    className={isLast ? '' : 'border-b border-border mb-6 pb-6'}
                   >
                     <div className="relative flex items-start gap-4">
-                      <span className="relative z-10 mt-1.5 shrink-0 w-3.5 h-3.5 rounded-full border-2 border-gray-900 bg-white" />
+                      <span className="relative z-10 mt-1.5 shrink-0 w-3.5 h-3.5 rounded-full border-2 border-foreground bg-background" />
 
                       <button
                         type="button"
                         onClick={() => setOpenDay(isOpen ? null : i)}
-                        className="flex-1 flex items-start justify-between gap-4 text-left"
+                        className="flex-1 flex items-start justify-between gap-4 text-start"
                         aria-expanded={isOpen}
                       >
-                        <span className="inline-block px-3 py-1 rounded-full border border-gray-200 text-xs font-medium text-gray-600">
+                        <span className="inline-block px-3 py-1 rounded-none border border-border text-xs font-medium text-muted-foreground">
                           {item.dayLabel}
                         </span>
                         {isOpen ? (
-                          <ChevronUp className="w-5 h-5 shrink-0 text-gray-500" />
+                          <ChevronUp className="w-5 h-5 shrink-0 text-muted-foreground" />
                         ) : (
-                          <ChevronDown className="w-5 h-5 shrink-0 text-gray-500" />
+                          <ChevronDown className="w-5 h-5 shrink-0 text-muted-foreground" />
                         )}
                       </button>
                     </div>
 
-                    <div className="ml-[26px] mt-2">
-                      <h3 className="text-lg font-bold text-gray-900">
+                    <div className="ms-[26px] mt-2">
+                      <h3 className="text-lg font-medium text-foreground">
                         {item.title}
                       </h3>
 
                       {isOpen && (
                         <>
                           {item.description && (
-                            <p className="text-sm text-gray-500 leading-relaxed mt-2">
+                            <p className="text-sm text-muted-foreground leading-relaxed mt-2">
                               {item.description}
                             </p>
                           )}
@@ -221,7 +221,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
                               {item.images.map((image, imgIdx) => (
                                 <div
                                   key={imgIdx}
-                                  className="relative aspect-[4/3] rounded-2xl overflow-hidden"
+                                  className="relative aspect-[4/3] rounded-none overflow-hidden"
                                 >
                                   {image && typeof image === 'object' && (
                                     <Media resource={image} fill imgClassName="object-cover" />
@@ -246,7 +246,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
         <section className="py-12">
           <div className="container mx-auto ">
             {recommendedTitle && (
-              <h2 className={`  text-4xl md:text-5xl font-bold mb-8 text-start ${getTitleColorClass(recommendedTitleColor)}`}>
+              <h2 className={`  text-4xl md:text-5xl font-medium mb-8 text-start ${getTitleColorClass(recommendedTitleColor)}`}>
                 {recommendedTitle}
               </h2>
             )}
@@ -258,20 +258,20 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
                   <CardTag
                     key={recEvent.id || i}
                     {...(recEvent.link ? { href: recEvent.link } : {})}
-                    className="rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-shadow flex flex-col"
+                    className="rounded-none overflow-hidden bg-background border border-border  transition-shadow flex flex-col"
                   >
                     <div className="relative h-48">
                       {recEvent.image && typeof recEvent.image === 'object' && (
                         <Media fill resource={recEvent.image} imgClassName="object-cover" />
                       )}
-                      <div className="absolute top-3 left-3 flex items-center gap-2">
+                      <div className="absolute top-3 start-3 flex items-center gap-2">
                         {recEvent.badge && (
-                          <span className="px-2.5 py-1 text-[11px] font-bold rounded-full bg-gray-900 text-white">
+                          <span className="px-2.5 py-1 text-[11px] font-medium rounded-none bg-foreground text-background">
                             {recEvent.badge}
                           </span>
                         )}
                         {recEvent.ageRange && (
-                          <span className="px-2.5 py-1 text-[11px] font-medium rounded-full bg-white/90 text-gray-700">
+                          <span className="px-2.5 py-1 text-[11px] font-medium rounded-none bg-white/90 text-foreground">
                             {recEvent.ageRange}
                           </span>
                         )}
@@ -279,26 +279,26 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
                     </div>
 
                     <div className="p-4 flex flex-col gap-2 flex-1">
-                      <h3 className="font-bold text-gray-900">{recEvent.title}</h3>
+                      <h3 className="font-medium text-foreground">{recEvent.title}</h3>
 
-                      <div className="flex items-center gap-3 text-xs text-gray-500">
+                      <div className="flex items-center gap-3 text-xs text-muted-foreground">
                         {recEvent.durationLabel && <span>{recEvent.durationLabel}</span>}
                         {recEvent.route && <span>{recEvent.route}</span>}
                       </div>
 
                       <div className="flex items-baseline gap-2">
-                        <span className="text-lg font-extrabold text-gray-900">
+                        <span className="text-lg font-medium text-foreground">
                           {recEvent.currency} ${recEvent.price?.toLocaleString()}
                         </span>
                         {recEvent.originalPrice != null && (
-                          <span className="text-sm text-gray-400 line-through">
+                          <span className="text-sm text-muted-foreground line-through">
                             ${recEvent.originalPrice?.toLocaleString()}
                           </span>
                         )}
                       </div>
 
                       {recEvent.departsOn && (
-                        <p className="text-xs font-medium text-gray-700">{recEvent.departsOn}</p>
+                        <p className="text-xs font-medium text-foreground">{recEvent.departsOn}</p>
                       )}
 
                       {Array.isArray(recEvent.tags) && recEvent.tags.length > 0 && (
@@ -306,7 +306,7 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
                           {recEvent.tags.map((tag, ti) => (
                             <span
                               key={tag.id || ti}
-                              className="px-2 py-0.5 text-[11px] rounded-full bg-gray-100 text-gray-600"
+                              className="px-2 py-0.5 text-[11px] rounded-none bg-card text-muted-foreground"
                             >
                               {tag.label}
                             </span>
@@ -317,14 +317,14 @@ export const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
                       <div className="flex items-center gap-2 mt-auto pt-3">
                         <button
                           type="button"
-                          className="flex-1 rounded-full bg-gray-900 hover:bg-black text-white font-medium px-7 py-3 transition-colors"
+                          className="flex-1 rounded-none bg-foreground hover:opacity-80 text-background font-medium px-7 py-3 transition-colors"
                         >
                           {recEvent.buttonLabel || 'Book Adventure'}
                         </button>
                         <button
                           type="button"
                           aria-label="Save"
-                          className="w-10 h-10 shrink-0 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 hover:text-gray-900 transition-colors"
+                          className="w-10 h-10 shrink-0 flex items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground transition-colors"
                         >
                           <Heart className="w-4 h-4" />
                         </button>

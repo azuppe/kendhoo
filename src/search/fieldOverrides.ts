@@ -40,6 +40,12 @@ export const searchFields: Field[] = [
     ],
   },
   {
+    name: 'publishedAt',
+    type: 'date',
+    index: true,
+    admin: { readOnly: true, description: 'Publish date (events: start date), used by search date filters.' },
+  },
+  {
     label: 'Categories',
     name: 'categories',
     type: 'array',

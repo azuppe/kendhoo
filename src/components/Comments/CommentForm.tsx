@@ -65,7 +65,7 @@ export const CommentForm: React.FC<{ postId: string | number }> = ({ postId }) =
 
   if (hasSubmitted) {
     return (
-      <p className="text-sm text-gray-600 bg-gray-50 rounded-lg p-4">
+      <p className="text-sm text-muted-foreground bg-card rounded-none p-4">
         Thanks! Your comment has been posted.
       </p>
     )
@@ -114,7 +114,7 @@ export const CommentForm: React.FC<{ postId: string | number }> = ({ postId }) =
         />
       </div>
 
-      {error && <p className="text-sm text-gray-900 font-medium">{error}</p>}
+      {error && <p className="text-sm text-foreground font-medium">{error}</p>}
 
       <Button type="submit" disabled={isLoading} className="self-start">
         {isLoading ? 'Posting...' : 'Post comment'}

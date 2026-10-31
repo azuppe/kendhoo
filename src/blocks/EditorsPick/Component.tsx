@@ -64,15 +64,15 @@ export const EditorsPickBlock: React.FC<
 
       <Link
         href={featuredHref}
-        className="relative block aspect-[21/9] w-full overflow-hidden rounded-2xl bg-gray-900 mb-6"
+        className="relative block aspect-[21/9] w-full overflow-hidden rounded-none bg-foreground mb-6"
       >
         {featuredImage && (
           <Media resource={featuredImage} imgClassName="object-cover w-full h-full aspect-[21/9]" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8 space-y-2 text-white max-w-2xl">
+        <div className="absolute bottom-0 start-0 end-0 p-6 lg:p-8 space-y-2 text-white max-w-2xl">
           <PostSourceLine post={resolvedFeatured} variant="dark" />
-          <h3 className="text-xl lg:text-3xl font-bold leading-tight">{resolvedFeatured.title}</h3>
+          <h3 className="text-xl lg:text-3xl font-medium leading-tight">{resolvedFeatured.title}</h3>
           {resolvedFeatured.meta?.description && (
             <p className="text-sm lg:text-base text-white/80 line-clamp-2">
               {resolvedFeatured.meta.description}

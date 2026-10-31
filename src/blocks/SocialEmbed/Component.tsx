@@ -85,7 +85,7 @@ function YouTubeEmbed({ url }: { url: string }) {
   }
 
   return (
-    <div className="mx-auto my-8 aspect-video w-full max-w-3xl overflow-hidden rounded-lg">
+    <div className="mx-auto my-8 aspect-video w-full max-w-3xl overflow-hidden rounded-none">
       <iframe
         className="h-full w-full"
         src={`https://www.youtube.com/embed/${videoId}`}

@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import { ArrowUpRight } from 'lucide-react'
 import React from 'react'
 
 import type { Post } from '@/payload-types'
 
 import { Media } from '@/components/Media'
+import { SaveButton } from '@/components/Saved/SaveButton'
 import { PostSourceLine, PostFooterLine } from './PostMeta'
 import { formatReadTime, getPostImage } from './utils'
 
@@ -17,22 +17,28 @@ export const PostCard: React.FC<{ post: Post; locale: string; className?: string
   const href = `/${locale}/posts/${post.slug}`
 
   return (
-    <article className={className}>
-      <Link
-        href={href}
-        className="relative block aspect-[4/3] w-full overflow-hidden rounded-2xl bg-gray-100"
-      >
-        {image && <Media resource={image} imgClassName="object-cover w-full h-full aspect-[4/3]" />}
-        <span className="absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-xl bg-gray-900 text-white shadow-lg">
-          <ArrowUpRight className="h-4 w-4" />
-        </span>
+    <article className={`group relative ${className || ''}`}>
+      <SaveButton
+        id={String(post.id)}
+        className="absolute end-3 top-3 z-10 bg-background/90 backdrop-blur"
+      />
+      <Link href={href} className="relative block aspect-[4/5] w-full overflow-hidden bg-card">
+        {image && (
+          <Media
+            resource={image}
+            alt={post.title}
+            imgClassName="object-cover w-full h-full aspect-[4/5] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+          />
+        )}
       </Link>
-      <div className="pt-3 space-y-2">
-        <PostSourceLine post={post} />
-        <h3 className="text-sm font-semibold leading-snug text-gray-900">
-          <Link href={href}>{post.title}</Link>
-        </h3>
+      <div className="space-y-3 pt-5">
         <PostFooterLine post={post} readTimeMinutes={formatReadTime(post)} />
+        <h3 className="font-serif text-[26px] leading-[1.12]">
+          <Link href={href} className="hover:opacity-70">
+            {post.title}
+          </Link>
+        </h3>
+        <PostSourceLine post={post} />
       </div>
     </article>
   )
@@ -47,22 +53,18 @@ export const PostCardCompact: React.FC<{ post: Post; locale: string; className?:
   const href = `/${locale}/posts/${post.slug}`
 
   return (
-    <article className={`flex gap-3 ${className || ''}`}>
-      <Link
-        href={href}
-        className="relative shrink-0 block w-20 h-20 overflow-hidden rounded-xl bg-gray-100"
-      >
-        {image && <Media resource={image} imgClassName="object-cover w-20 h-20" />}
-        <span className="absolute bottom-1 right-1 flex h-6 w-6 items-center justify-center rounded-lg bg-gray-900 text-white shadow">
-          <ArrowUpRight className="h-3 w-3" />
-        </span>
+    <article className={`group flex gap-4 border-b border-border pb-6 ${className || ''}`}>
+      <Link href={href} className="relative block h-28 w-24 shrink-0 overflow-hidden bg-card">
+        {image && <Media resource={image}
+            alt={post.title} imgClassName="object-cover h-28 w-24" />}
       </Link>
-      <div className="space-y-1.5 min-w-0">
-        <PostSourceLine post={post} />
-        <h3 className="text-sm font-semibold leading-snug text-gray-900 line-clamp-2">
-          <Link href={href}>{post.title}</Link>
-        </h3>
+      <div className="min-w-0 space-y-2">
         <PostFooterLine post={post} readTimeMinutes={formatReadTime(post)} />
+        <h3 className="line-clamp-3 font-serif text-[22px] leading-[1.15]">
+          <Link href={href} className="hover:opacity-70">
+            {post.title}
+          </Link>
+        </h3>
       </div>
     </article>
   )

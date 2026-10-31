@@ -29,11 +29,11 @@ export const HeaderNav: React.FC<{ header: HeaderType; variant?: 'row' | 'stacke
   const pathname = usePathname()
 
   return (
-    <nav>
-      <div
+    <nav aria-label="Primary">
+      <ul
         className={cn(
-          'flex w-full',
-          variant === 'row' ? 'items-center' : 'flex-col items-stretch gap-1',
+          'flex',
+          variant === 'row' ? 'items-center gap-10' : 'flex-col items-stretch',
         )}
       >
         {navItems.map(({ link }, i) => {
@@ -41,21 +41,21 @@ export const HeaderNav: React.FC<{ header: HeaderType; variant?: 'row' | 'stacke
           const isActive = href === pathname || (href === '/' && pathname === '/')
 
           return (
-            <CMSLink
-              className={cn(
-                'text-sm font-medium rounded-full px-4 py-2 transition-colors duration-150',
-                variant === 'stacked' && 'w-full text-center',
-                isActive
-                  ? 'bg-white text-slate-900 hover:text-slate-900'
-                  : 'text-white/70 hover:text-white',
-              )}
-              key={i}
-              {...link}
-              appearance="link"
-            />
+            <li key={i}>
+              <CMSLink
+                className={cn(
+                  'inline-flex items-center border-b py-2 text-[12px] font-medium uppercase transition-opacity hover:opacity-70',
+                  variant === 'stacked' && 'w-full py-4 text-[13px]',
+                  isActive ? 'border-current' : 'border-transparent',
+                )}
+                key={i}
+                {...link}
+                appearance="link"
+              />
+            </li>
           )
         })}
-      </div>
+      </ul>
     </nav>
   )
 }

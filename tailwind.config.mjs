@@ -89,10 +89,12 @@ export default {
         success: 'hsl(var(--success))',
         error: 'hsl(var(--error))',
         warning: 'hsl(var(--warning))',
+        brass: 'hsl(var(--brass))',
       },
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
-        sans: ['var(--font-lato)'],
+        sans: ['var(--font-jost)', 'var(--font-thaana)', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-cormorant)', 'var(--font-thaana)', 'Georgia', 'serif'],
       },
       keyframes: {
         'accordion-down': {
@@ -107,12 +109,31 @@ export default {
       typography: ({ theme }) => ({
         DEFAULT: {
           css: {
-            '--tw-prose-body': 'var(--text)',
-            '--tw-prose-headings': 'var(--text)',
+            '--tw-prose-body': 'hsl(var(--foreground))',
+            '--tw-prose-headings': 'hsl(var(--foreground))',
+            '--tw-prose-links': 'hsl(var(--brass))',
+            '--tw-prose-quotes': 'hsl(var(--foreground))',
+            '--tw-prose-hr': 'hsl(var(--border))',
+            '--tw-prose-captions': 'hsl(var(--muted-foreground))',
+            fontFamily: 'var(--font-cormorant), var(--font-thaana), Georgia, serif',
+            fontSize: '1.3rem',
+            lineHeight: '1.75',
             h1: {
               fontSize: '4rem',
-              fontWeight: 'normal',
+              fontWeight: '400',
               marginBottom: '0.25em',
+            },
+            h2: { fontWeight: '400', fontSize: '2.4rem' },
+            h3: { fontWeight: '400', fontSize: '1.9rem' },
+            blockquote: {
+              fontStyle: 'italic',
+              fontWeight: '400',
+              borderInlineStartWidth: '0',
+              borderTop: '1px solid hsl(var(--foreground))',
+              borderBottom: '1px solid hsl(var(--foreground))',
+              paddingBlock: '1.5rem',
+              fontSize: '1.9rem',
+              textAlign: 'center',
             },
           },
         },

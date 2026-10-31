@@ -11,7 +11,7 @@ export function LandingPage({ links, media, title, richText, ...props }: Page['h
   return (
     <div className="relative min-h-screen font-sans text-white">
       {media && typeof media === 'object' && (
-        <div className="absolute pointer-events-none bg-black/30 left-0 bottom-0 w-full h-full ">
+        <div className="absolute pointer-events-none bg-black/30 start-0 bottom-0 w-full h-full ">
           <Media
             fill
             className="h-screen w-screen"
@@ -38,7 +38,7 @@ export function LandingPage({ links, media, title, richText, ...props }: Page['h
               delay: 0.1,
             },
           }}
-          className="text-6xl md:text-[120px] lg:text-[180px] bg-clip-text text-transparent  bg-gradient-to-b from-transparent to to-white  mix-blend-difference  font-bold tracking-tight mb-4"
+          className="text-6xl md:text-[120px] lg:text-[180px] bg-clip-text text-transparent  bg-gradient-to-b from-transparent to to-white  mix-blend-difference  font-medium tracking-tight mb-4"
         >
           {title}
         </motion.h1>
@@ -63,7 +63,7 @@ export function LandingPage({ links, media, title, richText, ...props }: Page['h
             {links.map(({ link }, i) => {
               return (
                 <li key={i}>
-                  <CMSLink className={` rounded-full px-10 py-2 text-lg font-thin ${i==0?"bg-black":"bg-white text-gray-900"} `} {...link} />
+                  <CMSLink className={` rounded-none px-10 py-2 text-lg font-thin ${i==0?"bg-black":"bg-background text-foreground"} `} {...link} />
                 </li>
               )
             })}

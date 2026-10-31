@@ -27,15 +27,17 @@ export const LocaleSwitcher: React.FC = () => {
   }
 
   return (
-    <div className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-white p-1">
+    <div className="inline-flex items-center gap-5">
       {localization.locales.map((l) => (
         <button
           key={l.code}
           type="button"
           onClick={() => onSelect(l.code as TypedLocale)}
           className={cn(
-            'px-3 py-1 rounded-full text-xs font-medium uppercase transition-colors',
-            locale === l.code ? 'bg-gray-100 text-gray-900' : 'text-gray-400 hover:text-gray-600',
+            'min-h-11 border-b text-[12px] font-medium uppercase tracking-[0.18em] transition-opacity hover:opacity-70',
+            locale === l.code
+              ? 'border-foreground text-foreground'
+              : 'border-transparent text-muted-foreground',
           )}
         >
           {l.code}

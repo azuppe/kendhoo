@@ -39,20 +39,20 @@ export const FeaturedPostBlock: React.FC<FeaturedPostBlockProps> = async ({ post
       <article className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <Link
           href={href}
-          className="relative block aspect-[4/3] w-full overflow-hidden rounded-2xl bg-gray-100"
+          className="relative block aspect-[4/3] w-full overflow-hidden rounded-none bg-card"
         >
           {image && <Media resource={image} imgClassName="object-cover w-full h-full" />}
-          <span className="absolute bottom-2 right-2 flex h-9 w-9 items-center justify-center rounded-xl bg-gray-900 text-white shadow-lg">
+          <span className="absolute bottom-2 end-2 flex h-9 w-9 items-center justify-center rounded-none bg-foreground text-background">
             <ArrowUpRight className="h-4 w-4" />
           </span>
         </Link>
         <div className="space-y-3">
           <PostSourceLine post={resolvedPost} />
-          <h2 className="text-3xl md:text-4xl font-bold leading-tight text-gray-900">
+          <h2 className="text-3xl md:text-4xl font-medium leading-tight text-foreground">
             <Link href={href}>{resolvedPost.title}</Link>
           </h2>
           {resolvedPost.meta?.description && (
-            <p className="text-gray-600 line-clamp-3">{resolvedPost.meta.description}</p>
+            <p className="text-muted-foreground line-clamp-3">{resolvedPost.meta.description}</p>
           )}
           <PostFooterLine post={resolvedPost} readTimeMinutes={formatReadTime(resolvedPost)} />
         </div>

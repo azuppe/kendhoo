@@ -11,6 +11,7 @@ import RichText from '@/components/RichText'
 
 import type { Post } from '@/payload-types'
 
+import { ReadingProgress } from '@/components/Share/ReadingProgress'
 import { PostHero } from '@/heros/PostHero'
 import { Comments } from '@/components/Comments'
 import { generateMeta } from '@/utilities/generateMeta'
@@ -62,7 +63,8 @@ export default async function Post({ params: paramsPromise }: Args) {
   const authorName = post.populatedAuthors?.[0]?.name
 
   return (
-    <article className="pt-32 pb-16  min-h-screen">
+    <article id="article" className="min-h-screen pb-16 pt-28">
+      <ReadingProgress targetId="article" />
       <PageClient />
       <PayloadRedirects disableNotFound url={url} />
       <JsonLd
@@ -80,7 +82,7 @@ export default async function Post({ params: paramsPromise }: Args) {
             name: 'Kendhoo Online',
             logo: {
               '@type': 'ImageObject',
-              url: `${baseUrl}/kendhoo-logo-white-web.png`,
+              url: `${baseUrl}/kendhoo-mark.svg`,
             },
           },
           mainEntityOfPage: `${baseUrl}/${locale}${url}`,
@@ -91,9 +93,9 @@ export default async function Post({ params: paramsPromise }: Args) {
         {/* Main Article */}
         <div>
           <PostHero post={post} />
-          <div className="bg-white rounded-2xl shadow-sm p-6 mt-6">
+          <div className="mx-auto mt-20 max-w-2xl">
             <RichText
-              className="prose max-w-none"
+              className="prose max-w-none prose-lg"
               content={post.content}
               enableGutter={false}
             />
@@ -103,9 +105,9 @@ export default async function Post({ params: paramsPromise }: Args) {
 
           {/* More News */}
           {relatedPosts.length > 0 && (
-            <div className="mt-10">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">More News</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="mt-32">
+              <h2 className="mb-10 border-b border-border pb-5 font-serif text-4xl">Read next</h2>
+              <div className="grid grid-cols-1 gap-x-10 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
                 {relatedPosts.slice(0, 3).map((related) => {
                   const image =
                     related.coverImage && typeof related.coverImage === 'object'
@@ -115,40 +117,32 @@ export default async function Post({ params: paramsPromise }: Args) {
                         : undefined
 
                   return (
-                    <div
+                    <Link
                       key={related.id}
-                      className="bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col"
+                      href={`/${locale}/posts/${related.slug}`}
+                      className="group flex flex-col gap-5"
                     >
-                      <div className="w-full aspect-[16/10] bg-gray-100">
+                      <div className="aspect-[4/5] w-full overflow-hidden bg-card">
                         {image && (
                           <Media
                             resource={image}
-                            imgClassName="object-cover w-full h-full"
+                            imgClassName="object-cover w-full h-full aspect-[4/5] transition-transform duration-700 group-hover:scale-[1.03]"
                           />
                         )}
                       </div>
-                      <div className="p-6 flex flex-col flex-1">
-                        <span className="text-sm text-gray-500 mb-2">
-                          {related.publishedAt &&
-                            new Date(related.publishedAt).toLocaleDateString('en-US', {
-                              month: 'long',
-                              day: 'numeric',
-                              year: 'numeric',
-                            })}
+                      {related.publishedAt && (
+                        <span className="eyebrow">
+                          {new Date(related.publishedAt).toLocaleDateString('en-US', {
+                            month: 'long',
+                            day: 'numeric',
+                            year: 'numeric',
+                          })}
                         </span>
-                        <h3 className="text-lg font-bold text-gray-900 leading-snug mb-4">
-                          {related.title}
-                        </h3>
-                        <div className="mt-auto pt-4 border-t border-gray-200">
-                          <Link
-                            href={`/${locale}/posts/${related.slug}`}
-                            className="text-blue-600 hover:underline font-medium"
-                          >
-                            Read More
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
+                      )}
+                      <h3 className="font-serif text-[26px] leading-[1.12] group-hover:opacity-70">
+                        {related.title}
+                      </h3>
+                    </Link>
                   )
                 })}
               </div>

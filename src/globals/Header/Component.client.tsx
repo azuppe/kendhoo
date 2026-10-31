@@ -10,7 +10,10 @@ import { HeaderNav } from './Nav'
 import { useLocale, useTranslations } from 'next-intl'
 import localization from '@/i18n/localization'
 
-import { ChevronDown, ExternalLink, Heart, Menu, SearchIcon, User, X } from 'lucide-react'
+import { Menu, SearchIcon, X } from 'lucide-react'
+import { Logo } from '@/components/Logo/Logo'
+import { SavedLink } from '@/components/Saved/SavedLink'
+import { ThemeToggle } from '@/components/Theme/ThemeToggle'
 import {
   Select,
   SelectContent,
@@ -30,47 +33,53 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
   const pathname = usePathname()
   const t = useTranslations()
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     setMobileNavOpen(false)
   }, [pathname])
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // The home page opens on a full-bleed photograph: let the header float over it until scrolled.
+  const overHero = pathname === '/' && !scrolled && !mobileNavOpen
+
   return (
-    <div className="fixed inset-x-0 top-0 z-50">
+    <div
+      className={cn(
+        'fixed inset-x-0 top-0 z-50 transition-colors duration-300',
+        overHero
+          ? 'border-b border-transparent bg-transparent text-white'
+          : 'border-b border-border bg-background/95 text-foreground backdrop-blur',
+      )}
+    >
       <header
         id="header"
-        className=" container mx-auto flex items-center justify-between gap-4 px-4 py-3 md:px-6"
+        className="container mx-auto flex h-20 items-center justify-between gap-6 px-4 md:px-8"
       >
-        <Link
-          href="/"
-          className="me-auto flex items-center shrink-0 bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 border border-white/10 rounded-full px-3 py-1.5 hover:bg-slate-950/50 transition-colors"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/kendhoo-logo-white-web.png"
-            alt="Kendhoo Online"
-            className="h-12 w-auto rounded-xl object-contain"
-          />
+        <Link href="/" aria-label="Kendhoo Online" className="me-auto shrink-0 hover:opacity-80">
+          <Logo />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-1 bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 rounded-full px-1.5 py-1.5 border border-white/10">
+        <div className="hidden md:block">
           <HeaderNav header={header} />
-        </nav>
+        </div>
 
-        <div className="flex items-center gap-2 md:gap-3">
+        <div className="flex items-center gap-1 md:gap-3">
           <Link
             href="/search"
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 hover:bg-slate-950/50 transition-colors"
+            className="flex h-11 w-11 items-center justify-center hover:opacity-70"
           >
             <span className="sr-only">{t('search')}</span>
-            <SearchIcon className="min-w-10 text-white" />
+            <SearchIcon className="h-5 w-5" strokeWidth={1.5} />
           </Link>
-          <span className="hidden sm:flex items-center justify-center min-w-10 h-10 rounded-full bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 hover:bg-slate-950/50 transition-colors">
-            <Heart className="w-5 text-white" />
-          </span>
-          <span className="hidden sm:flex items-center justify-center min-w-10 h-10 rounded-full bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 hover:bg-slate-950/50 transition-colors">
-            <User className="w-5 text-white" />
-          </span>
+          <SavedLink />
+          <ThemeToggle />
           <div className="hidden sm:block">
             <LocaleSwitcher />
           </div>
@@ -78,15 +87,15 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
           <button
             type="button"
             onClick={() => setMobileNavOpen((open) => !open)}
-            className="flex md:hidden items-center justify-center w-10 h-10 rounded-full bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 hover:bg-slate-950/50 transition-colors"
+            className="flex h-11 w-11 items-center justify-center hover:opacity-70 md:hidden"
             aria-expanded={mobileNavOpen}
             aria-controls="mobile-nav-panel"
           >
             <span className="sr-only">{mobileNavOpen ? t('close') : t('menu')}</span>
             {mobileNavOpen ? (
-              <X className="w-5 text-white" />
+              <X className="h-5 w-5" strokeWidth={1.5} />
             ) : (
-              <Menu className="w-5 text-white" />
+              <Menu className="h-5 w-5" strokeWidth={1.5} />
             )}
           </button>
         </div>
@@ -95,23 +104,11 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
       {mobileNavOpen && (
         <div
           id="mobile-nav-panel"
-          className="md:hidden mx-4 mt-2 rounded-3xl bg-slate-950/80 backdrop-blur-xl backdrop-saturate-150 border border-white/10 px-4 py-4 flex flex-col gap-4"
+          className="flex min-h-[calc(100vh-5rem)] flex-col gap-8 border-t border-border bg-background px-6 py-8 text-foreground md:hidden"
         >
-          <nav className="flex flex-col gap-1">
-            <HeaderNav header={header} variant="stacked" />
-          </nav>
-
-          <div className="flex items-center gap-2 pt-2 border-t border-white/10 sm:hidden">
-            <span className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-colors">
-              <Heart className="w-5 text-white" />
-            </span>
-            <span className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-colors">
-              <User className="w-5 text-white" />
-            </span>
-          </div>
-
-          <div className="flex justify-end sm:hidden">
-            <LocaleSwitcher className="w-[60px]" />
+          <HeaderNav header={header} variant="stacked" />
+          <div className="mt-auto flex justify-start sm:hidden">
+            <LocaleSwitcher />
           </div>
         </div>
       )}
@@ -142,18 +139,18 @@ function LocaleSwitcher({ className }: { className?: string }) {
     <Select onValueChange={onSelectChange} value={locale}>
       <SelectTrigger
         className={cn(
-          'flex items-center justify-center whitespace-nowrap gap-1 bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 border-white/20 focus:outline-none text-white px-4 py-2 rounded-full hover:bg-slate-950/50',
+          'flex h-11 items-center justify-center gap-1 whitespace-nowrap border-0 bg-transparent px-2 text-[12px] font-medium uppercase tracking-[0.18em] text-current focus:outline-none hover:opacity-70',
           className,
         )}
       >
         <SelectValue placeholder="" />
       </SelectTrigger>
-      <SelectContent className="transparent rounded-[10px] focus:outline-none">
+      <SelectContent className="rounded-none border-border bg-background focus:outline-none">
         {localization.locales
           .sort((a, b) => a.label.localeCompare(b.label)) // Ordenar por label
           .map((locale) => (
             <SelectItem
-              className="cursor-pointer text-base font-normal text-gray-700"
+              className="cursor-pointer text-[12px] font-normal uppercase tracking-[0.18em] text-foreground"
               value={locale.code}
               key={locale.code}
             >

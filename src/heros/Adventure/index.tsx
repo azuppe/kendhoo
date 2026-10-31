@@ -44,13 +44,13 @@ export const AdventureHero: React.FC<Page['hero']> = ({
           </Link>
 
           {Array.isArray(navItems) && navItems.length > 0 && (
-            <ul className="hidden md:flex items-center gap-1 rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-2 py-2">
+            <ul className="hidden md:flex items-center gap-1 rounded-none border border-white/20 bg-white/10 backdrop-blur-md px-2 py-2">
               {navItems.map((item, i) => (
                 <li key={i}>
                   <Link
                     href={item.link}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                      i === 0 ? 'bg-white text-gray-900' : 'text-white/90 hover:bg-white/10'
+                    className={`px-4 py-2 rounded-none text-sm font-medium transition-colors ${
+                      i === 0 ? 'bg-background text-foreground' : 'text-white/90 hover:bg-white/10'
                     }`}
                   >
                     {item.label}
@@ -63,10 +63,10 @@ export const AdventureHero: React.FC<Page['hero']> = ({
           {bookNowLink?.url && (
             <Link
               href={bookNowLink.url}
-              className="hidden sm:flex items-center gap-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md pl-4 pr-1.5 py-1.5 text-sm font-medium shrink-0"
+              className="hidden sm:flex items-center gap-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md ps-4 pe-1.5 py-1.5 text-sm font-medium shrink-0"
             >
               {bookNowLink.label || 'Book now'}
-              <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white text-gray-900">
+              <span className="flex items-center justify-center w-8 h-8 rounded-full bg-background text-foreground">
                 <ArrowUpRight className="w-4 h-4" />
               </span>
             </Link>
@@ -75,7 +75,7 @@ export const AdventureHero: React.FC<Page['hero']> = ({
 
         {badge && (
           <div className="flex justify-center mt-12">
-            <span className="rounded-full border border-white/25 bg-white/10 backdrop-blur-md px-4 py-1.5 text-sm">
+            <span className="rounded-none border border-white/25 bg-white/10 backdrop-blur-md px-4 py-1.5 text-sm">
               {badge}
             </span>
           </div>
@@ -93,7 +93,7 @@ export const AdventureHero: React.FC<Page['hero']> = ({
 
         <div className="mt-auto px-4 md:px-8 pb-8">
           <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,320px)_repeat(3,minmax(0,1fr))] gap-4 items-end">
-            <div className="rounded-3xl border border-white/15 bg-white/10 backdrop-blur-md p-6 flex flex-col gap-6">
+            <div className="rounded-none border border-white/15 bg-white/10 backdrop-blur-md p-6 flex flex-col gap-6">
               {Array.isArray(avatars) && avatars.length > 0 && (
                 <div className="flex items-center gap-3">
                   <div className="flex -space-x-3">
@@ -125,10 +125,10 @@ export const AdventureHero: React.FC<Page['hero']> = ({
               {bookNowLink?.url && (
                 <Link
                   href={bookNowLink.url}
-                  className="inline-flex items-center gap-2 self-start rounded-full bg-white text-gray-900 pl-5 pr-1.5 py-1.5 text-sm font-medium"
+                  className="inline-flex items-center gap-2 self-start rounded-full bg-background text-foreground ps-5 pe-1.5 py-1.5 text-sm font-medium"
                 >
                   {bookNowLink.label || 'Book now'}
-                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-900 text-white">
+                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-foreground text-background">
                     <ArrowUpRight className="w-4 h-4" />
                   </span>
                 </Link>
@@ -136,7 +136,7 @@ export const AdventureHero: React.FC<Page['hero']> = ({
             </div>
 
             {featuredImage && typeof featuredImage === 'object' && (
-              <div className="rounded-3xl overflow-hidden relative h-64 lg:h-72 group">
+              <div className="rounded-none overflow-hidden relative h-64 lg:h-72 group">
                 <Media
                   resource={featuredImage}
                   fill
@@ -144,7 +144,7 @@ export const AdventureHero: React.FC<Page['hero']> = ({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                 {(featuredTitle || featuredDescription) && (
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                  <div className="absolute bottom-0 start-0 end-0 p-5">
                     {featuredTitle && <h3 className="text-lg font-semibold">{featuredTitle}</h3>}
                     {featuredDescription && (
                       <p className="text-sm text-white/80 mt-1 line-clamp-2">
@@ -160,7 +160,7 @@ export const AdventureHero: React.FC<Page['hero']> = ({
               galleryImages.slice(0, 3).map((item, i) => (
                 <div
                   key={i}
-                  className="rounded-3xl overflow-hidden relative h-64 lg:h-72 hidden md:block group"
+                  className="rounded-none overflow-hidden relative h-64 lg:h-72 hidden md:block group"
                 >
                   {item.image && typeof item.image === 'object' && (
                     <Media

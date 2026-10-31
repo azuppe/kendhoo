@@ -16,7 +16,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
           <div className="max-w-2xl">
             {richText && (
               <RichText
-                className="mb-0 prose-headings:font-extrabold prose-headings:tracking-tight prose-headings:leading-[0.95] prose-h1:text-6xl md:prose-h1:text-7xl prose-h2:text-6xl md:prose-h2:text-7xl prose-p:hidden"
+                className="mb-0 prose-headings:font-normal prose-headings:tracking-tight prose-headings:leading-[0.98] prose-h1:text-6xl md:prose-h1:text-7xl prose-h2:text-6xl md:prose-h2:text-7xl prose-p:hidden"
                 content={richText}
                 enableGutter={false}
               />
@@ -36,10 +36,10 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
                   return (
                     <li key={i}>
                       <CMSLink
-                        className={`rounded-full px-8 py-2.5 text-sm font-medium transition-colors ${
+                        className={`px-10 text-[12px] uppercase tracking-[0.2em] transition-colors ${
                           i === 0
-                            ? 'bg-white text-gray-900 hover:bg-white/90'
-                            : 'bg-white/10 text-white border border-white/30 backdrop-blur-sm hover:bg-white/20'
+                            ? 'border border-white bg-background text-[#1C1B19] hover:bg-transparent hover:text-white'
+                            : 'border border-white/60 bg-transparent text-white hover:bg-background hover:text-[#1C1B19]'
                         }`}
                         {...link}
                       />
@@ -53,7 +53,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
       </div>
       <div
         aria-hidden
-        className="absolute bottom-8 right-6 z-10 hidden md:flex items-center justify-center w-14 h-14 rounded-full bg-slate-950/35 backdrop-blur-xl backdrop-saturate-150 border border-white/10"
+        className="absolute bottom-8 end-6 z-10 hidden md:flex items-center justify-center w-14 h-14 border border-white/40"
       >
         <ArrowDown className="w-5 h-5 text-white" />
       </div>
@@ -61,8 +61,8 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
         {media && typeof media === 'object' && (
           <React.Fragment>
             <Media fill imgClassName="-z-10 object-cover" priority resource={media} />
-            <div className="absolute pointer-events-none left-0 top-0 w-full h-1/3 bg-gradient-to-b from-black/60 to-transparent" />
-            <div className="absolute pointer-events-none left-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent" />
+            <div className="absolute pointer-events-none start-0 top-0 w-full h-1/3 bg-gradient-to-b from-black/40 to-transparent" />
+            <div className="absolute pointer-events-none start-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-black/70 to-transparent" />
           </React.Fragment>
         )}
       </div>

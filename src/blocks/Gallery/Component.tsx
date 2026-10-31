@@ -56,13 +56,13 @@ export const GalleryBlock: React.FC<GalleryBlockProps> = ({
     <section className="py-12">
       <div className="container mx-auto px-4  ">
         {title && (
-          <h2 className={`  text-4xl md:text-5xl font-bold mb-8 text-start ${getTitleColorClass(titleColor)}`}>{title}</h2>
+          <h2 className={`  text-4xl md:text-5xl font-medium mb-8 text-start ${getTitleColorClass(titleColor)}`}>{title}</h2>
         )}
         <div className={gridClass}>
           {images?.map((item, i) => (
             <figure
               key={i}
-              className={`overflow-hidden rounded-2xl bg-gray-100 ${
+              className={`overflow-hidden rounded-none bg-card ${
                 layout === 'slider' ? 'shrink-0 w-72 snap-start' : ''
               }`}
             >
@@ -72,7 +72,7 @@ export const GalleryBlock: React.FC<GalleryBlockProps> = ({
                 className="w-full h-64"
               />
               {item.caption && (
-                <figcaption className="text-sm text-gray-500 px-3 py-2">
+                <figcaption className="text-sm text-muted-foreground px-3 py-2">
                   {item.caption}
                 </figcaption>
               )}

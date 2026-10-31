@@ -45,13 +45,13 @@ export const GalleryCoverflow: React.FC<{
   return (
     <section className="py-16 overflow-hidden">
       <div className="container mx-auto px-4   text-center">
-        {eyebrow && <p className="text-sm font-semibold tracking-wide text-gray-900 mb-3">{eyebrow}</p>}
+        {eyebrow && <p className="text-sm font-semibold tracking-wide text-foreground mb-3">{eyebrow}</p>}
         {title && (
-          <h2 className={`  text-4xl md:text-5xl font-bold mb-4 text-start ${getTitleColorClass(titleColor)}`}>
+          <h2 className={`  text-4xl md:text-5xl font-medium mb-4 text-start ${getTitleColorClass(titleColor)}`}>
             {title}
           </h2>
         )}
-        {description && <p className="text-gray-500 max-w-md mx-auto mb-10">{description}</p>}
+        {description && <p className="text-muted-foreground max-w-md mx-auto mb-10">{description}</p>}
 
         {locations.length > 0 && (
           <div className="flex flex-wrap items-center justify-center gap-2 mb-14">
@@ -63,10 +63,10 @@ export const GalleryCoverflow: React.FC<{
                   setActiveLocation(loc)
                   setIndex(0)
                 }}
-                className={`px-5 py-2.5 rounded-full text-sm font-medium border transition-colors ${
+                className={`px-5 py-2.5 rounded-none text-sm font-medium border transition-colors ${
                   activeLocation === loc
-                    ? 'bg-gray-950 text-white border-gray-950'
-                    : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400'
+                    ? 'bg-foreground text-background border-foreground'
+                    : 'bg-background text-foreground border-border hover:border-foreground'
                 }`}
               >
                 {loc}
@@ -75,7 +75,7 @@ export const GalleryCoverflow: React.FC<{
             {viewMoreUrl && (
               <a
                 href={viewMoreUrl}
-                className="flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-medium border border-gray-950 text-gray-950 hover:bg-gray-950 hover:text-white transition-colors"
+                className="flex items-center gap-1.5 px-5 py-2.5 rounded-none text-sm font-medium border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
               >
                 {viewMoreLabel || 'View More'}
                 <ArrowRight className="w-4 h-4" />
@@ -106,7 +106,7 @@ export const GalleryCoverflow: React.FC<{
                 key={i}
                 onClick={() => goTo(i)}
                 aria-label={item.location || item.caption || 'View image'}
-                className="absolute rounded-[28px] overflow-hidden shadow-xl bg-gray-200 w-[220px] h-[300px] sm:w-[280px] sm:h-[380px] md:w-[340px] md:h-[440px]"
+                className="absolute rounded-[28px] overflow-hidden bg-card w-[220px] h-[300px] sm:w-[280px] sm:h-[380px] md:w-[340px] md:h-[440px]"
                 animate={{
                   x: translateX,
                   y: translateY,
@@ -118,8 +118,8 @@ export const GalleryCoverflow: React.FC<{
               >
                 {item.image && <Media resource={item.image} fill imgClassName="object-cover" />}
                 {item.isVideo && (
-                  <span className="absolute bottom-4 right-4 flex items-center justify-center w-9 h-9 rounded-full bg-white/90 text-gray-900">
-                    <Play className="w-4 h-4 fill-current ml-0.5" />
+                  <span className="absolute bottom-4 end-4 flex items-center justify-center w-9 h-9 rounded-full bg-white/90 text-foreground">
+                    <Play className="w-4 h-4 fill-current ms-0.5" />
                   </span>
                 )}
               </motion.button>
@@ -132,7 +132,7 @@ export const GalleryCoverflow: React.FC<{
             type="button"
             aria-label="Previous"
             onClick={() => goTo(safeIndex - 1)}
-            className="flex items-center justify-center w-11 h-11 rounded-full border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white transition-colors"
+            className="flex items-center justify-center w-11 h-11 rounded-full border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
@@ -140,7 +140,7 @@ export const GalleryCoverflow: React.FC<{
             type="button"
             aria-label="Next"
             onClick={() => goTo(safeIndex + 1)}
-            className="flex items-center justify-center w-11 h-11 rounded-full border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white transition-colors"
+            className="flex items-center justify-center w-11 h-11 rounded-full border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
           >
             <ArrowRight className="w-4 h-4" />
           </button>

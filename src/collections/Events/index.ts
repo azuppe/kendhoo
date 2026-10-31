@@ -264,6 +264,39 @@ export const Events: CollectionConfig = {
       ],
     },
     {
+      name: 'startDate',
+      label: 'Starts',
+      type: 'date',
+      index: true,
+      admin: {
+        date: { pickerAppearance: 'dayAndTime' },
+        position: 'sidebar',
+        description: 'When the event begins (Maldives time). Needed for the calendar.',
+      },
+    },
+    {
+      name: 'endDate',
+      label: 'Ends',
+      type: 'date',
+      admin: {
+        date: { pickerAppearance: 'dayAndTime' },
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'venue',
+      type: 'text',
+      localized: true,
+      admin: { position: 'sidebar', description: 'e.g. "Kendhoo harbour"' },
+    },
+    {
+      name: 'isFree',
+      label: 'Free to attend',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: { position: 'sidebar' },
+    },
+    {
       name: 'publishedAt',
       type: 'date',
       admin: {

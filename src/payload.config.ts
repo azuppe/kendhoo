@@ -34,6 +34,8 @@ import Sources from './collections/Sources'
 import Users from './collections/Users'
 import { seedHandler } from './endpoints/seedHandler'
 import { Footer } from './globals/Footer/config'
+import { IslandInfo } from './globals/IslandInfo/config'
+import { Subscribers } from './collections/Subscribers'
 import { Header } from './globals/Header/config'
 import { revalidateRedirects } from './hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
@@ -76,8 +78,8 @@ export default buildConfig({
       icons: [
         {
           rel: 'icon',
-          type: 'image/x-icon',
-          url: '/favicon.ico',
+          type: 'image/svg+xml',
+          url: '/favicon.svg',
         },
       ],
     },
@@ -150,6 +152,7 @@ export default buildConfig({
     Pages,
     Posts,
     Events,
+    Subscribers,
     Activities,
     Media,
     Categories,
@@ -171,7 +174,7 @@ export default buildConfig({
       path: '/seed',
     },
   ],
-  globals: [Header, Footer],
+  globals: [Header, Footer, IslandInfo],
   plugins: [
     redirectsPlugin({
       collections: ['pages', 'posts'],
@@ -229,7 +232,7 @@ export default buildConfig({
       },
     }),
     searchPlugin({
-      collections: ['posts'],
+      collections: ['posts', 'events'],
       beforeSync: beforeSyncWithSearch,
       searchOverrides: {
         fields: ({ defaultFields }) => {

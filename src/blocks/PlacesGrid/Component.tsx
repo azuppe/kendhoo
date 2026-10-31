@@ -45,13 +45,13 @@ export const PlacesGridBlock: React.FC<PlacesGridBlockProps> = async ({
     <section className="py-12">
       <div className="container mx-auto px-4  ">
         {title && (
-          <h2 className={`  text-4xl md:text-5xl font-bold mb-8 text-start ${getTitleColorClass(titleColor)}`}>{title}</h2>
+          <h2 className={`  text-4xl md:text-5xl font-medium mb-8 text-start ${getTitleColorClass(titleColor)}`}>{title}</h2>
         )}
         <div className="grid grid-cols-2 md:grid-cols-3">
           {places.map((place: any) => (
             <article
               key={place.id}
-              className="group relative aspect-square overflow-hidden bg-gray-900"
+              className="group relative aspect-square overflow-hidden bg-foreground"
             >
               {place.image && (
                 <Media
@@ -62,7 +62,7 @@ export const PlacesGridBlock: React.FC<PlacesGridBlockProps> = async ({
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
               <div className="absolute inset-0 flex items-center justify-center p-4">
-                <h3 className="text-white text-center text-base md:text-lg font-bold leading-snug drop-shadow-md">
+                <h3 className="text-white text-center text-base md:text-lg font-medium leading-snug drop-shadow-md">
                   {place.name}
                 </h3>
               </div>

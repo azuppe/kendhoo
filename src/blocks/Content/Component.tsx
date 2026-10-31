@@ -37,19 +37,19 @@ export const ContentBlock: React.FC<
                 })}
                 key={index}
               >
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 h-full ">
+                <div className="bg-background rounded-none border border-border p-8 h-full ">
                   {richText && (
                     <RichText
                       content={richText}
                       enableGutter={false}
-                      className="text-gray-900 [&_h1]:text-5xl [&_h1]:font-semibold [&_h1]:tracking-tight [&_h1]:mb-2 [&_h2]:text-4xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:mb-2 [&_h3]:text-3xl [&_h3]:font-semibold [&_h3]:tracking-tight [&_h3]:mb-2 [&_p]:text-base [&_p]:text-gray-600 [&_p]:leading-relaxed [&_strong]:text-gray-900 [&_strong]:font-semibold"
+                      className="text-foreground [&_h1]:text-5xl [&_h1]:font-semibold [&_h1]:tracking-tight [&_h1]:mb-2 [&_h2]:text-4xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:mb-2 [&_h3]:text-3xl [&_h3]:font-semibold [&_h3]:tracking-tight [&_h3]:mb-2 [&_p]:text-base [&_p]:text-muted-foreground [&_p]:leading-relaxed [&_strong]:text-foreground [&_strong]:font-semibold"
                     />
                   )}
 
                   {enableLink && (
                     <CMSLink
                       {...link}
-                      className="mt-6 inline-flex items-center text-gray-900 hover:text-black font-medium text-sm transition-colors"
+                      className="mt-6 inline-flex items-center text-foreground hover:text-black font-medium text-sm transition-colors"
                     />
                   )}
                 </div>

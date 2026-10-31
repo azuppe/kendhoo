@@ -16,7 +16,7 @@ export const CategorySplit: React.FC<{
   return (
     <div>
       <SectionHeader title={title} href={href} />
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-x-10 gap-y-16 sm:grid-cols-2">
         {posts.map((post) => (
           <PostCard key={post.id} post={post} locale={locale} />
         ))}

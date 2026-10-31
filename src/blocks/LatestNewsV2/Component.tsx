@@ -54,17 +54,17 @@ export const LatestNewsV2Block: React.FC<LatestNewsV2BlockProps> = async ({
       <div className="container mx-auto px-4  ">
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_2fr] gap-10 lg:gap-16 items-start">
           <div>
-            <h2 className="  text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6 text-start">
+            <h2 className="  text-4xl md:text-5xl font-medium tracking-tight text-foreground mb-6 text-start">
               {heading}
             </h2>
             {subtitle && (
-              <p className="text-gray-600 mb-8 max-w-xs">{subtitle}</p>
+              <p className="text-muted-foreground mb-8 max-w-xs">{subtitle}</p>
             )}
             {link?.label && (
               <CMSLink
                 {...link}
                 appearance="default"
-                className="w-fit rounded-full bg-gray-900 text-white px-5 py-2.5 text-sm font-medium hover:bg-gray-800 transition-colors"
+                className="w-fit rounded-none bg-foreground text-background px-5 py-2.5 text-sm font-medium hover:opacity-80 transition-colors"
               />
             )}
           </div>
@@ -81,29 +81,29 @@ export const LatestNewsV2Block: React.FC<LatestNewsV2BlockProps> = async ({
                   type="reference"
                   reference={{ relationTo: 'posts', value: post }}
                   appearance="inline"
-                  className="group flex items-start justify-between gap-6 rounded-3xl bg-gray-50 px-8 py-7 hover:bg-gray-100 transition-colors"
+                  className="group flex items-start justify-between gap-6 rounded-none bg-card px-8 py-7 hover:bg-card transition-colors"
                 >
                   <div>
                     <div className="flex items-center gap-2 mb-3 text-sm">
                       {category && (
-                        <span className="font-bold uppercase tracking-wide text-gray-900">
+                        <span className="font-medium uppercase tracking-wide text-foreground">
                           {category.title}
                         </span>
                       )}
                       {category && post.publishedAt && (
-                        <span className="w-1 h-1 rounded-full bg-gray-400" aria-hidden />
+                        <span className="w-1 h-1 rounded-full bg-muted-foreground" aria-hidden />
                       )}
                       {post.publishedAt && (
-                        <span className="uppercase tracking-wide text-gray-400 font-medium">
+                        <span className="uppercase tracking-wide text-muted-foreground font-medium">
                           {formatMonthYear(post.publishedAt)}
                         </span>
                       )}
                     </div>
-                    <h3 className="text-lg md:text-xl font-bold text-gray-900 group-hover:underline">
+                    <h3 className="text-lg md:text-xl font-medium text-foreground group-hover:underline">
                       {post.meta?.description || post.title}
                     </h3>
                   </div>
-                  <span className="shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-gray-400 group-hover:bg-white group-hover:text-gray-900 group-hover:shadow transition-colors">
+                  <span className="shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground group-hover:bg-background group-hover:text-foreground group-hover: transition-colors">
                     <ArrowUpRight className="w-4 h-4" />
                   </span>
                 </CMSLink>

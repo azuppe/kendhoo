@@ -8,13 +8,13 @@ export const QuoteBlockComponent: React.FC<QuoteBlockProps> = ({ quote, name, ro
   }
 
   return (
-    <div className="mx-auto my-8 w-full max-w-3xl rounded border border-gray-200 p-8">
-      <blockquote className="text-2xl leading-snug text-gray-800">
+    <div className="mx-auto my-8 w-full max-w-3xl rounded border border-border p-8">
+      <blockquote className="text-2xl leading-snug text-foreground">
         &ldquo;{quote}&rdquo;
       </blockquote>
       <footer className="mt-6">
-        <p className="text-xs font-bold uppercase tracking-wide text-gray-900">{name}</p>
-        {role && <p className="text-sm text-gray-500">{role}</p>}
+        <p className="text-xs font-medium uppercase tracking-wide text-foreground">{name}</p>
+        {role && <p className="text-sm text-muted-foreground">{role}</p>}
       </footer>
     </div>
   )

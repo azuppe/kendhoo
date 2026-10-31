@@ -8,7 +8,6 @@ import React, { Fragment } from 'react'
 import type { Post } from '@/payload-types'
 
 import { Media } from '@/components/Media'
-import { Eye } from 'lucide-react'
 
 export const Card: React.FC<{
   alignItems?: 'center'
@@ -35,22 +34,22 @@ export const Card: React.FC<{
     <article
       ref={card.ref}
             className={cn(
-        ' p-[12px]  rounded-2xl overflow-hidden  bg-white border border-gray-200',
+        'group overflow-hidden bg-transparent',
         className
       )}
       
     >
-      <div className="w-full rounded-xl ">
+      <div className="w-full overflow-hidden bg-card">
         {!metaImage && <div className="">No image</div>}
         {metaImage && typeof metaImage !== 'string' && (
-          <Media resource={metaImage} imgClassName='object-cover !rounded-xl h-48 ' className="  " />
+          <Media resource={metaImage} imgClassName='h-64 object-cover transition-transform duration-700 group-hover:scale-[1.03]' className="  " />
         )}
       </div>
 
-      <div className="space-y-2 pt-4">
+      <div className="space-y-3 pt-5">
         <div className=" flex  justify-between  items-center">
           {showCategories && hasCategories && (
-            <div className="uppercase text-sm mb-4">
+            <div className="mb-2">
               {showCategories && hasCategories && (
                 <div>
                   {categories?.map((category, index) => {
@@ -63,7 +62,7 @@ export const Card: React.FC<{
 
                       return (
                         <Fragment key={index}>
-                          <span className="inline-block px-3 py-1 text-xs font-semibold text-gray-700 bg-gray-100 rounded-full">
+                          <span className="eyebrow-brass">
                             {categoryTitle}
                           </span>
 
@@ -78,17 +77,14 @@ export const Card: React.FC<{
               )}
             </div>
           )}
-          <div className="flex items-center justify-end text-gray-500 text-xs gap-1">
-            <Eye size={14} />
-            <span>2.5m</span>
-          </div>
+          
         </div>
 
         {titleToUse && (
           <div className="prose">
             <h3>
               <Link
-                className="text-sm font-semibold text-gray-900 leading-snug not-prose"
+                className="not-prose font-serif text-[26px] leading-[1.12] hover:opacity-70"
                 href={href}
                 ref={link.ref}
               >
@@ -98,7 +94,7 @@ export const Card: React.FC<{
           </div>
         )}
 
-        <div className="text-sm text-gray-500">{sanitizedDescription}</div>
+        <div className="text-[15px] leading-relaxed text-muted-foreground">{sanitizedDescription}</div>
       </div>
     </article>
   )

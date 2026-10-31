@@ -13,7 +13,7 @@ export const PhotoGalleryBlock: React.FC<PhotoGalleryBlockProps> = ({ images }) 
     <section className="py-8">
       <div className="container mx-auto px-4">
         {images && images.length > 0 && (
-          <div className="grid grid-cols-4 grid-rows-2 gap-3 h-[380px] rounded-3xl overflow-hidden">
+          <div className="grid grid-cols-4 grid-rows-2 gap-3 h-[380px] rounded-none overflow-hidden">
             {img1 && (
               <div className="relative col-span-1 row-span-2">
                 <Media resource={img1} fill imgClassName="object-cover" />

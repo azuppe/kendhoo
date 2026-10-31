@@ -1,7 +1,7 @@
 {
   "name": "kendhoo-online",
   "version": "1.0.0",
-  "description": "Kendhoo Online — news, events, activities and places to explore.",
+  "description": "Kendhoo Online \u2014 news, events, activities and places to explore.",
   "type": "module",
   "scripts": {
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
@@ -15,7 +15,8 @@
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "reinstall": "cross-env NODE_OPTIONS=--no-deprecation rm -rf node_modules && rm pnpm-lock.yaml && pnpm --ignore-workspace install",
     "seed:admin": "cross-env NODE_OPTIONS=--no-deprecation payload run scripts/seed-admin.ts",
-    "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "test": "node --test tests/*.test.ts"
   },
   "dependencies": {
     "@mongodb-js/saslprep": "^1.4.12",
@@ -74,6 +75,9 @@
     "node": "^18.20.2 || >=20.9.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["sharp", "esbuild"]
+    "onlyBuiltDependencies": [
+      "sharp",
+      "esbuild"
+    ]
   }
 }

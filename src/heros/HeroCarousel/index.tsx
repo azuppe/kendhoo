@@ -1,148 +1,112 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
 import { Media } from '@/components/Media'
 
 export default function HeroCarousel({ ...props }) {
+  const posts: any[] = props.posts || []
+  const count = posts.length
   const [currentSlide, setCurrentSlide] = useState(0)
-  const [direction, setDirection] = useState(0)
+  const [playing, setPlaying] = useState(true)
+
+  // Never autoplay for people who ask their system for less motion.
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) setPlaying(false)
+  }, [])
 
   useEffect(() => {
-    if (!props.posts) return
-    const timer = setInterval(() => {
-      setDirection(1)
-      setCurrentSlide((prev) => (prev + 1) % props.posts.length)
-    }, 6000)
-
+    if (!playing || count < 2) return
+    const timer = setInterval(() => setCurrentSlide((prev) => (prev + 1) % count), 7000)
     return () => clearInterval(timer)
-  }, [props.posts])
+  }, [playing, count])
 
-  const goToSlide = (index) => {
-    setDirection(index > currentSlide ? 1 : -1)
-    setCurrentSlide(index)
-  }
+  if (!count) return null
 
-  const nextSlide = () => {
-    setDirection(1)
-    setCurrentSlide((prev) => (prev + 1) % props.posts.length)
-  }
+  const slide = posts[currentSlide]
+  const go = (i: number) => setCurrentSlide((i + count) % count)
 
-  const prevSlide = () => {
-    setDirection(-1)
-    setCurrentSlide((prev) => (prev - 1 + props.posts.length) % props.posts.length)
-  }
-
-  const slideVariants = {
-    enter: (direction) => ({
-      x: direction > 0 ? 2000 : -2000,
-      opacity: 0,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction) => ({
-      x: direction < 0 ? 2000 : -2000,
-      opacity: 0,
-    }),
-  }
+  const arrow =
+    'flex h-12 w-12 items-center justify-center border border-white/60 text-white transition-colors hover:bg-white hover:text-[#1C1B19]'
 
   return (
-    <div className="w-full  container mx-auto pt-[110px]">
-      {props.posts && (
-        <div className="relative h-[500px] md:h-[600px] rounded-3xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-300">
-          <AnimatePresence initial={false} custom={direction} mode="wait">
+    <section aria-roledescription="carousel" aria-label="Featured stories" className="w-full pt-24">
+      <div className="container mx-auto px-4 md:px-8">
+        <div className="relative h-[520px] overflow-hidden bg-card md:h-[680px]">
+          <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={currentSlide}
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                x: { type: 'spring', stiffness: 200, damping: 30 },
-                opacity: { duration: 1 },
-
-              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.8, ease: 'easeInOut' }}
               className="absolute inset-0"
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${currentSlide + 1} of ${count}`}
             >
-              <div className="relative h-full w-full">
-                <div className="absolute inset-0">
-                  <Media
-                    className="-mx-4 md:-mx-8 2xl:-mx-16"
-                    imgClassName=""
-                    priority
-                    resource={props.posts[currentSlide]?.meta.image}
-                  />
+              {slide?.meta?.image && (
+                <Media
+                  fill
+                  priority={currentSlide === 0}
+                  alt={slide.title}
+                  imgClassName="object-cover"
+                  resource={slide.meta.image}
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
-                </div>
-           
-
-                <div className="relative h-full flex   px-8 md:px-16 flex-col items-start justify-end pb-16">
-                  <div className="max-w-3xl text-white">
-                    <motion.h2
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1, duration: 0.2 }}
-                      className="text-3xl md:text-4xl lg:text-6xl font-semi-bold mb-4 md:mb-6 leading-tight"
-                    >
-                      {props.posts[currentSlide]?.title}
-                    </motion.h2>
-                  </div>
-                  <div>
-                    <motion.p
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2, duration: 0.2 }}
-                      className="text-sm md:text-lg leading-relaxed text-gray-100 max-w-full"
-                    >
-                      {props.posts[currentSlide]?.meta.description}
-                    </motion.p>
-                  </div>
-                </div>
+              <div className="absolute inset-x-0 bottom-0 flex flex-col items-start gap-5 p-8 pb-24 text-white md:p-16 md:pb-28">
+                <h2 className="max-w-3xl text-4xl leading-[1.04] md:text-6xl lg:text-7xl">{slide?.title}</h2>
+                {slide?.meta?.description && (
+                  <p className="line-clamp-2 max-w-xl text-[16px] leading-relaxed text-white/90 md:text-[18px]">
+                    {slide.meta.description}
+                  </p>
+                )}
               </div>
             </motion.div>
           </AnimatePresence>
 
-          {/* Navigation Arrows */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-2 rounded-full transition-all duration-200 z-10"
-            aria-label="Previous slide"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-          <button
-            onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-2 rounded-full transition-all duration-200 z-10"
-            aria-label="Next slide"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-
-          {/* Dots Navigation */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-10">
-            {props.posts.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className="group"
-                aria-label={`Go to slide ${index + 1}`}
-              >
-                <div
-                  className={`h-2.5 rounded-full transition-all duration-300 ${
-                    index === currentSlide
-                      ? 'w-8 bg-white'
-                      : 'w-2.5 bg-white/50 group-hover:bg-white/70'
-                  }`}
-                />
-              </button>
-            ))}
-          </div>
+          {count > 1 && (
+            <div className="absolute inset-x-8 bottom-8 z-10 flex items-center justify-between md:inset-x-16">
+              <div className="flex items-center gap-4">
+                {posts.map((_, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => go(index)}
+                    aria-label={`Go to slide ${index + 1}`}
+                    aria-current={index === currentSlide}
+                    className="group flex h-11 items-center"
+                  >
+                    <span
+                      className={`block h-px transition-all duration-500 ${
+                        index === currentSlide ? 'w-14 bg-white' : 'w-8 bg-white/50 group-hover:bg-white/80'
+                      }`}
+                    />
+                  </button>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setPlaying((p) => !p)}
+                  className={arrow}
+                  aria-label={playing ? 'Pause slideshow' : 'Play slideshow'}
+                >
+                  {playing ? <Pause className="h-4 w-4" strokeWidth={1.5} /> : <Play className="h-4 w-4" strokeWidth={1.5} />}
+                </button>
+                <button type="button" onClick={() => go(currentSlide - 1)} className={arrow} aria-label="Previous slide">
+                  <ChevronLeft className="h-5 w-5 rtl:rotate-180" strokeWidth={1.5} />
+                </button>
+                <button type="button" onClick={() => go(currentSlide + 1)} className={arrow} aria-label="Next slide">
+                  <ChevronRight className="h-5 w-5 rtl:rotate-180" strokeWidth={1.5} />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
-      )}
-    </div>
+      </div>
+    </section>
   )
 }

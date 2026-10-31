@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 import { cn } from '@/utilities/ui'
 import { GeistMono } from 'geist/font/mono'
-import { Lato } from 'next/font/google'
+import { Cormorant_Garamond, Jost, Noto_Sans_Thaana } from 'next/font/google'
 import React from 'react'
 
 import { Footer } from '@/globals/Footer/Component'
@@ -19,11 +19,27 @@ import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 import localization from '@/i18n/localization'
 import { JsonLd } from '@/components/JsonLd'
+import { ThemeScript } from '@/components/Theme/ThemeScript'
 
-const lato = Lato({
+const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
-  weight: ['100', '300', '400', '700', '900'],
-  variable: '--font-lato',
+  weight: ['400', '500'],
+  style: ['normal', 'italic'],
+  variable: '--font-cormorant',
+  display: 'swap',
+})
+
+const jost = Jost({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-jost',
+  display: 'swap',
+})
+
+const thaana = Noto_Sans_Thaana({
+  subsets: ['thaana'],
+  weight: ['400', '500'],
+  variable: '--font-thaana',
   display: 'swap',
 })
 
@@ -49,13 +65,13 @@ export default async function RootLayout({ children, params }: Args) {
 
   return (
     <html
-      className={cn(lato.variable, GeistMono.variable)}
+      className={cn(cormorant.variable, jost.variable, thaana.variable, GeistMono.variable)}
       lang={locale}
       dir={direction}
       suppressHydrationWarning
     >
       <head>
-        <link href="/favicon.ico" rel="icon" sizes="32x32" />
+        <ThemeScript />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
         <JsonLd
           data={{
@@ -63,7 +79,7 @@ export default async function RootLayout({ children, params }: Args) {
             '@type': 'Organization',
             name: 'Kendhoo Online',
             url: process.env.NEXT_PUBLIC_SERVER_URL || 'https://kendhoo.online',
-            logo: `${process.env.NEXT_PUBLIC_SERVER_URL || 'https://kendhoo.online'}/kendhoo-logo-white-web.png`,
+            logo: `${process.env.NEXT_PUBLIC_SERVER_URL || 'https://kendhoo.online'}/kendhoo-mark.svg`,
           }}
         />
         <JsonLd
@@ -75,7 +91,7 @@ export default async function RootLayout({ children, params }: Args) {
           }}
         />
       </head>
-      <body className="font-sans">
+      <body className="bg-background font-sans text-foreground">
 
           <NextIntlClientProvider messages={messages}>
             <LivePreviewListener />

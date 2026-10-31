@@ -99,11 +99,11 @@ export const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, locale
         <div className="absolute inset-0 flex items-end">
           <div className="container mx-auto px-4 pb-8 md:pb-10">
             {categoryTag && (
-              <span className="inline-block mb-3 px-3 py-1 rounded-full bg-white/15 backdrop-blur-sm text-xs font-medium text-white ring-1 ring-white/30">
+              <span className="inline-block mb-3 px-3 py-1 rounded-none bg-white/15 backdrop-blur-sm text-xs font-medium text-white ring-1 ring-background/30">
                 {categoryTag}
               </span>
             )}
-            <h1 className="text-3xl md:text-5xl font-bold text-white max-w-2xl leading-tight">
+            <h1 className="text-3xl md:text-5xl font-medium text-white max-w-2xl leading-tight">
               {title}
             </h1>
             {intro && (
@@ -115,16 +115,16 @@ export const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, locale
 
       {/* Quick details */}
       {quickInfo.length > 0 && (
-        <section className="bg-gray-50 border-b border-gray-100">
+        <section className="bg-card border-b border-border">
           <div className="container mx-auto px-4 py-6">
             <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
-              <span className="text-sm font-bold text-gray-900 shrink-0">Quick details</span>
+              <span className="text-sm font-medium text-foreground shrink-0">Quick details</span>
               {quickInfo.map((item, i) => (
                 <div key={i} className="flex items-center gap-2">
                   <item.icon className="w-4 h-4 text-emerald-700 shrink-0" />
                   <div>
-                    <p className="text-[11px] text-gray-400 leading-tight">{item.label}</p>
-                    <p className="text-sm font-medium text-gray-900 leading-tight">{item.value}</p>
+                    <p className="text-[11px] text-muted-foreground leading-tight">{item.label}</p>
+                    <p className="text-sm font-medium text-foreground leading-tight">{item.value}</p>
                   </div>
                 </div>
               ))}
@@ -138,10 +138,10 @@ export const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, locale
           {/* About */}
           <div>
             {aboutTitle && (
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">{aboutTitle}</h2>
+              <h2 className="text-2xl font-medium text-foreground mb-4">{aboutTitle}</h2>
             )}
             {aboutParagraphs.length > 0 && (
-              <div className="text-sm text-gray-600 leading-relaxed space-y-4">
+              <div className="text-sm text-muted-foreground leading-relaxed space-y-4">
                 {aboutParagraphs.map((para, i) => (
                   <p key={i}>{para}</p>
                 ))}
@@ -151,11 +151,11 @@ export const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, locale
             {highlights && highlights.length > 0 && (
               <div className="mt-8">
                 {highlightsTitle && (
-                  <h3 className="text-lg font-bold text-gray-900 mb-4">{highlightsTitle}</h3>
+                  <h3 className="text-lg font-medium text-foreground mb-4">{highlightsTitle}</h3>
                 )}
                 <ul className="space-y-3">
                   {highlights.map((h, i) => (
-                    <li key={h.id || i} className="flex items-start gap-2 text-sm text-gray-700">
+                    <li key={h.id || i} className="flex items-start gap-2 text-sm text-foreground">
                       <CheckCircle2 className="w-4.5 h-4.5 text-emerald-600 shrink-0 mt-0.5" />
                       <span>{h.label}</span>
                     </li>
@@ -169,7 +169,7 @@ export const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, locale
           {providers && providers.length > 0 && (
             <div>
               {providersTitle && (
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">{providersTitle}</h2>
+                <h2 className="text-2xl font-medium text-foreground mb-4">{providersTitle}</h2>
               )}
               <div className="flex flex-col gap-4">
                 {providers.map((provider, i) => {
@@ -177,16 +177,16 @@ export const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, locale
                   return (
                     <div
                       key={provider.id || i}
-                      className="flex gap-4 rounded-2xl border border-gray-100 bg-white shadow-sm p-4"
+                      className="flex gap-4 rounded-none border border-border bg-background p-4"
                     >
                       {provider.logo && typeof provider.logo === 'object' && (
-                        <div className="relative w-24 h-24 md:w-28 md:h-28 shrink-0 rounded-xl overflow-hidden">
+                        <div className="relative w-24 h-24 md:w-28 md:h-28 shrink-0 rounded-none overflow-hidden">
                           <Media resource={provider.logo} fill imgClassName="object-cover" />
                         </div>
                       )}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <h3 className="font-bold text-gray-900">{provider.name}</h3>
+                          <h3 className="font-medium text-foreground">{provider.name}</h3>
                           {provider.verified && (
                             <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700">
                               <BadgeCheck className="w-3.5 h-3.5" /> Verified
@@ -194,31 +194,31 @@ export const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, locale
                           )}
                         </div>
                         {provider.description && (
-                          <p className="text-xs text-gray-500 mt-1">{provider.description}</p>
+                          <p className="text-xs text-muted-foreground mt-1">{provider.description}</p>
                         )}
 
-                        <div className="flex items-center gap-4 mt-2 text-xs text-gray-600">
+                        <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
                           {provider.startingPrice && (
                             <span className="flex items-center gap-1">
-                              <TagIcon className="w-3.5 h-3.5 text-gray-400" />
+                              <TagIcon className="w-3.5 h-3.5 text-muted-foreground" />
                               {provider.startingPrice}
                             </span>
                           )}
                           {provider.duration && (
                             <span className="flex items-center gap-1">
-                              <Timer className="w-3.5 h-3.5 text-gray-400" />
+                              <Timer className="w-3.5 h-3.5 text-muted-foreground" />
                               {provider.duration}
                             </span>
                           )}
                         </div>
 
                         {provider.included && (
-                          <p className="text-xs text-gray-500 mt-1">
+                          <p className="text-xs text-muted-foreground mt-1">
                             Inclusions: {provider.included}
                           </p>
                         )}
                         {provider.availableTimes && (
-                          <p className="text-xs text-gray-500 mt-1">
+                          <p className="text-xs text-muted-foreground mt-1">
                             Available: {provider.availableTimes}
                           </p>
                         )}
@@ -227,7 +227,7 @@ export const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, locale
                           {provider.phone && (
                             <a
                               href={`tel:${provider.phone}`}
-                              className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-gray-300 text-xs font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                              className="flex items-center gap-1.5 px-4 py-2 rounded-none border border-border text-xs font-medium text-foreground hover:bg-card transition-colors"
                             >
                               <Phone className="w-3.5 h-3.5" />
                               Call
@@ -238,7 +238,7 @@ export const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, locale
                               href={`https://wa.me/${waNumber}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-700 hover:bg-emerald-800 text-xs font-medium text-white transition-colors"
+                              className="flex items-center gap-1.5 px-4 py-2 rounded-none bg-emerald-700 hover:bg-emerald-800 text-xs font-medium text-white transition-colors"
                             >
                               WhatsApp
                             </a>
@@ -261,7 +261,7 @@ export const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, locale
               <div className="lg:col-span-2 grid grid-cols-3 gap-3">
                 {galleryImages.slice(0, 3).map((img, i) =>
                   typeof img === 'object' && img ? (
-                    <div key={img.id || i} className="relative aspect-square rounded-xl overflow-hidden">
+                    <div key={img.id || i} className="relative aspect-square rounded-none overflow-hidden">
                       <Media resource={img} fill imgClassName="object-cover" />
                     </div>
                   ) : null,
@@ -270,16 +270,16 @@ export const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, locale
             )}
 
             {beforeYouGoItems && beforeYouGoItems.length > 0 && (
-              <div className="rounded-2xl bg-gray-50 border border-gray-100 p-6">
+              <div className="rounded-none bg-card border border-border p-6">
                 {beforeYouGoTitle && (
-                  <h3 className="text-lg font-bold text-gray-900 mb-4">{beforeYouGoTitle}</h3>
+                  <h3 className="text-lg font-medium text-foreground mb-4">{beforeYouGoTitle}</h3>
                 )}
                 <ul className="space-y-3">
                   {beforeYouGoItems.map((item, i) => {
                     const Icon = beforeYouGoIcons[item.icon || 'info'] || Info
                     return (
-                      <li key={item.id || i} className="flex items-start gap-2.5 text-sm text-gray-600">
-                        <Icon className="w-4 h-4 text-gray-500 shrink-0 mt-0.5" />
+                      <li key={item.id || i} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                        <Icon className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
                         <span>{item.label}</span>
                       </li>
                     )
@@ -292,28 +292,28 @@ export const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, locale
 
         {/* Location */}
         {(locationDescription || mapImage) && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-14 rounded-2xl bg-gray-50 border border-gray-100 p-6 md:p-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-14 rounded-none bg-card border border-border p-6 md:p-8">
             <div>
               {locationTitle && (
-                <h3 className="text-lg font-bold text-gray-900 mb-3">{locationTitle}</h3>
+                <h3 className="text-lg font-medium text-foreground mb-3">{locationTitle}</h3>
               )}
               {locationDescription && (
-                <p className="text-sm text-gray-600 leading-relaxed mb-2">{locationDescription}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-2">{locationDescription}</p>
               )}
-              {locationNote && <p className="text-xs text-gray-400 mb-5">{locationNote}</p>}
+              {locationNote && <p className="text-xs text-muted-foreground mb-5">{locationNote}</p>}
               {mapLink && (
                 <a
                   href={mapLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-emerald-700 text-emerald-700 text-sm font-medium hover:bg-emerald-50 transition-colors"
+                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-none border border-emerald-700 text-emerald-700 text-sm font-medium hover:bg-emerald-50 transition-colors"
                 >
                   <MapPin className="w-4 h-4" />
                   View on map
                 </a>
               )}
             </div>
-            <div className="relative aspect-[16/9] lg:aspect-auto rounded-xl overflow-hidden bg-gray-200">
+            <div className="relative aspect-[16/9] lg:aspect-auto rounded-none overflow-hidden bg-card">
               {mapImage && typeof mapImage === 'object' && (
                 <Media resource={mapImage} fill imgClassName="object-cover" />
               )}
@@ -325,7 +325,7 @@ export const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, locale
         {relatedActivities && relatedActivities.length > 0 && (
           <div className="mt-16">
             {relatedTitle && (
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">{relatedTitle}</h2>
+              <h2 className="text-2xl font-medium text-foreground mb-6">{relatedTitle}</h2>
             )}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedActivities.map((rel, i) => {
@@ -338,7 +338,7 @@ export const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, locale
                   <a
                     key={rel.id || i}
                     href={`/${locale}/things-to-do/${rel.slug}`}
-                    className="group rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-shadow"
+                    className="group rounded-none overflow-hidden bg-background border border-border  transition-shadow"
                   >
                     <div className="relative h-40">
                       {relImage && typeof relImage === 'object' && (
@@ -346,8 +346,8 @@ export const ActivityDetail: React.FC<ActivityDetailProps> = ({ activity, locale
                       )}
                     </div>
                     <div className="p-4">
-                      <h3 className="font-bold text-gray-900">{rel.title}</h3>
-                      <p className="text-xs text-gray-500 mt-1">
+                      <h3 className="font-medium text-foreground">{rel.title}</h3>
+                      <p className="text-xs text-muted-foreground mt-1">
                         {[relLocation, rel.priceRange].filter(Boolean).join(' · ')}
                       </p>
                       <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-700 mt-3 group-hover:gap-2 transition-all">

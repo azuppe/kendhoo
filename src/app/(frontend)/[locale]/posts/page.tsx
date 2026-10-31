@@ -16,6 +16,7 @@ import { StoryAvatars } from '@/components/PostsMagazine/StoryAvatars'
 import { MustRead } from '@/components/PostsMagazine/MustRead'
 import { EditorsPick } from '@/components/PostsMagazine/EditorsPick'
 import { CategorySplit } from '@/components/PostsMagazine/CategorySplit'
+import { TodayStrip } from '@/components/TodayStrip'
 import { NewsletterBanner } from '@/components/PostsMagazine/NewsletterBanner'
 import { PostCard, PostCardCompact } from '@/components/PostsMagazine/PostCard'
 import { topAuthorsFromPosts } from '@/components/PostsMagazine/utils'
@@ -81,7 +82,7 @@ export default async function Page({ params, searchParams }: Args) {
       <div className="pt-32 pb-24">
         <PageClient />
         <div className="container mb-8">
-          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
+          <h1 className="text-2xl lg:text-3xl font-medium text-foreground">
             {activeCategory?.title || t('posts')}
           </h1>
         </div>
@@ -102,7 +103,7 @@ export default async function Page({ params, searchParams }: Args) {
           />
         </div>
         <div className="container">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 gap-x-10 gap-y-16 sm:grid-cols-2 lg:grid-cols-4">
             {posts.docs.map((post) => (
               <PostCard key={post.id} post={post} locale={locale} />
             ))}
@@ -184,20 +185,12 @@ export default async function Page({ params, searchParams }: Args) {
   const topCreators = topAuthorsFromPosts(posts, 4)
 
   return (
-    <div className="pt-32 pb-24 space-y-16">
+    <div className="pt-32 pb-24 space-y-24">
       <PageClient />
 
       <div className="container">
-        <div className="rounded-2xl  border border-gray-200 px-6 py-8 text-center">
-          <p className="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-2">
-            {t('welcome-to-buletin')}
-          </p>
-          <h1 className="text-lg lg:text-2xl font-semibold text-gray-900 max-w-2xl mx-auto">
-            {t.rich('welcome-headline', {
-              red: (chunks) => <span className="text-gray-900 font-bold">{chunks}</span>,
-            })}
-          </h1>
-        </div>
+        <h1 className="sr-only">{t('posts')}</h1>
+        <TodayStrip locale={locale} />
       </div>
 
       <div className="mb-8">
@@ -206,16 +199,14 @@ export default async function Page({ params, searchParams }: Args) {
 
       {heroPost && (
         <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 items-stretch">
-            <HeroFeatured post={heroPost} locale={locale} />
-            {heroSidePosts.length > 0 && (
-              <div className="flex flex-col justify-between gap-6">
-                {heroSidePosts.map((post) => (
-                  <PostCardCompact key={post.id} post={post} locale={locale} />
-                ))}
-              </div>
-            )}
-          </div>
+          <HeroFeatured post={heroPost} locale={locale} />
+          {heroSidePosts.length > 0 && (
+            <div className="mt-20 grid grid-cols-1 gap-10 border-t border-border pt-12 md:grid-cols-3">
+              {heroSidePosts.map((post) => (
+                <PostCardCompact key={post.id} post={post} locale={locale} />
+              ))}
+            </div>
+          )}
         </div>
       )}
 

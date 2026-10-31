@@ -39,10 +39,10 @@ export default async function ThingsToDoPage({ params }: Args) {
       <PageClient />
 
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3 text-start">
+        <h1 className="text-4xl md:text-5xl font-medium text-foreground mb-3 text-start">
           Things To Do
         </h1>
-        <p className="text-gray-500 mb-12 max-w-xl">
+        <p className="text-muted-foreground mb-12 max-w-xl">
           Local activities and experiences, guided by trusted providers.
         </p>
 
@@ -56,29 +56,29 @@ export default async function ThingsToDoPage({ params }: Args) {
               <a
                 key={activity.id}
                 href={`/${locale}/things-to-do/${activity.slug}`}
-                className="group rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-shadow"
+                className="group rounded-none overflow-hidden bg-background border border-border  transition-shadow"
               >
                 <div className="relative h-48">
                   {activity.heroImage && typeof activity.heroImage === 'object' && (
                     <Media resource={activity.heroImage} fill imgClassName="object-cover" />
                   )}
                   {activity.categoryTag && (
-                    <span className="absolute top-3 left-3 px-2.5 py-1 text-[11px] font-medium rounded-full bg-white/90 text-gray-700">
+                    <span className="absolute top-3 start-3 px-2.5 py-1 text-[11px] font-medium rounded-none bg-white/90 text-foreground">
                       {activity.categoryTag}
                     </span>
                   )}
                 </div>
 
                 <div className="p-4">
-                  <h3 className="font-bold text-gray-900">{activity.title}</h3>
+                  <h3 className="font-medium text-foreground">{activity.title}</h3>
                   {location && (
-                    <p className="flex items-center gap-1 text-xs text-gray-500 mt-1">
+                    <p className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
                       <MapPin className="w-3.5 h-3.5" />
                       {location}
                     </p>
                   )}
                   {activity.priceRange && (
-                    <p className="text-sm font-medium text-gray-900 mt-2">{activity.priceRange}</p>
+                    <p className="text-sm font-medium text-foreground mt-2">{activity.priceRange}</p>
                   )}
                   <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-700 mt-3 group-hover:gap-2 transition-all">
                     View activity <ArrowRight className="w-3.5 h-3.5" />

@@ -6,6 +6,7 @@ export const beforeSyncWithSearch: BeforeSync = async ({ req, originalDoc, searc
   } = searchDoc
 
   const { slug, id, categories, title, meta } = originalDoc
+  const when = collection === 'events' ? originalDoc.startDate || originalDoc.publishedAt : originalDoc.publishedAt
 
   const modifiedDoc: DocToSync = {
     ...searchDoc,
@@ -16,6 +17,7 @@ export const beforeSyncWithSearch: BeforeSync = async ({ req, originalDoc, searc
       image: meta?.image?.id || meta?.image,
       description: meta?.description,
     },
+    publishedAt: when || undefined,
     categories: [],
   }
 

@@ -32,7 +32,7 @@ export const BannerBlock: React.FC<Props> = ({
           )}
 
           <div
-            className="absolute inset-y-0 left-0 w-[64%] md:w-[58%] bg-black/85"
+            className="absolute inset-y-0 start-0 w-[64%] md:w-[58%] bg-black/85"
             style={{ clipPath: 'polygon(0 0, 100% 0, 78% 100%, 0 100%)' }}
           />
 
@@ -46,7 +46,7 @@ export const BannerBlock: React.FC<Props> = ({
             )}
 
             <RichText
-              className="text-white font-extrabold uppercase leading-tight text-2xl md:text-4xl [&_p]:my-0 [&_*]:underline-offset-8"
+              className="text-white font-medium uppercase leading-tight text-2xl md:text-4xl [&_p]:my-0 [&_*]:underline-offset-8"
               content={content}
               enableGutter={false}
               enableProse={false}

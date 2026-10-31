@@ -19,34 +19,32 @@ export const MustRead: React.FC<{ posts: Post[]; locale: string }> = ({ posts, l
 
   return (
     <div>
-      <SectionHeader title="Must Read" href={`/${locale}/posts`} />
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div className="lg:col-span-1">
+      <SectionHeader title="Must read" href={`/${locale}/posts`} />
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
+        <div className="lg:col-span-3">
           <PostCardCompact post={left} locale={locale} />
         </div>
 
-        <Link
-          href={centerHref}
-          className="lg:col-span-2 relative block aspect-[16/10] w-full overflow-hidden rounded-2xl bg-gray-900"
-        >
-          {centerImage && (
-            <Media
-              resource={centerImage}
-              imgClassName="object-cover w-full h-full aspect-[16/10] opacity-90"
-            />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-6 space-y-2 text-white">
-            <PostSourceLine post={center} variant="dark" />
-            <h3 className="text-lg lg:text-xl font-bold leading-snug">{center.title}</h3>
-            {center.meta?.description && (
-              <p className="text-sm text-white/80 line-clamp-2">{center.meta.description}</p>
+        <Link href={centerHref} className="group block space-y-6 lg:col-span-6">
+          <div className="relative aspect-[4/3] w-full overflow-hidden bg-card">
+            {centerImage && (
+              <Media
+                resource={centerImage}
+                alt={center.title}
+                imgClassName="object-cover w-full h-full aspect-[4/3] transition-transform duration-1000 ease-out group-hover:scale-[1.02]"
+              />
             )}
-            <PostFooterLine post={center} readTimeMinutes={formatReadTime(center)} variant="dark" />
+          </div>
+          <div className="space-y-3 text-center">
+            <PostFooterLine post={center} readTimeMinutes={formatReadTime(center)} />
+            <h3 className="font-serif text-4xl leading-[1.05]">{center.title}</h3>
+            <div className="flex justify-center">
+              <PostSourceLine post={center} />
+            </div>
           </div>
         </Link>
 
-        <div className="lg:col-span-1 flex flex-col gap-6">
+        <div className="flex flex-col gap-6 lg:col-span-3">
           {rightPosts.map((post) => (
             <PostCardCompact key={post.id} post={post} locale={locale} />
           ))}

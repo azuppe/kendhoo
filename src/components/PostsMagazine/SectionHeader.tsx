@@ -9,11 +9,11 @@ export const SectionHeader: React.FC<{ title: string; href?: string }> = async (
   const t = await getTranslations()
 
   return (
-    <div className="flex items-center justify-between mb-6">
-      <h2 className="text-xl lg:text-2xl font-bold text-gray-900">{title}</h2>
+    <div className="mb-10 flex items-baseline justify-between gap-6 border-b border-border pb-5">
+      <h2 className="font-serif text-4xl lg:text-5xl">{title}</h2>
       {href && (
-        <Link href={href} className="text-sm font-semibold text-gray-900 whitespace-nowrap">
-          {t('see-all')} &rarr;
+        <Link href={href} className="eyebrow whitespace-nowrap py-3 hover:text-foreground">
+          {t('see-all')}
         </Link>
       )}
     </div>

@@ -14,42 +14,71 @@
   }
 
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Luxury minimalism: ivory ground, warm ink, one brass accent */
+    --background: 40 33% 97%;
+    --foreground: 40 7% 10%;
 
-    --card: 240 5% 96%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 40 28% 93%;
+    --card-foreground: 40 7% 10%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 40 33% 97%;
+    --popover-foreground: 40 7% 10%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 40 7% 10%;
+    --primary-foreground: 40 33% 97%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 40 28% 93%;
+    --secondary-foreground: 40 7% 10%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 40 28% 93%;
+    --muted-foreground: 40 6% 39%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 40 28% 93%;
+    --accent-foreground: 40 7% 10%;
 
-    --destructive: 0 0% 15%;
-    --destructive-foreground: 210 40% 98%;
+    --brass: 37 45% 33%;
 
-    --border: 240 6% 90%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --destructive: 0 45% 35%;
+    --destructive-foreground: 40 33% 97%;
 
-    --radius: 0.2rem;
+    --border: 40 20% 82%;
+    --input: 40 20% 82%;
+    --ring: 40 7% 10%;
 
-    --success: 0 0% 74%;
-    --warning: 0 0% 85%;
-    --error: 0 0% 86%;
+    --radius: 0rem;
+
+    --success: 150 20% 70%;
+    --warning: 40 40% 75%;
+    --error: 0 30% 80%;
   }
+}
 
- 
+@layer base {
+  /* The home hero pins itself to the light palette */
+  [data-theme='light'] {
+    color-scheme: light;
+  }
+  [data-theme='dark'] {
+    color-scheme: dark;
+    --background: 40 8% 8%;
+    --foreground: 40 25% 93%;
+    --card: 40 6% 12%;
+    --card-foreground: 40 25% 93%;
+    --popover: 40 8% 8%;
+    --popover-foreground: 40 25% 93%;
+    --primary: 40 25% 93%;
+    --primary-foreground: 40 8% 8%;
+    --secondary: 40 6% 12%;
+    --secondary-foreground: 40 25% 93%;
+    --muted: 40 6% 12%;
+    --muted-foreground: 40 10% 68%;
+    --accent: 40 6% 12%;
+    --accent-foreground: 40 25% 93%;
+    --brass: 40 45% 62%;
+    --border: 40 6% 22%;
+    --input: 40 6% 22%;
+    --ring: 40 25% 93%;
+  }
 }
 
 @layer base {
@@ -58,5 +87,81 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply font-sans;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  ::selection {
+    background: hsl(var(--foreground));
+    color: hsl(var(--background));
+  }
+  :focus-visible {
+    outline: 1px solid hsl(var(--foreground));
+    outline-offset: 3px;
+  }
+
+  /* Headlines are always the refined serif, light weight */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-cormorant), var(--font-thaana), serif !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.01em;
+  }
+  h1 {
+    line-height: 1.04;
+  }
+  h2,
+  h3 {
+    line-height: 1.12;
+  }
+  [lang='dv'] h1,
+  [lang='dv'] h2,
+  [lang='dv'] h3,
+  [lang='dv'] h4 {
+    font-family: var(--font-thaana), serif !important;
+    letter-spacing: 0;
+    line-height: 1.5;
+  }
+  [lang='dv'] body {
+    line-height: 1.9;
+  }
+}
+
+@layer components {
+  /* Small, widely-spaced uppercase label */
+  .eyebrow {
+    @apply text-[11px] font-medium uppercase text-muted-foreground;
+    letter-spacing: 0.2em;
+  }
+  .eyebrow-brass {
+    @apply text-[11px] font-medium uppercase;
+    letter-spacing: 0.2em;
+    color: hsl(var(--brass));
+  }
+  .hairline {
+    @apply border-t border-border;
+  }
+  .btn-luxe {
+    @apply inline-flex h-12 items-center justify-center border border-foreground bg-foreground px-8 text-[12px] font-medium uppercase text-background transition-opacity hover:opacity-80;
+    letter-spacing: 0.2em;
+  }
+  .btn-luxe-outline {
+    @apply inline-flex h-12 items-center justify-center border border-foreground bg-transparent px-8 text-[12px] font-medium uppercase text-foreground transition-colors hover:bg-foreground hover:text-background;
+    letter-spacing: 0.2em;
+  }
+  .link-luxe {
+    @apply border-b border-foreground pb-1 text-[12px] font-medium uppercase;
+    letter-spacing: 0.18em;
   }
 }

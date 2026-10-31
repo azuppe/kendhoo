@@ -15,7 +15,7 @@ export type DestinationsBlockProps = {
 
 export const DestinationsBlock: React.FC<DestinationsBlockProps> = ({ destinations }) => {
   return (
-    <section className="flex flex-col sm:flex-row w-full h-[420px] md:h-[480px] overflow-hidden">
+    <section className="flex h-auto w-full flex-col overflow-hidden sm:h-[520px] sm:flex-row md:h-[620px]">
       {destinations?.map((dest, i) => {
         const content = (
           <>
@@ -23,18 +23,23 @@ export const DestinationsBlock: React.FC<DestinationsBlockProps> = ({ destinatio
               <Media
                 fill
                 resource={dest.image}
-                imgClassName="object-cover transition-transform duration-500 group-hover:scale-105"
+                alt={dest.title}
+                imgClassName="object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.03]"
               />
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-6 text-center text-white">
-              <h3 className="text-2xl font-bold">{dest.title}</h3>
-              {dest.subtitle && <p className="text-sm text-white/80 mt-1">{dest.subtitle}</p>}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-8 text-center text-white">
+              <h3 className="font-serif text-3xl">{dest.title}</h3>
+              {dest.subtitle && (
+                <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.2em] text-white/85">
+                  {dest.subtitle}
+                </p>
+              )}
             </div>
           </>
         )
 
-        const className = 'relative flex-1 h-full overflow-hidden group'
+        const className = 'group relative h-80 flex-1 overflow-hidden bg-card sm:h-full'
 
         return dest.link ? (
           <a key={i} href={dest.link} className={className}>

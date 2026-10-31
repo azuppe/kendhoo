@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState } from 'react'
-import { Mail, Plus } from 'lucide-react'
+import React, { useId, useState } from 'react'
+import { Plus } from 'lucide-react'
 
 import { Media } from '@/components/Media'
 import { getTitleColorClass } from '@/utilities/getTitleColorClass'
@@ -41,108 +41,101 @@ export const FaqBlock: React.FC<FaqBlockProps> = ({
   signatureTagline,
 }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const uid = useId()
+  const hasImage = image && typeof image === 'object'
 
   return (
-    <section className="bg-gray-50 py-16 px-4">
-      <div className="  mx-auto">
-        <div className="flex flex-col items-center text-center mb-14">
-          {badge && (
-            <span className="px-4 py-1.5 rounded-full bg-gray-100 text-xs font-semibold text-gray-600 mb-6">
-              {badge}
-            </span>
-          )}
+    <section className="py-24 md:py-32">
+      <div className="container mx-auto px-4 md:px-8">
+        <div className="mb-20 flex flex-col items-center text-center">
+          {badge && <span className="eyebrow-brass mb-6">{badge}</span>}
           {title && (
-            <h2 className={`  text-4xl md:text-5xl font-bold leading-tight text-start ${getTitleColorClass(titleColor)}`}>
+            <h2 className={`max-w-3xl text-5xl leading-[1.04] md:text-7xl ${getTitleColorClass(titleColor)}`}>
               {title}
             </h2>
           )}
           {titleAccent && (
-            <p className={`  italic text-4xl md:text-6xl leading-tight ${getTitleColorClass(titleColor)}`}>
+            <p className={`mt-2 max-w-3xl font-serif text-5xl italic leading-[1.04] md:text-7xl ${getTitleColorClass(titleColor)}`}>
               {titleAccent}
             </p>
           )}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-          <div className="rounded-3xl bg-white shadow-sm p-6 flex flex-col gap-6">
+        <div className={`grid grid-cols-1 items-start gap-16 ${hasImage ? 'lg:grid-cols-2' : 'mx-auto max-w-3xl'}`}>
+          <div className="flex flex-col gap-10">
+            <div className="border-t border-foreground">
+              {items?.map((item, idx) => {
+                const isOpen = openIndex === idx
+                const panelId = `${uid}-panel-${idx}`
+                return (
+                  <div key={idx} className="border-b border-border">
+                    <h3>
+                      <button
+                        type="button"
+                        onClick={() => setOpenIndex(isOpen ? null : idx)}
+                        className="flex min-h-16 w-full items-center justify-between gap-6 py-5 text-start"
+                        aria-expanded={isOpen}
+                        aria-controls={panelId}
+                      >
+                        <span className="font-serif text-[26px] leading-[1.2]">{item.question}</span>
+                        <Plus
+                          aria-hidden
+                          strokeWidth={1.25}
+                          className={`h-6 w-6 shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}
+                        />
+                      </button>
+                    </h3>
+                    <div
+                      id={panelId}
+                      role="region"
+                      hidden={!isOpen}
+                      className="pb-8 pe-12 text-[16px] leading-relaxed text-muted-foreground"
+                    >
+                      {item.answer}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+
             {(email || ctaLabel) && (
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  {email && (
-                    <>
-                      <p className="text-xs text-gray-400 mb-1">Email</p>
-                      <p className="font-semibold text-gray-900">{email}</p>
-                    </>
-                  )}
-                </div>
+              <div className="flex flex-wrap items-end justify-between gap-6">
+                {email && (
+                  <div>
+                    <p className="eyebrow mb-1">Email</p>
+                    <a href={`mailto:${email}`} className="font-serif text-2xl hover:opacity-70">
+                      {email}
+                    </a>
+                  </div>
+                )}
                 {ctaLabel && (
                   <a
                     href={ctaLink || `mailto:${email || ''}`}
-                    className="inline-flex items-center gap-2 rounded-full bg-gray-900 text-white px-5 py-3 text-sm font-semibold shrink-0"
+                    className="inline-flex h-12 items-center border border-foreground px-8 text-[12px] font-medium uppercase tracking-[0.2em] transition-colors hover:bg-foreground hover:text-background"
                   >
-                    <Mail className="w-4 h-4" />
                     {ctaLabel}
                   </a>
                 )}
               </div>
             )}
-
-            <div className="flex flex-col gap-3">
-              {items?.map((item, idx) => {
-                const isOpen = openIndex === idx
-                return (
-                  <div key={idx} className="rounded-xl bg-gray-50 overflow-hidden">
-                    <button
-                      type="button"
-                      onClick={() => setOpenIndex(isOpen ? null : idx)}
-                      className="w-full flex items-center justify-between gap-4 px-6 py-4 text-left"
-                      aria-expanded={isOpen}
-                    >
-                      <span className="font-medium text-gray-900">{item.question}</span>
-                      <span
-                        className={`shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-gray-900 text-white transition-transform duration-200 ${
-                          isOpen ? 'rotate-45' : ''
-                        }`}
-                      >
-                        <Plus className="w-4 h-4" />
-                      </span>
-                    </button>
-                    {isOpen && (
-                      <div className="px-6 pb-4 text-sm text-gray-600 leading-relaxed">
-                        {item.answer}
-                      </div>
-                    )}
-                  </div>
-                )
-              })}
-            </div>
           </div>
 
-          {image && typeof image === 'object' && (
-            <div className="relative rounded-3xl overflow-hidden h-full min-h-[26rem]">
+          {hasImage && (
+            <figure className="relative min-h-[28rem] overflow-hidden bg-card lg:h-full lg:min-h-[36rem]">
               <Media resource={image} fill imgClassName="object-cover" />
               {imageCaption && (
-                <>
-                  <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/60 to-transparent" />
-                  <span className="absolute bottom-4 left-4 text-white text-sm font-medium">
-                    {imageCaption}
-                  </span>
-                </>
+                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-6 pt-16 text-[13px] uppercase tracking-[0.16em] text-white">
+                  {imageCaption}
+                </figcaption>
               )}
-            </div>
+            </figure>
           )}
         </div>
 
         {(signatureName || signatureTagline) && (
-          <div className="flex flex-col items-center text-center mt-14">
-            {signatureName && (
-              <p className="  italic text-3xl text-gray-900">{signatureName}</p>
-            )}
-            {signatureTagline && (
-              <p className="text-xs tracking-widest text-gray-500 uppercase mt-1">
-                {signatureTagline}
-              </p>
-            )}
+          <div className="mt-20 flex flex-col items-center text-center">
+            {signatureName && <p className="font-serif text-3xl italic">{signatureName}</p>}
+            {signatureTagline && <p className="eyebrow mt-2">{signatureTagline}</p>}
           </div>
         )}
       </div>

@@ -70,6 +70,7 @@ export interface Config {
     pages: Page;
     posts: Post;
     events: Event;
+    subscribers: Subscriber;
     activities: Activity;
     media: Media;
     categories: Category;
@@ -92,6 +93,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
+    subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
     activities: ActivitiesSelect<false> | ActivitiesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
@@ -115,10 +117,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    'island-info': IslandInfo;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'island-info': IslandInfoSelect<false> | IslandInfoSelect<true>;
   };
   locale: 'dv' | 'en';
   user: User & {
@@ -1679,12 +1683,33 @@ export interface Event {
     image?: (string | null) | Media;
     description?: string | null;
   };
+  /**
+   * When the event begins (Maldives time). Needed for the calendar.
+   */
+  startDate?: string | null;
+  endDate?: string | null;
+  /**
+   * e.g. "Kendhoo harbour"
+   */
+  venue?: string | null;
+  isFree?: boolean | null;
   publishedAt?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers".
+ */
+export interface Subscriber {
+  id: string;
+  email: string;
+  locale?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1958,16 +1983,25 @@ export interface Search {
   id: string;
   title?: string | null;
   priority?: number | null;
-  doc: {
-    relationTo: 'posts';
-    value: string | Post;
-  };
+  doc:
+    | {
+        relationTo: 'posts';
+        value: string | Post;
+      }
+    | {
+        relationTo: 'events';
+        value: string | Event;
+      };
   slug?: string | null;
   meta?: {
     title?: string | null;
     description?: string | null;
     image?: (string | null) | Media;
   };
+  /**
+   * Publish date (events: start date), used by search date filters.
+   */
+  publishedAt?: string | null;
   categories?:
     | {
         relationTo?: string | null;
@@ -1997,6 +2031,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'events';
         value: string | Event;
+      } | null)
+    | ({
+        relationTo: 'subscribers';
+        value: string | Subscriber;
       } | null)
     | ({
         relationTo: 'activities';
@@ -2807,12 +2845,26 @@ export interface EventsSelect<T extends boolean = true> {
         image?: T;
         description?: T;
       };
+  startDate?: T;
+  endDate?: T;
+  venue?: T;
+  isFree?: T;
   publishedAt?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers_select".
+ */
+export interface SubscribersSelect<T extends boolean = true> {
+  email?: T;
+  locale?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3241,6 +3293,7 @@ export interface SearchSelect<T extends boolean = true> {
         description?: T;
         image?: T;
       };
+  publishedAt?: T;
   categories?:
     | T
     | {
@@ -3374,6 +3427,44 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "island-info".
+ */
+export interface IslandInfo {
+  id: string;
+  /**
+   * Used for weather and prayer times.
+   */
+  latitude?: number | null;
+  longitude?: number | null;
+  showWeather?: boolean | null;
+  /**
+   * Turn on once the timetable below is filled in.
+   */
+  showFerry?: boolean | null;
+  /**
+   * Local time (Maldives, UTC+5), 24-hour format, e.g. 07:30.
+   */
+  ferries?:
+    | {
+        time: string;
+        route: string;
+        days?: ('0' | '1' | '2' | '3' | '4' | '5' | '6')[] | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Off by default. Check the times against the official Maldives Islamic Ministry timetable before turning this on.
+   */
+  showPrayer?: boolean | null;
+  /**
+   * Aladhan calculation method id (1 = Karachi). Pick the one that matches the official Maldives times.
+   */
+  prayerMethod?: number | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -3444,6 +3535,29 @@ export interface FooterSelect<T extends boolean = true> {
   privacyPolicyUrl?: T;
   creditText?: T;
   creditUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "island-info_select".
+ */
+export interface IslandInfoSelect<T extends boolean = true> {
+  latitude?: T;
+  longitude?: T;
+  showWeather?: T;
+  showFerry?: T;
+  ferries?:
+    | T
+    | {
+        time?: T;
+        route?: T;
+        days?: T;
+        id?: T;
+      };
+  showPrayer?: T;
+  prayerMethod?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

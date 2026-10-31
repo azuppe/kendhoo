@@ -18,8 +18,8 @@ const spanClasses: Record<string, string> = {
 }
 
 const colorClasses: Record<string, string> = {
-  blue: 'bg-gray-900 text-white',
-  white: 'bg-white text-gray-900',
+  blue: 'bg-foreground text-background',
+  white: 'bg-background text-foreground',
 }
 
 export const QuickFactsMosaic: React.FC<{ facts: MosaicFact[] }> = ({ facts }) => {
@@ -35,7 +35,7 @@ export const QuickFactsMosaic: React.FC<{ facts: MosaicFact[] }> = ({ facts }) =
             key={i}
             className={`relative overflow-hidden flex flex-col items-center text-center p-6 ${
               spanClasses[span]
-            } ${isImage ? 'bg-gray-200' : colorClasses[fact.color ?? 'white']} ${
+            } ${isImage ? 'bg-card' : colorClasses[fact.color ?? 'white']} ${
               hasText ? 'justify-start pt-10' : 'justify-center'
             }`}
           >

@@ -48,7 +48,7 @@ export const BusinessDirectoryBlock: React.FC<BusinessDirectoryBlockProps> = asy
     <section className="py-12">
       <div className="container mx-auto px-4  ">
         {title && (
-          <h2 className={`  text-4xl md:text-5xl font-bold mb-8 text-start ${getTitleColorClass(titleColor)}`}>{title}</h2>
+          <h2 className={`  text-4xl md:text-5xl font-medium mb-8 text-start ${getTitleColorClass(titleColor)}`}>{title}</h2>
         )}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {businesses.map((biz: any) => {
@@ -57,7 +57,7 @@ export const BusinessDirectoryBlock: React.FC<BusinessDirectoryBlockProps> = asy
             return (
               <article
                 key={biz.id}
-                className="relative h-[420px] rounded-3xl overflow-hidden bg-gray-900 flex flex-col justify-end"
+                className="relative h-[420px] rounded-none overflow-hidden bg-foreground flex flex-col justify-end"
               >
                 {biz.image && (
                   <Media resource={biz.image} fill imgClassName="object-cover" />
@@ -66,7 +66,7 @@ export const BusinessDirectoryBlock: React.FC<BusinessDirectoryBlockProps> = asy
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 
                 <span
-                  className={`absolute top-4 left-4 px-4 py-1.5 rounded-full text-xs font-semibold text-white backdrop-blur-sm ${
+                  className={`absolute top-4 start-4 px-4 py-1.5 rounded-none text-xs font-semibold text-white backdrop-blur-sm ${
                     isOpen ? 'bg-white/20' : 'bg-white/10'
                   }`}
                 >
@@ -76,7 +76,7 @@ export const BusinessDirectoryBlock: React.FC<BusinessDirectoryBlockProps> = asy
                 <button
                   type="button"
                   aria-label="Save"
-                  className="absolute top-4 right-4 flex items-center justify-center w-8 h-8 rounded-full bg-white text-gray-500 hover:text-gray-900 shadow transition-colors"
+                  className="absolute top-4 end-4 flex items-center justify-center w-8 h-8 rounded-full bg-background text-muted-foreground hover:text-foreground  transition-colors"
                 >
                   <Heart className="w-4 h-4" />
                 </button>
@@ -89,7 +89,7 @@ export const BusinessDirectoryBlock: React.FC<BusinessDirectoryBlockProps> = asy
                     </div>
                   )}
 
-                  <h3 className="text-xl font-bold text-white mb-1.5">{biz.name}</h3>
+                  <h3 className="text-xl font-medium text-white mb-1.5">{biz.name}</h3>
 
                   {biz.description && (
                     <p className="text-sm text-white/80 line-clamp-3 mb-4">{biz.description}</p>
@@ -97,7 +97,7 @@ export const BusinessDirectoryBlock: React.FC<BusinessDirectoryBlockProps> = asy
 
                   <button
                     type="button"
-                    className="w-full rounded-full bg-white text-gray-900 font-semibold py-2.5 hover:bg-gray-100 transition-colors"
+                    className="w-full rounded-full bg-background text-foreground font-semibold py-2.5 hover:bg-card transition-colors"
                   >
                     Book Now
                   </button>
