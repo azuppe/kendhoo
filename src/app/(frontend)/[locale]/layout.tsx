@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 import { cn } from '@/utilities/ui'
 import { GeistMono } from 'geist/font/mono'
-import { Inter, Noto_Sans_Thaana } from 'next/font/google'
+import { Cormorant_Garamond, Jost, Noto_Sans_Thaana } from 'next/font/google'
 import React from 'react'
 
 import { Footer } from '@/globals/Footer/Component'
@@ -21,10 +21,18 @@ import localization from '@/i18n/localization'
 import { JsonLd } from '@/components/JsonLd'
 import { ThemeScript } from '@/components/Theme/ThemeScript'
 
-const inter = Inter({
+const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
-  weight: ['400', '500', '700', '900'],
-  variable: '--font-sans',
+  weight: ['400', '500'],
+  style: ['normal', 'italic'],
+  variable: '--font-cormorant',
+  display: 'swap',
+})
+
+const jost = Jost({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-jost',
   display: 'swap',
 })
 
@@ -57,7 +65,7 @@ export default async function RootLayout({ children, params }: Args) {
 
   return (
     <html
-      className={cn(inter.variable, thaana.variable, GeistMono.variable)}
+      className={cn(cormorant.variable, jost.variable, thaana.variable, GeistMono.variable)}
       lang={locale}
       dir={direction}
       suppressHydrationWarning

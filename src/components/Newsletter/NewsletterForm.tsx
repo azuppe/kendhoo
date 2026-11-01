@@ -62,7 +62,7 @@ export const NewsletterForm: React.FC<Props> = ({
       <button
         type="submit"
         disabled={state === 'sending'}
-        className="h-12 border border-foreground bg-foreground px-8 text-[12px] font-medium uppercase tracking-[0.06em] text-background transition-opacity hover:opacity-80 disabled:opacity-50"
+        className="h-12 border border-foreground bg-foreground px-8 text-[12px] font-medium uppercase tracking-[0.2em] text-background transition-opacity hover:opacity-80 disabled:opacity-50"
       >
         {button}
       </button>

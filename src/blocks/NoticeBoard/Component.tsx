@@ -58,13 +58,13 @@ export const NoticeBoardBlock: React.FC<NoticeBoardBlockProps> = ({
         {title && (
           <h2 className={`mb-8 text-4xl md:text-6xl ${getTitleColorClass(titleColor)}`}>{title}</h2>
         )}
-        <ul className="border-t-4 border-foreground">
+        <ul className="border-t border-foreground">
           {visible.map((n, i) => {
             const urgent = n.category === 'urgent'
             return (
               <li
                 key={i}
-                className="grid grid-cols-1 gap-x-8 gap-y-2 border-b-2 border-foreground py-6 md:grid-cols-12"
+                className="grid grid-cols-1 gap-x-8 gap-y-2 border-b border-foreground py-6 md:grid-cols-12"
               >
                 <div className="md:col-span-3">
                   <p className={urgent ? 'eyebrow-brass' : 'eyebrow'}>

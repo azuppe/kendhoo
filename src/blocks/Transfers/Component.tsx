@@ -40,7 +40,7 @@ const TYPE_LABELS: Record<string, string> = {
 }
 
 const contactBtn =
-  'inline-flex h-10 items-center gap-2 border-2 border-foreground px-4 text-[12px] font-bold uppercase tracking-[0.04em] transition-colors hover:bg-foreground hover:text-background'
+  'inline-flex h-10 items-center gap-2 border border-foreground px-4 text-[12px] font-medium uppercase tracking-[0.18em] transition-colors hover:bg-foreground hover:text-background'
 
 export const TransfersBlock: React.FC<TransfersBlockProps> = ({
   title,
@@ -64,13 +64,13 @@ export const TransfersBlock: React.FC<TransfersBlockProps> = ({
           )}
         </div>
 
-        <ul className="grid grid-cols-1 border-l-2 border-t-2 border-foreground lg:grid-cols-2">
+        <ul className="grid grid-cols-1 border-l border-t border-foreground lg:grid-cols-2">
           {options.map((o, i) => {
             const hasImage = o.image && typeof o.image === 'object'
             const wa = o.whatsapp?.replace(/\D/g, '')
             const deps = o.departures || []
             return (
-              <li key={i} className="flex flex-col border-b-2 border-r-2 border-foreground">
+              <li key={i} className="flex flex-col border-b border-r border-foreground">
                 {hasImage && (
                   <div className="relative aspect-[16/9] overflow-hidden bg-card">
                     <Media resource={o.image} fill imgClassName="object-cover" />
@@ -83,7 +83,7 @@ export const TransfersBlock: React.FC<TransfersBlockProps> = ({
                     </p>
                     <h3 className="mt-2 text-3xl md:text-4xl">{o.name}</h3>
                     {(o.from || o.to) && (
-                      <p className="mt-2 flex flex-wrap items-center gap-2 text-lg font-bold">
+                      <p className="mt-2 flex flex-wrap items-center gap-2 text-lg font-medium">
                         {o.from}
                         {o.from && o.to && <ArrowRight className="h-5 w-5" aria-label="to" />}
                         {o.to}
@@ -92,34 +92,34 @@ export const TransfersBlock: React.FC<TransfersBlockProps> = ({
                   </div>
 
                   {(o.duration || o.price) && (
-                    <dl className="grid grid-cols-2 border-t-2 border-foreground">
+                    <dl className="grid grid-cols-2 border-t border-foreground">
                       {o.duration && (
                         <div className="pt-3">
                           <dt className="eyebrow">Duration</dt>
-                          <dd className="font-bold tabular-nums">{o.duration}</dd>
+                          <dd className="font-medium tabular-nums">{o.duration}</dd>
                         </div>
                       )}
                       {o.price && (
                         <div className="pt-3">
                           <dt className="eyebrow">Fare</dt>
-                          <dd className="font-bold tabular-nums">{o.price}</dd>
+                          <dd className="font-medium tabular-nums">{o.price}</dd>
                         </div>
                       )}
                     </dl>
                   )}
 
                   {o.onRequest ? (
-                    <p className="border-t-2 border-foreground pt-3 font-bold">
+                    <p className="border-t border-foreground pt-3 font-medium">
                       On request — contact the operator to arrange a time.
                     </p>
                   ) : deps.length > 0 ? (
-                    <ul className="border-t-2 border-foreground">
+                    <ul className="border-t border-foreground">
                       {deps.map((d, j) => (
                         <li
                           key={j}
                           className="flex items-baseline gap-4 border-b border-foreground/30 py-2 last:border-b-0"
                         >
-                          <span className="w-20 text-2xl font-black tabular-nums tracking-tight">
+                          <span className="w-20 text-2xl font-serif font-normal tabular-nums tracking-tight">
                             {d.time}
                           </span>
                           <span className="flex-1 text-sm">

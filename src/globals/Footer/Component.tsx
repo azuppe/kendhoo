@@ -103,7 +103,7 @@ export async function Footer({ locale }: { locale: TypedLocale }) {
       </div>
 
       <div className="border-t border-border">
-        <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-4 py-8 text-[11px] uppercase tracking-[0.06em] text-muted-foreground md:flex-row md:px-8">
+        <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-4 py-8 text-[11px] uppercase tracking-[0.16em] text-muted-foreground md:flex-row md:px-8">
           <div className="flex items-center gap-6">
             {footer?.copyrightText && <span>{footer.copyrightText}</span>}
             {footer?.privacyPolicyUrl && (

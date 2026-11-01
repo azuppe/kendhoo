@@ -37,7 +37,7 @@ function download(filename: string, text: string) {
 
 const tab = (on: boolean) =>
   cn(
-    'min-h-12 border-b text-[12px] font-medium uppercase tracking-[0.06em] transition-colors',
+    'min-h-12 border-b text-[12px] font-medium uppercase tracking-[0.18em] transition-colors',
     on ? 'border-foreground text-foreground' : 'border-transparent text-muted-foreground hover:text-foreground',
   )
 
@@ -127,7 +127,7 @@ export const EventsBrowser: React.FC<{ events: BrowserEvent[]; locale: string }>
             ))}
           </div>
         )}
-        <label className="flex min-h-12 cursor-pointer items-center gap-3 text-[12px] font-medium uppercase tracking-[0.06em] text-muted-foreground">
+        <label className="flex min-h-12 cursor-pointer items-center gap-3 text-[12px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
           <input
             type="checkbox"
             checked={freeOnly}
@@ -140,7 +140,7 @@ export const EventsBrowser: React.FC<{ events: BrowserEvent[]; locale: string }>
           <button
             type="button"
             onClick={() => download('kendhoo-events.ics', icsFor(filtered))}
-            className="ms-auto min-h-12 text-[12px] font-medium uppercase tracking-[0.06em] hover:opacity-70"
+            className="ms-auto min-h-12 text-[12px] font-medium uppercase tracking-[0.18em] hover:opacity-70"
           >
             Add all to calendar
           </button>
@@ -188,7 +188,7 @@ export const EventsBrowser: React.FC<{ events: BrowserEvent[]; locale: string }>
                 <button
                   type="button"
                   onClick={() => download(`${e.slug}.ics`, icsFor([e]))}
-                  className="h-12 border border-foreground px-7 text-[12px] font-medium uppercase tracking-[0.06em] transition-colors hover:bg-foreground hover:text-background"
+                  className="h-12 border border-foreground px-7 text-[12px] font-medium uppercase tracking-[0.18em] transition-colors hover:bg-foreground hover:text-background"
                 >
                   Add to calendar
                 </button>

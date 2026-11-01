@@ -139,7 +139,7 @@ function LocaleSwitcher({ className }: { className?: string }) {
     <Select onValueChange={onSelectChange} value={locale}>
       <SelectTrigger
         className={cn(
-          'flex h-11 items-center justify-center gap-1 whitespace-nowrap border-0 bg-transparent px-2 text-[12px] font-medium uppercase tracking-[0.06em] text-current focus:outline-none hover:opacity-70',
+          'flex h-11 items-center justify-center gap-1 whitespace-nowrap border-0 bg-transparent px-2 text-[12px] font-medium uppercase tracking-[0.18em] text-current focus:outline-none hover:opacity-70',
           className,
         )}
       >
@@ -150,7 +150,7 @@ function LocaleSwitcher({ className }: { className?: string }) {
           .sort((a, b) => a.label.localeCompare(b.label)) // Ordenar por label
           .map((locale) => (
             <SelectItem
-              className="cursor-pointer text-[12px] font-normal uppercase tracking-[0.06em] text-foreground"
+              className="cursor-pointer text-[12px] font-normal uppercase tracking-[0.18em] text-foreground"
               value={locale.code}
               key={locale.code}
             >

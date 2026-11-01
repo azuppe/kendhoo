@@ -23,9 +23,9 @@ export const UsefulNumbersBlock: React.FC<UsefulNumbersBlockProps> = ({
         {title && (
           <h2 className={`mb-8 text-4xl md:text-6xl ${getTitleColorClass(titleColor)}`}>{title}</h2>
         )}
-        <ul className="grid grid-cols-1 border-l-2 border-t-2 border-foreground sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid grid-cols-1 border-l border-t border-foreground sm:grid-cols-2 lg:grid-cols-3">
           {contacts.map((c, i) => (
-            <li key={i} className="border-b-2 border-r-2 border-foreground">
+            <li key={i} className="border-b border-r border-foreground">
               <a
                 href={`tel:${c.phone.replace(/[^\d+]/g, '')}`}
                 className={`flex h-full flex-col justify-between gap-8 p-6 transition-colors ${
@@ -35,10 +35,10 @@ export const UsefulNumbersBlock: React.FC<UsefulNumbersBlockProps> = ({
                 }`}
               >
                 <span>
-                  <span className="block text-xl font-bold">{c.name}</span>
+                  <span className="block text-xl font-medium">{c.name}</span>
                   {c.detail && <span className="mt-1 block text-sm opacity-70">{c.detail}</span>}
                 </span>
-                <span className="text-4xl font-black tabular-nums tracking-tight">{c.phone}</span>
+                <span className="text-4xl font-serif font-normal tabular-nums tracking-tight">{c.phone}</span>
               </a>
             </li>
           ))}

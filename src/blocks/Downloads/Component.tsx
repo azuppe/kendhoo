@@ -54,9 +54,9 @@ export const DownloadsBlock: React.FC<DownloadsBlockProps> = ({
             <p className="text-muted-foreground md:col-span-5 md:self-end">{description}</p>
           )}
         </div>
-        <ul className="border-t-4 border-foreground">
+        <ul className="border-t border-foreground">
           {items.map((f, i) => (
-            <li key={i} className="border-b-2 border-foreground">
+            <li key={i} className="border-b border-foreground">
               <a
                 href={f.href as string}
                 download={f.file ? '' : undefined}
@@ -68,7 +68,7 @@ export const DownloadsBlock: React.FC<DownloadsBlockProps> = ({
                   {f.category || 'File'}
                 </span>
                 <span className="md:col-span-6">
-                  <span className="block text-xl font-bold md:text-2xl">{f.title}</span>
+                  <span className="block text-xl font-medium md:text-2xl">{f.title}</span>
                   {f.description && (
                     <span className="mt-1 block text-sm text-muted-foreground">{f.description}</span>
                   )}
@@ -76,7 +76,7 @@ export const DownloadsBlock: React.FC<DownloadsBlockProps> = ({
                 <span className="hidden text-sm uppercase tabular-nums text-muted-foreground md:col-span-3 md:block">
                   {[f.ext, f.size].filter(Boolean).join(' · ')}
                 </span>
-                <span className="flex h-10 w-10 items-center justify-center border-2 border-current md:col-span-1 md:justify-self-end">
+                <span className="flex h-10 w-10 items-center justify-center border border-current md:col-span-1 md:justify-self-end">
                   <ArrowDown className="h-5 w-5" />
                 </span>
               </a>

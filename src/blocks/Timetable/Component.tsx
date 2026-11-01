@@ -29,18 +29,18 @@ export const TimetableBlock: React.FC<TimetableBlockProps> = ({
           {description && <p className="mt-3 text-muted-foreground">{description}</p>}
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[32rem] border-t-4 border-foreground text-start">
+          <table className="w-full min-w-[32rem] border-t border-foreground text-start">
             <tbody>
               {rows.map((r, i) => (
-                <tr key={i} className="border-b-2 border-foreground align-baseline">
+                <tr key={i} className="border-b border-foreground align-baseline">
                   <th
                     scope="row"
-                    className="w-32 py-4 pe-4 text-start text-3xl font-black tabular-nums tracking-tight md:w-48 md:text-5xl"
+                    className="w-32 py-4 pe-4 text-start text-3xl font-serif font-normal tabular-nums tracking-tight md:w-48 md:text-5xl"
                   >
                     {r.time}
                   </th>
                   <td className="py-4 pe-4">
-                    <span className="block text-lg font-bold md:text-xl">{r.label}</span>
+                    <span className="block text-lg font-medium md:text-xl">{r.label}</span>
                     {r.note && <span className="block text-sm text-muted-foreground">{r.note}</span>}
                   </td>
                   <td className="eyebrow py-4 text-end">{r.days}</td>

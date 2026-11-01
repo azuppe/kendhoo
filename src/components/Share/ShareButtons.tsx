@@ -31,7 +31,7 @@ export const ShareButtons: React.FC<{ title: string }> = ({ title }) => {
   }
 
   const cls =
-    'inline-flex h-11 items-center gap-2 text-[12px] font-medium uppercase tracking-[0.06em] hover:opacity-70'
+    'inline-flex h-11 items-center gap-2 text-[12px] font-medium uppercase tracking-[0.18em] hover:opacity-70'
 
   return (
     <div className="flex flex-wrap items-center gap-x-6">

@@ -15,7 +15,7 @@ export const PostSourceLine: React.FC<{ post: Post; variant?: 'light' | 'dark' }
 
   return (
     <div
-      className={`flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.06em] ${
+      className={`flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.2em] ${
         isDark ? 'text-white/80' : 'text-muted-foreground'
       }`}
     >
@@ -36,7 +36,7 @@ export const PostFooterLine: React.FC<{
 
   return (
     <div
-      className={`flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.06em] ${
+      className={`flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.2em] ${
         variant === 'dark' ? 'text-white/80' : 'text-muted-foreground'
       }`}
     >

@@ -34,7 +34,7 @@ export const LocaleSwitcher: React.FC = () => {
           type="button"
           onClick={() => onSelect(l.code as TypedLocale)}
           className={cn(
-            'min-h-11 border-b text-[12px] font-medium uppercase tracking-[0.06em] transition-opacity hover:opacity-70',
+            'min-h-11 border-b text-[12px] font-medium uppercase tracking-[0.18em] transition-opacity hover:opacity-70',
             locale === l.code
               ? 'border-foreground text-foreground'
               : 'border-transparent text-muted-foreground',
