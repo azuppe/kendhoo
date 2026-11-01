@@ -148,7 +148,7 @@ export const Search: React.FC<Props> = ({ initial, categories, locale }) => {
             type="button"
             disabled={!active}
             onClick={() => setF({ q: '', type: '', category: '', from: '', to: '' })}
-            className="h-12 text-[12px] font-medium uppercase tracking-[0.18em] hover:opacity-70 disabled:opacity-30"
+            className="h-12 text-[12px] font-medium uppercase tracking-[0.06em] hover:opacity-70 disabled:opacity-30"
           >
             Clear filters
           </button>

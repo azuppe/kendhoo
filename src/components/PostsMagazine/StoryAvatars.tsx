@@ -18,7 +18,7 @@ export const StoryAvatars: React.FC<{ sources: Source[] }> = ({ sources }) => {
                 <Media resource={source.logo} imgClassName="object-cover h-full w-full" />
               )}
             </span>
-            <span className="w-full truncate text-center text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+            <span className="w-full truncate text-center text-[11px] uppercase tracking-[0.06em] text-muted-foreground">
               {source.name}
             </span>
           </div>

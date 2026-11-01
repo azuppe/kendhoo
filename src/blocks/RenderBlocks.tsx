@@ -29,6 +29,11 @@ import { RecommendedEventsBlock } from '@/blocks/RecommendedEvents/Component'
 import { PhotoGalleryBlock } from '@/blocks/PhotoGallery/Component'
 import { EditorsPickBlock } from '@/blocks/EditorsPick/Component'
 import { EventsListBlock } from '@/blocks/EventsList/Component'
+import { NoticeBoardBlock } from '@/blocks/NoticeBoard/Component'
+import { DownloadsBlock } from '@/blocks/Downloads/Component'
+import { UsefulNumbersBlock } from '@/blocks/UsefulNumbers/Component'
+import { TimetableBlock } from '@/blocks/Timetable/Component'
+import { TransfersBlock } from '@/blocks/Transfers/Component'
 import { TypedLocale } from 'payload'
 
 const blockComponents = {
@@ -57,6 +62,11 @@ const blockComponents = {
   photoGallery: PhotoGalleryBlock,
   editorsPick: EditorsPickBlock,
   eventsList: EventsListBlock,
+  noticeBoard: NoticeBoardBlock,
+  downloads: DownloadsBlock,
+  usefulNumbers: UsefulNumbersBlock,
+  timetable: TimetableBlock,
+  transfers: TransfersBlock,
 }
 
 export const RenderBlocks: React.FC<{

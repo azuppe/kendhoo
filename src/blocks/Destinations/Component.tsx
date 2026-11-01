@@ -31,7 +31,7 @@ export const DestinationsBlock: React.FC<DestinationsBlockProps> = ({ destinatio
             <div className="absolute inset-x-0 bottom-0 p-8 text-center text-white">
               <h3 className="font-serif text-3xl">{dest.title}</h3>
               {dest.subtitle && (
-                <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.2em] text-white/85">
+                <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.06em] text-white/85">
                   {dest.subtitle}
                 </p>
               )}

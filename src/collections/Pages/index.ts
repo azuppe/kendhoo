@@ -27,6 +27,11 @@ import { RecommendedEvents } from '../../blocks/RecommendedEvents/config'
 import { PhotoGallery } from '../../blocks/PhotoGallery/config'
 import { EditorsPick } from '../../blocks/EditorsPick/config'
 import { EventsList } from '../../blocks/EventsList/config'
+import { NoticeBoard } from '../../blocks/NoticeBoard/config'
+import { Downloads } from '../../blocks/Downloads/config'
+import { UsefulNumbers } from '../../blocks/UsefulNumbers/config'
+import { Timetable } from '../../blocks/Timetable/config'
+import { Transfers } from '../../blocks/Transfers/config'
 import { hero } from '@/heros/config'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -118,6 +123,11 @@ export const Pages: CollectionConfig = {
                 PhotoGallery,
                 EditorsPick,
                 EventsList,
+                NoticeBoard,
+                Downloads,
+                UsefulNumbers,
+                Timetable,
+                Transfers,
               ],
               required: true,
             },

@@ -22,15 +22,15 @@ export const Logo: React.FC<{
       <Icon className={stacked ? 'h-12 w-12' : 'h-9 w-9'} />
       <span className="flex flex-col leading-none">
         <span
-          className="font-serif font-medium text-[22px]"
-          style={{ letterSpacing: '0.32em', paddingInlineStart: stacked ? '0.32em' : 0 }}
+          className="font-sans font-black text-[22px]"
+          style={{ letterSpacing: '-0.03em' }}
         >
           KENDHOO
         </span>
         {showOnline && (
           <span
-            className="mt-1.5 text-[9px] font-medium opacity-70"
-            style={{ letterSpacing: '0.55em', paddingInlineStart: stacked ? '0.55em' : 0 }}
+            className="mt-1 text-[9px] font-bold"
+            style={{ letterSpacing: '0.2em' }}
           >
             ONLINE
           </span>

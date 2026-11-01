@@ -26,7 +26,7 @@ export const SaveButton: React.FC<{ id: string; className?: string; label?: bool
       }}
       className={cn(
         'inline-flex h-11 items-center justify-center gap-2 text-foreground transition-opacity hover:opacity-70',
-        label ? 'px-1 text-[12px] font-medium uppercase tracking-[0.18em]' : 'w-11',
+        label ? 'px-1 text-[12px] font-medium uppercase tracking-[0.06em]' : 'w-11',
         className,
       )}
     >

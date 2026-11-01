@@ -49,7 +49,7 @@ export const QuickFactsMosaic: React.FC<{ facts: MosaicFact[] }> = ({ facts }) =
             {hasText && (
               <div className={`relative z-10 flex flex-col items-center gap-3 ${isImage ? 'text-white' : ''}`}>
                 {fact.label && (
-                  <h3 className="text-sm font-semibold tracking-widest uppercase pb-2 border-b border-current/50 inline-block">
+                  <h3 className="text-sm font-semibold tracking-[0.06em] uppercase pb-2 border-b border-current/50 inline-block">
                     {fact.label}
                   </h3>
                 )}
@@ -59,7 +59,7 @@ export const QuickFactsMosaic: React.FC<{ facts: MosaicFact[] }> = ({ facts }) =
                 {fact.button?.label && fact.button?.url && (
                   <a
                     href={fact.button.url}
-                    className="mt-3 inline-block text-xs font-semibold tracking-widest uppercase px-5 py-2 border border-current hover:bg-current/10 transition-colors"
+                    className="mt-3 inline-block text-xs font-semibold tracking-[0.06em] uppercase px-5 py-2 border border-current hover:bg-current/10 transition-colors"
                   >
                     {fact.button.label}
                   </a>

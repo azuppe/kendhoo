@@ -36,7 +36,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
                   return (
                     <li key={i}>
                       <CMSLink
-                        className={`px-10 text-[12px] uppercase tracking-[0.2em] transition-colors ${
+                        className={`px-10 text-[12px] uppercase tracking-[0.06em] transition-colors ${
                           i === 0
                             ? 'border border-white bg-background text-[#1C1B19] hover:bg-transparent hover:text-white'
                             : 'border border-white/60 bg-transparent text-white hover:bg-background hover:text-[#1C1B19]'

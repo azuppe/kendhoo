@@ -411,6 +411,11 @@ export interface Page {
     | PhotoGalleryBlock
     | EditorsPickBlock
     | EventsListBlock
+    | NoticeBoardBlock
+    | DownloadsBlock
+    | UsefulNumbersBlock
+    | TimetableBlock
+    | TransfersBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1702,6 +1707,185 @@ export interface Event {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NoticeBoardBlock".
+ */
+export interface NoticeBoardBlock {
+  title?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
+  notices: {
+    title: string;
+    body?: string | null;
+    category?: ('general' | 'urgent' | 'council' | 'utilities' | 'health' | 'transport' | 'community') | null;
+    date?: string | null;
+    /**
+     * Optional. The notice is hidden after this date.
+     */
+    expires?: string | null;
+    pinned?: boolean | null;
+    linkLabel?: string | null;
+    linkUrl?: string | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'noticeBoard';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DownloadsBlock".
+ */
+export interface DownloadsBlock {
+  title?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
+  description?: string | null;
+  files: {
+    title: string;
+    description?: string | null;
+    /**
+     * e.g. "Forms", "Reports", "Maps"
+     */
+    category?: string | null;
+    /**
+     * Upload a PDF, document or any other file.
+     */
+    file?: (string | null) | Media;
+    /**
+     * Used when no file is uploaded.
+     */
+    externalUrl?: string | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'downloads';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "UsefulNumbersBlock".
+ */
+export interface UsefulNumbersBlock {
+  title?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
+  contacts: {
+    name: string;
+    /**
+     * e.g. "24 hours"
+     */
+    detail?: string | null;
+    phone: string;
+    emergency?: boolean | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'usefulNumbers';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TimetableBlock".
+ */
+export interface TimetableBlock {
+  title?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
+  /**
+   * e.g. "Ferry schedule, effective November 2026"
+   */
+  description?: string | null;
+  rows: {
+    /**
+     * e.g. "07:30"
+     */
+    time: string;
+    /**
+     * e.g. "Kendhoo → Malé"
+     */
+    label: string;
+    /**
+     * e.g. "Daily" or "Sun, Tue, Thu"
+     */
+    days?: string | null;
+    note?: string | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'timetable';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TransfersBlock".
+ */
+export interface TransfersBlock {
+  title?: string | null;
+  /**
+   * Choose the title color (use light on dark backgrounds).
+   */
+  titleColor?: ('dark' | 'light') | null;
+  description?: string | null;
+  options: {
+    type: 'ferry' | 'speedboat' | 'seaplane' | 'flight' | 'other';
+    /**
+     * Operator or vessel, e.g. "Kendhoo Express"
+     */
+    name: string;
+    image?: (string | null) | Media;
+    from?: string | null;
+    to?: string | null;
+    /**
+     * e.g. "45 min"
+     */
+    duration?: string | null;
+    /**
+     * e.g. "MVR 60" or "USD 35 per person"
+     */
+    price?: string | null;
+    departures?:
+      | {
+          /**
+           * e.g. "07:30"
+           */
+          time: string;
+          /**
+           * e.g. "Daily" or "Sun, Tue, Thu"
+           */
+          days?: string | null;
+          note?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * No fixed schedule; runs on request (typical for speedboats).
+     */
+    onRequest?: boolean | null;
+    notes?: string | null;
+    contactName?: string | null;
+    phone?: string | null;
+    /**
+     * Number with country code, e.g. 9607771234
+     */
+    whatsapp?: string | null;
+    email?: string | null;
+    bookingUrl?: string | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'transfers';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "subscribers".
  */
 export interface Subscriber {
@@ -2269,6 +2453,11 @@ export interface PagesSelect<T extends boolean = true> {
         photoGallery?: T | PhotoGalleryBlockSelect<T>;
         editorsPick?: T | EditorsPickBlockSelect<T>;
         eventsList?: T | EventsListBlockSelect<T>;
+        noticeBoard?: T | NoticeBoardBlockSelect<T>;
+        downloads?: T | DownloadsBlockSelect<T>;
+        usefulNumbers?: T | UsefulNumbersBlockSelect<T>;
+        timetable?: T | TimetableBlockSelect<T>;
+        transfers?: T | TransfersBlockSelect<T>;
       };
   meta?:
     | T
@@ -2726,6 +2915,127 @@ export interface EventsListBlockSelect<T extends boolean = true> {
   titleColor?: T;
   events?: T;
   linkLabel?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NoticeBoardBlock_select".
+ */
+export interface NoticeBoardBlockSelect<T extends boolean = true> {
+  title?: T;
+  titleColor?: T;
+  notices?:
+    | T
+    | {
+        title?: T;
+        body?: T;
+        category?: T;
+        date?: T;
+        expires?: T;
+        pinned?: T;
+        linkLabel?: T;
+        linkUrl?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DownloadsBlock_select".
+ */
+export interface DownloadsBlockSelect<T extends boolean = true> {
+  title?: T;
+  titleColor?: T;
+  description?: T;
+  files?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        category?: T;
+        file?: T;
+        externalUrl?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "UsefulNumbersBlock_select".
+ */
+export interface UsefulNumbersBlockSelect<T extends boolean = true> {
+  title?: T;
+  titleColor?: T;
+  contacts?:
+    | T
+    | {
+        name?: T;
+        detail?: T;
+        phone?: T;
+        emergency?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TimetableBlock_select".
+ */
+export interface TimetableBlockSelect<T extends boolean = true> {
+  title?: T;
+  titleColor?: T;
+  description?: T;
+  rows?:
+    | T
+    | {
+        time?: T;
+        label?: T;
+        days?: T;
+        note?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TransfersBlock_select".
+ */
+export interface TransfersBlockSelect<T extends boolean = true> {
+  title?: T;
+  titleColor?: T;
+  description?: T;
+  options?:
+    | T
+    | {
+        type?: T;
+        name?: T;
+        image?: T;
+        from?: T;
+        to?: T;
+        duration?: T;
+        price?: T;
+        departures?:
+          | T
+          | {
+              time?: T;
+              days?: T;
+              note?: T;
+              id?: T;
+            };
+        onRequest?: T;
+        notes?: T;
+        contactName?: T;
+        phone?: T;
+        whatsapp?: T;
+        email?: T;
+        bookingUrl?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

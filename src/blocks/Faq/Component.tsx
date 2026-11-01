@@ -111,7 +111,7 @@ export const FaqBlock: React.FC<FaqBlockProps> = ({
                 {ctaLabel && (
                   <a
                     href={ctaLink || `mailto:${email || ''}`}
-                    className="inline-flex h-12 items-center border border-foreground px-8 text-[12px] font-medium uppercase tracking-[0.2em] transition-colors hover:bg-foreground hover:text-background"
+                    className="inline-flex h-12 items-center border border-foreground px-8 text-[12px] font-medium uppercase tracking-[0.06em] transition-colors hover:bg-foreground hover:text-background"
                   >
                     {ctaLabel}
                   </a>
@@ -124,7 +124,7 @@ export const FaqBlock: React.FC<FaqBlockProps> = ({
             <figure className="relative min-h-[28rem] overflow-hidden bg-card lg:h-full lg:min-h-[36rem]">
               <Media resource={image} fill imgClassName="object-cover" />
               {imageCaption && (
-                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-6 pt-16 text-[13px] uppercase tracking-[0.16em] text-white">
+                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-6 pt-16 text-[13px] uppercase tracking-[0.06em] text-white">
                   {imageCaption}
                 </figcaption>
               )}

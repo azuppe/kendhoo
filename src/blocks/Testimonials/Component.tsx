@@ -37,7 +37,7 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({ title, tit
                   </div>
                 )}
                 <div>
-                  <p className="text-[12px] font-medium uppercase tracking-[0.18em]">{item.name}</p>
+                  <p className="text-[12px] font-medium uppercase tracking-[0.06em]">{item.name}</p>
                   {item.role && <p className="mt-1 text-[14px] text-muted-foreground">{item.role}</p>}
                 </div>
               </figcaption>
