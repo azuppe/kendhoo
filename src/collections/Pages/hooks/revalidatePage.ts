@@ -7,8 +7,11 @@ import type { Page } from '../../../payload-types'
 export const revalidatePage: CollectionAfterChangeHook<Page> = ({
   doc,
   previousDoc,
-  req: { payload, i18n },
+  req: { payload, i18n, context },
 }) => {
+  // Scripts running outside Next (e.g. seeding) set this to skip cache revalidation
+  if (context.disableRevalidate) return doc
+
   const locale = i18n.language
   if (doc._status === 'published') {
     const path = doc.slug === 'home' ? `/${locale}` : `/${locale}/${doc.slug}`
